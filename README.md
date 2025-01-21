@@ -9,6 +9,7 @@
 3. **Composer** : version 2.8.5
 4. **Node.js** and **npm** : v22.13.0
 5. **Database** : MySQL (phpmyadmin)
+6. **Authentication Setup** : Laravel UI v4.x
 
 &nbsp;
 
@@ -18,6 +19,8 @@
 
     ```bash
     git clone https://github.com/shajibulhasan/online-traffic-offense-management-system.git
+    ```
+    ```bash
     cd online-traffic-offense-management-system
     ```
 
@@ -25,8 +28,13 @@
 
 
 ```bash
-composer install
-npm install
+    composer install
+```
+```bash
+    npm install
+```
+```bash
+    npm run dev
 ```
 
 3. **Environment Configuration:**
@@ -62,26 +70,6 @@ npm install
     ```
 
 &nbsp;
-
-## **3. Authentication Setup**
-
-This project uses **Laravel UI v4.x** for authentication scaffolding.
-
-To customize the UI:
-
-1. Generate authentication scaffolding:
-
-    ```bash
-     php artisan ui bootstrap --auth
-    ```
-
-2. Rebuild assets:
-
-    ```bash
-    npm run dev
-    ```
-
----
 
 ## **3. Git Workflow and Collaboration Rules**
 
