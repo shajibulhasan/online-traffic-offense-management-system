@@ -31,16 +31,14 @@
                                 @foreach($areas as  $area)
                                 <tr>
                                     <td>{{ $area->id }}</td>
-                                    <td>{{ $area->AreaName }}</td>
-                                    <td>{{ $area->DetailsArea }}</td>
-                                    <td><a href="{{ route('Admin.update-area', $area->id) }}" class="btn btn-sm btn-primary">Edit</a>
+                                    <td>{{ $area->area_name }}</td>
+                                    <td>{{ $area->details_area }}</td>
+                                    <td><a href="{{ route('Admin.updateArea', $area->id) }}" class="btn btn-sm btn-primary">Edit</a>
                                     <form action="{{ route('Admin.area.delete', $area->id) }}" method="POST" class="d-inline">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?')">Delete</button>
                                     </form>
-
-
                                 </td>
                                 </tr>
                                 @endforeach

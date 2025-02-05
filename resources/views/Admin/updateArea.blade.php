@@ -1,5 +1,4 @@
 @extends('layouts.app')
-
 @section('content')
     @if(session('success'))
         <div class="alert alert-success">
@@ -19,29 +18,28 @@
                         <h4><b>Update Area</b></h4>
                     </div>
                     <div class="card-body">
-                        <!-- Form to update Area -->
-                        <form action="{{ route('Admin.update-area', $area->id) }}" method="POST">
+                        <form action="{{ route('Admin.updateArea', $area->id) }}" method="POST">
                             @csrf
-                            @method('POST')  <!-- This is required to simulate the POST method -->
+                            @method('POST') 
 
                             <div class="mb-4">
                                 <label for="area" class="form-label"><b>Area Name:</b> <span class="text-danger">*</span></label>
                                 <div class="input-group">
                                     <span class="input-group-text"><i class="bi bi-house-door"></i></span>
-                                    <input type="text" class="form-control shadow-sm" id="area" name="AreaName" value="{{ old('AreaName', $area->AreaName) }}">
+                                    <input type="text" class="form-control shadow-sm" id="area" name="area_name" value="{{ old('area_name', $area->area_name) }}">
                                 </div>
-                                @error('AreaName')
+                                @error('area_name')
                                     <div class="text-danger mt-2">{{ $message }}</div>
                                 @enderror
                             </div>
 
                             <div class="mb-4">
-                                <label for="DetailsArea" class="form-label"><b>Details Area:</b> <span class="text-danger">*</span></label>
+                                <label for="details_area" class="form-label"><b>Details Area:</b> <span class="text-danger">*</span></label>
                                 <div class="input-group">
                                     <span class="input-group-text"><i class="bi bi-telephone-fill"></i></span>
-                                    <input type="text" class="form-control shadow-sm" id="DetailsArea" name="DetailsArea" value="{{ old('DetailsArea', $area->DetailsArea) }}">
+                                    <input type="text" class="form-control shadow-sm" id="details_area" name="details_area" value="{{ old('details_area', $area->details_area) }}">
                                 </div>
-                                @error('DetailsArea')
+                                @error('details_area')
                                     <div class="text-danger mt-2">{{ $message }}</div>
                                 @enderror
                             </div>

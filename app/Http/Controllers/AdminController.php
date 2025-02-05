@@ -25,9 +25,9 @@ class AdminController extends Controller
     {
         return view('Admin.add-thana');
     }
-    public function addarea()
+    public function addArea()
     {
-        return view('Admin.add-area');
+        return view('Admin.addArea');
     }
     public function area_list()
     {
@@ -63,18 +63,18 @@ class AdminController extends Controller
     {
         $request->validate(
             [
-                'AreaName' => 'required',
-                'DetailsArea' => 'required',
+                'area_name' => 'required',
+                'details_area' => 'required',
             ],
             [
-                'AreaName.required' => 'AreaName field is required',
-                'DetailsArea.required' => 'DetailsArea field is required'
+                'area_name.required' => 'are field is required',
+                'details_area.required' => 'details field is required'
             ]
         );
     
         $area_create = DB::table('area')->insert([
-            'AreaName' => $request->AreaName,
-            'DetailsArea' => $request->DetailsArea,
+            'area_name' => $request->area_name,
+            'details_area' => $request->details_area,
         ]);
     
         if ($area_create) {
@@ -87,42 +87,35 @@ class AdminController extends Controller
     public function areaList()
     {
         $areas = DB::table('area')->get();
-        return view('Admin.area-list', compact('areas'));
+        return view('Admin.areaList', compact('areas'));
     }
     
     public function updateArea(Request $request, $id)
     {
-        // Handle the POST request to update the area data
+        
         if ($request->isMethod('POST')) {
-            // Validate the form data
             $validatedData = $request->validate([
-                'AreaName' => 'required|string|max:255',
-                'DetailsArea' => 'required|string|max:255',
+                'area_name' => 'required|string|max:255',
+                'details_area' => 'required|string|max:255',
             ]);
-    
-            // Attempt to update the area in the database
             $updated = DB::table('area') 
                         ->where('id', $id) 
                         ->update([
-                            'AreaName' => $validatedData['AreaName'],
-                            'DetailsArea' => $validatedData['DetailsArea'],
+                            'area_name' => $validatedData['area_name'],
+                            'details_area' => $validatedData['details_area'],
                         ]);
-    
-            // Check if any row was updated
+  
             if ($updated) {
-                return redirect()->route('Admin.update-area', $id)
+                return redirect()->route('Admin.updateArea', $id)
                                  ->with('success', 'Area updated successfully');
             } else {
-                return redirect()->route('Admin.update-area', $id)
+                return redirect()->route('Admin.updateArea', $id)
                                  ->with('error', 'Area update failed. No changes made.');
             }
         }
     
-        // Fetch the area data for the form
         $area = DB::table('area')->where('id', $id)->first(); 
-    
-        // Return the view with the area data
-        return view('Admin.update-area', compact('area'));
+        return view('Admin.updateArea', compact('area'));
     }
     
     

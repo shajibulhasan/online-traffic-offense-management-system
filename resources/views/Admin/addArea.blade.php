@@ -21,29 +21,29 @@
                     <h3><b>Add New Area</b></h3>
                 </div>
                 <div class="card-body">
-                    <form action="{{ route('Admin.add-area') }}" method="POST">
+                    <form action="{{ route('Admin.addArea') }}" method="POST">
                         @csrf
 
                         <!-- Area Name Field -->
                         <div class="mb-4">
-                            <label for="AreaName" class="form-label"><b>Area Name:</b> <span class="text-danger">*</span></label>
+                            <label for="area_name" class="form-label"><b>Area Name:</b> <span class="text-danger">*</span></label>
                             <div class="input-group">
                                 <span class="input-group-text bg-light"><i class="bi bi-house-door-fill"></i></span>
-                                <input type="text" placeholder="Enter Area Name" class="form-control shadow-sm @error('AreaName') is-invalid @enderror" value="{{ old('AreaName') }}" id="AreaName" name="AreaName">
+                                <input type="text" placeholder="Enter Area Name" class="form-control shadow-sm @error('area_name') is-invalid @enderror" value="{{ old('area_name') }}" id="area_name" name="area_name">
                             </div>
-                            @error('AreaName')
+                            @error('area_name')
                                 <div class="text-danger mt-2">{{ $message }}</div>
                             @enderror
                         </div>
 
                         <!-- Detailed Area Field -->
                         <div class="mb-4">
-                            <label for="DetailsArea" class="form-label"><b>Detailed Area:</b> <span class="text-danger">*</span></label>
+                            <label for="details_area" class="form-label"><b>Detailed Area:</b> <span class="text-danger">*</span></label>
                             <div class="input-group">
                                 <span class="input-group-text"><i class="bi bi-map"></i></span>
-                                <textarea class="form-control shadow-sm @error('DetailsArea') is-invalid @enderror" id="DetailsArea" name="DetailsArea" rows="3" placeholder="Enter Details Area">{{ old('DetailsArea') }}</textarea>
+                                <textarea class="form-control shadow-sm @error('details_area') is-invalid @enderror" id="details_area" name="details_area" rows="3" placeholder="Enter Details Area">{{ old('details_area') }}</textarea>
                             </div>
-                            @error('DetailsArea')
+                            @error('details_area')
                                 <div class="text-danger mt-2">{{ $message }}</div>
                             @enderror
                         </div>

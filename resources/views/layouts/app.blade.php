@@ -42,11 +42,11 @@
                             <ul class="navbar-nav">
                                 <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Division_Lead
+                                DivisionLead
                                 </a>
                                 <ul class="dropdown-menu " aria-labelledby="navbarDarkDropdownMenuLink">
-                                    <li> <a class="dropdown-item" href="{{ route('Admin.assign-district') }}">{{ __('Assign-District') }}</a></li>
-                                    <li><a class="dropdown-item" href="{{ route('Admin.assign-district-list') }}">{{ __('Assign-District_List') }}</a></li>
+                                    <li> <a class="dropdown-item" href="{{ route('Admin.assign-district') }}">{{ __('AssignDistrict') }}</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('Admin.assign-district-list') }}">{{ __('AssignDistrictList') }}</a></li>
                                 </ul>
                                 </li>
                             </ul>
@@ -55,13 +55,13 @@
                             <ul class="navbar-nav">
                                 <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                   District_Lead
+                                   DistrictLead
                                 </a>
                                 <ul class="dropdown-menu " aria-labelledby="navbarDarkDropdownMenuLink">
-                                    <li> <a class="dropdown-item" href="{{ route('Admin.assign-thana') }}">{{ __('Assign-Thana') }}</a></li>
-                                    <li><a class="dropdown-item" href="{{ route('Admin.show-assign-thana') }}">{{ __('Show-Assign-Thana') }}</a></li>
-                                    <li><a class="dropdown-item" href="{{ route('Admin.add-thana') }}">{{ __('Add-Thana') }}</a></li>
-                                    <li><a class="dropdown-item" href="{{ route('Admin.thana_list') }}">{{ __('Thana-List') }}</a></li>
+                                    <li> <a class="dropdown-item" href="{{ route('Admin.assign-thana') }}">{{ __('AssignThana') }}</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('Admin.show-assign-thana') }}">{{ __('AssignThanaList') }}</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('Admin.add-thana') }}">{{ __('AddThana') }}</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('Admin.thana_list') }}">{{ __('ThanaList') }}</a></li>
                                 </ul>
                                 </li>
                             </ul>
@@ -70,13 +70,13 @@
                             <ul class="navbar-nav">
                                 <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                   Thana_Lead
+                                   ThanaLead
                                 </a>
                                 <ul class="dropdown-menu " aria-labelledby="navbarDarkDropdownMenuLink">
-                                    <li> <a class="dropdown-item" href="{{ route('Admin.assign-officer') }}">{{ __('Assign-Officer') }}</a></li>
-                                    <li><a class="dropdown-item" href="{{ route('Admin.assign-officer-list') }}">{{ __('Assign-officer_List') }}</a></li>
-                                    <li><a class="dropdown-item" href="{{ route('Admin.add-area') }}">{{ __('Add-Area') }}</a></li>
-                                    <li><a class="dropdown-item" href="{{ route('Admin.area-list') }}">{{ __('Area-List') }}</a></li>
+                                    <li> <a class="dropdown-item" href="{{ route('Admin.assign-officer') }}">{{ __('AssignOfficer') }}</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('Admin.assign-officer-list') }}">{{ __('AssignofficerList') }}</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('Admin.addArea') }}">{{ __('Add-Area') }}</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('Admin.areaList') }}">{{ __('areaList') }}</a></li>
                                 </ul>
                                 </li>
                             </ul>
@@ -84,7 +84,7 @@
 
                         
                         <li class="nav-item">
-                             <a class="nav-link" href="{{ route('Admin.verify-officer-account') }}">{{ __('Verify-officer-acount') }}</a>
+                             <a class="nav-link" href="{{ route('Admin.verify-officer-account') }}">{{ __('Verifyofficeracount') }}</a>
                         </li>
                     </ul>
 
