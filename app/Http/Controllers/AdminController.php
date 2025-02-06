@@ -21,9 +21,9 @@ class AdminController extends Controller
     {
         return view('Admin.divission');
     }
-    public function add_thana()
+    public function addThana()
     {
-        return view('Admin.add-thana');
+        return view('Admin.addThana');
     }
     public function addArea()
     {
@@ -134,21 +134,21 @@ class AdminController extends Controller
     {
         $req->validate(
         [
-            'districtName' => 'required',
-            'thanaName' => 'required|string|max:255',
+            'district_name' => 'required',
+            'thana_name' => 'required|string|max:255',
             'contact' => 'required|numeric',
             'address' => 'required|string|max:500',
         ], [
-            'districtName.required' => 'District field is required',
-            'thanaName.required' => 'Thana name field is required',
+            'district_name.required' => 'District field is required',
+            'thana_name.required' => 'Thana name field is required',
             'contact.required' => 'Number field is required',
             'address.required' => 'Address field is required',
         ]);
     
         // Insert thana into the 'thana' table
         $thana_create = DB::table('thana')->insert([
-            'districtName' => $req->districtName,
-            'thanaName' => $req->thanaName,
+            'district_name' => $req->district_name,
+            'thana_name' => $req->thana_name,
             'contact' => $req->contact,
             'address' => $req->address,
         ]);
@@ -163,52 +163,50 @@ class AdminController extends Controller
     public function thanaList()
     {
         $thanas = DB::table('thana')->get();
-        return view('Admin.thana_list', compact('thanas'));
+        return view('Admin.thanaList', compact('thanas'));
     }
-    //thana deleted
     public function thanadestroy($id)
     {
         try {
             
             DB::table('thana')->where('id', $id)->delete();
-            return redirect()->route('Admin.thana_list')->with('success', 'Thana deleted successfully!');
+            return redirect()->route('Admin.thanaList')->with('success', 'Thana deleted successfully!');
         } catch (\Exception $e) {
-            return redirect()->route('Admin.thana_list')->with('error', $e->getMessage());
+            return redirect()->route('Admin.thanaList')->with('error', $e->getMessage());
         }
     }
 
     public function updateThana(Request $request, $id)
     {
-       
-        if ($request->isMethod('POST') && $request->has('thanaName')) {
+        if ($request->isMethod('POST')) {  // Using POST instead of PUT
             $request->validate([
-                'districtName' => 'required|string|max:255',
-                'thanaName' => 'required|string|max:255',
+                'district_name' => 'required|string|max:255',
+                'thana_name' => 'required|string|max:255',  
                 'contact' => 'required|string|max:20',
                 'address' => 'required|string',
             ]);
     
-            $updated = DB::table('thana') 
-                        ->where('id', $id) 
+            $updated = DB::table('thana')
+                        ->where('id', $id)
                         ->update([
-                            'districtName' => $request->districtName,
-                            'thanaName' => $request->thanaName,
+                            'district_name' => $request->district_name,
+                            'thana_name' => $request->thana_name,  
                             'contact' => $request->contact,
                             'address' => $request->address,
                         ]);
     
             if ($updated) {
-                return redirect()->route('Admin.update-thana', $id)
+                return redirect()->route('Admin.updateThana', $id)
                                  ->with('success', 'Thana updated successfully');
             } else {
-                return redirect()->route('Admin.update-thana', $id)
+                return redirect()->route('Admin.updateThana', $id)
                                  ->with('error', 'Thana update failed');
             }
         }
     
-        $thana = DB::table('thana')->where('id', $id)->first(); 
+        $thana = DB::table('thana')->where('id', $id)->first();
     
-        return view('Admin.update-thana', compact('thana'));
+        return view('Admin.updateThana', compact('thana'));
     }
     
 }

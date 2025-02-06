@@ -34,18 +34,16 @@
                                 @foreach($thanas as  $thana)
                                 <tr>
                                     <td>{{ $thana->id }}</td>
-                                    <td>{{ $thana->districtName }}</td>
-                                    <td>{{ $thana->thanaName }}</td>
+                                    <td>{{ $thana->district_name }}</td>
+                                    <td>{{ $thana->thana_name }}</td>
                                     <td>{{ $thana->contact }}</td>
                                     <td>{{ $thana->address }}</td>
-                                    <td><a href="{{ route('Admin.update-thana', $thana->id) }}" class="btn btn-sm btn-primary">Edit</a>
+                                    <td><a href="{{ route('Admin.updateThana', $thana->id) }}" class="btn btn-sm btn-primary">Edit</a>
                                     <form action="{{ route('Admin.thana.delete', $thana->id) }}" method="POST" class="d-inline">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?')">Delete</button>
                                     </form>
-
-
                                 </td>
                                 </tr>
                                 @endforeach

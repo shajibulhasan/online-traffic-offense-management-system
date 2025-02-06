@@ -18,14 +18,14 @@
                     <h4><b>Add Thana</b></h4>
                 </div>
                 <div class="card-body">
-                    <form action="{{ route('Admin.add-thana') }}" method="post">
+                    <form action="{{ route('Admin.addThana') }}" method="post">
                         @csrf
                         <!-- District Dropdown -->
                         <div class="mb-4">
                             <label for="district" class="form-label"><b>District:</b> <span class="text-danger">*</span></label>
                             <div class="input-group">
                                 <span class="input-group-text"><i class="bi bi-geo-fill"></i></span>
-                                <select id="district" name="districtName" class="form-select shadow-sm">
+                                <select id="district" name="district_name" class="form-select shadow-sm">
                                     <option value="">Select District</option>
                                     <option value="Dhaka">Dhaka</option>
                                     <option value="Gazipur">Gazipur</option>
@@ -93,7 +93,7 @@
                                     <option value="Sunamganj">Sunamganj </option>
                                 </select>
                             </div>
-                            @error('districtName')
+                            @error('district_name')
                                 <div class="text-danger mt-2">{{ $message }}</div>
                             @enderror
                         </div>
@@ -103,9 +103,9 @@
                             <label for="thana" class="form-label"><b>Thana Name:</b> <span class="text-danger">*</span></label>
                             <div class="input-group">
                                 <span class="input-group-text"><i class="bi bi-house-door"></i></span>
-                                <input type="text" class="form-control shadow-sm" id="thana" name="thanaName" placeholder="Enter Thana Name" value="{{ old('thanaName') }}">
+                                <input type="text" class="form-control shadow-sm" id="thana" name="thana_name" placeholder="Enter Thana Name" value="{{ old('thana_name') }}">
                             </div>
-                            @error('thanaName')
+                            @error('thana_name')
                                 <div class="text-danger mt-2">{{ $message }}</div>
                             @enderror
                         </div>

@@ -60,8 +60,8 @@
                                 <ul class="dropdown-menu " aria-labelledby="navbarDarkDropdownMenuLink">
                                     <li> <a class="dropdown-item" href="{{ route('Admin.assign-thana') }}">{{ __('AssignThana') }}</a></li>
                                     <li><a class="dropdown-item" href="{{ route('Admin.show-assign-thana') }}">{{ __('AssignThanaList') }}</a></li>
-                                    <li><a class="dropdown-item" href="{{ route('Admin.add-thana') }}">{{ __('AddThana') }}</a></li>
-                                    <li><a class="dropdown-item" href="{{ route('Admin.thana_list') }}">{{ __('ThanaList') }}</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('Admin.addThana') }}">{{ __('AddThana') }}</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('Admin.thanaList') }}">{{ __('ThanaList') }}</a></li>
                                 </ul>
                                 </li>
                             </ul>
