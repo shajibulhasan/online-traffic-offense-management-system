@@ -11,11 +11,11 @@ class AdminController extends Controller
     }
     public function AssignDistrict()
     {
-        return view('Admin.assign-district');
+        return view('Admin.assignDistrict');
     }
     public function AssignDistrictList()
     {
-        return view('Admin.assign-district-list');
+        return view('Admin.assignDistrictList');
     }
     public function divission()
     {
@@ -31,15 +31,15 @@ class AdminController extends Controller
     }
     public function area_list()
     {
-        return view('Admin.area-list');
+        return view('Admin.areaList');
     }
-    public function assign_officer()
+    public function assignOfficer()
     {
-        return view('Admin.assign-officer');
+        return view('Admin.assignOfficer');
     }
-    public function assign_officer_list()
+    public function assignOfficerList()
     {
-        return view('Admin.assign-officer-list');
+        return view('Admin.assignOfficerList');
     }
     public function verifyOfficerAccount()
     {
@@ -124,9 +124,9 @@ class AdminController extends Controller
         try {
             // Using the DB facade to delete the record
             DB::table('area')->where('id', $id)->delete();
-            return redirect()->route('Admin.area-list')->with('success', 'area deleted successfully!');
+            return redirect()->route('Admin.areaList')->with('success', 'area deleted successfully!');
         } catch (\Exception $e) {
-            return redirect()->route('Admin.area-list')->with('error', $e->getMessage());
+            return redirect()->route('Admin.areaList')->with('error', $e->getMessage());
         }
     }
 // strat thana part 

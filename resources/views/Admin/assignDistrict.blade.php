@@ -20,7 +20,7 @@
                     <h3><b>Assign District Lead</b></h3>
                 </div>
                 <div class="card-body">
-                    <form action="{{ route('Admin.add-area') }}" method="POST">
+                    <form action="{{ route('Admin.assignDistrict') }}" method="POST">
                         @csrf
                         <div class="mb-4">
                             <label for="officer" class="form-label"><b>Officer Name:</b> <span class="text-danger">*</span></label>
