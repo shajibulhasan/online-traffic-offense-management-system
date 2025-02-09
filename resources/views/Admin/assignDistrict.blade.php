@@ -24,11 +24,10 @@
                                 <select id="officer" name="officer_name" class="form-select shadow-sm">
                                     <option value="">Select Officer</option>
                                     @foreach($officers as $officer)
-                                        <option value="{{ $officer->id }}" {{ old('officer_name') == $officer->id ? 'selected' : '' }}>
-                                            {{ $officer->name }}
-                                        </option>
+                                        <option value="{{ $officer->id }}">{{ $officer->name }}</option>
                                     @endforeach
                                 </select>
+
                             </div>
                             @error('officer_name')
                                 <div class="text-danger mt-2">{{ $message }}</div>

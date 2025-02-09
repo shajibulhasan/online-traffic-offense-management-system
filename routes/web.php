@@ -39,6 +39,7 @@ Route::post('/Admin/addArea', [AdminController::class, 'area'])->name('Admin.add
 Route::post('/Admin/addThana', [AdminController::class, 'Createthana'])->name('Admin.addThana');
 Route::delete('/thana/{id}', [AdminController::class, 'thanadestroy'])->name('Admin.thana.delete');
 Route::delete('/area/{id}', [AdminController::class, 'areadestroy'])->name('Admin.area.delete');
+Route::delete('/assignDistrcit/{id}', [AdminController::class, 'assignDistrcitdestroy'])->name('Admin.assignDistrict.delete');
 Route::post('/Admin/updateThana/{id}', [AdminController::class, 'updateThana'])->name('Admin.updateThana');
 Route::post('/Admin/updateArea/{id}', [AdminController::class, 'updateArea'])->name('Admin.updateArea');
 

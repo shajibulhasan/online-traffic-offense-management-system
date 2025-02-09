@@ -13,10 +13,10 @@ class AdminController extends Controller
     // {
     //     return view('Admin.assignDistrict');
     // }
-    public function AssignDistrictList()
-    {
-        return view('Admin.assignDistrictList');
-    }
+    // public function AssignDistrictList()
+    // {
+    //     return view('Admin.assignDistrictList');
+    // }
     public function divission()
     {
         return view('Admin.divission');
@@ -231,22 +231,44 @@ class AdminController extends Controller
             'officer_name.required' => 'Officer name field is required',
             'district.required' => 'District field is required',
         ]);
+    
+        $officer = DB::table('users')->where('id', $request->officer_name)->first();
+    
+        if (!$officer) {
+            return redirect()->back()->with('error', 'Selected officer does not exist.');
+        }
+    
 
-        // Insert into the database
         $assign_district = DB::table('assign_district')->insert([
-            'officer_name' => $request->officer_name,
+            'officer_name' => $officer->name, 
             'district' => $request->district,
             'created_at' => now(),
             'updated_at' => now(),
         ]);
-
+    
         if ($assign_district) {
-            return redirect()->back()->with('success', 'District assigned successfully!');
+            return redirect()->back()->with('success', 'District assigned successfully.');
         } else {
             return redirect()->back()->with('error', 'Failed to assign district.');
         }
     }
+    
 
+    public function assignDistrictList()
+    {
+        $assign_districts = DB::table('assign_district')->get();
+        return view('Admin.assignDistrictList', compact('assign_districts'));
+    }
+    public function assignDistrcitdestroy($id)
+    {
+        try {
+            
+            DB::table('assign_district')->where('id', $id)->delete();
+            return redirect()->route('Admin.assignDistrictList')->with('success', 'Thana deleted successfully!');
+        } catch (\Exception $e) {
+            return redirect()->route('Admin.assignDistrictList')->with('error', $e->getMessage());
+        }
+    }
    
 }
       
