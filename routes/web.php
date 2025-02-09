@@ -24,12 +24,17 @@ Route::get('/Admin/thanaList', [AdminController::class, 'thanaList'])->name('Adm
 Route::get('/Admin/assign-thana', [AdminController::class, 'assign_thana'])->name('Admin.assign-thana');
 Route::get('/Admin/show-assign-thana', [AdminController::class, 'showing_assign_thana'])->name('Admin.show-assign-thana');
 Route::get('/Admin/areaList', [AdminController::class, 'areaList'])->name('Admin.areaList');
-Route::get('/Admin/assignDistrict', [AdminController::class, 'assignDistrict'])->name('Admin.assignDistrict');
 Route::get('/Admin/assignDistrictList', [AdminController::class, 'AssignDistrictList'])->name('Admin.assignDistrictList');
 Route::get('/Admin/updateThana/{id}', [AdminController::class, 'UpdateThana'])->name('Admin.updateThana');
 Route::get('/Admin/updateArea/{id}', [AdminController::class, 'UpdateArea'])->name('Admin.updateArea');
+Route::get('/Admin/assignDistrict', [AdminController::class, 'assignDistrict'])->name('Admin.assignDistrict');
+Route::get('/Admin/assignDistrict', [AdminController::class, 'assignDistrict'])->name('Admin.assignDistrict');
+
+
+
 
 //post route
+Route::post('/Admin/assignDistrict', [AdminController::class, 'CreateAssign'])->name('Admin.createAssign');
 Route::post('/Admin/addArea', [AdminController::class, 'area'])->name('Admin.addArea');
 Route::post('/Admin/addThana', [AdminController::class, 'Createthana'])->name('Admin.addThana');
 Route::delete('/thana/{id}', [AdminController::class, 'thanadestroy'])->name('Admin.thana.delete');

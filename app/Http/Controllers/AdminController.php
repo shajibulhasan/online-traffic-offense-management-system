@@ -209,44 +209,44 @@ class AdminController extends Controller
         return view('Admin.updateThana', compact('thana'));
     }
   // Assign district information
-  public function assignDistrict()
-  {
-     
-      $officers = DB::table('users')
-          ->whereNull('thana_lead')
-          ->whereNull('district_lead')
-          ->where('role', 'officer')
-          ->where('status', 1)
-          ->get();
-         
-    return view('Admin.assignDistrict', compact('officers'));     
-  
-  }
 
-//   public function createAssignDistrict(Request $request)
-//   {
-//         $request->validate([
-//             'officer_name' => 'required',
-//             'district' => 'required',
-//         ], [
-//             'officer_name.required' => 'Officer name field is required',
-//             'district.required' => 'District field is required',
-//         ]);
+    public function assignDistrict()
+    {
+        $officers = DB::table('users')
+            ->whereNull('thana_lead')
+            ->whereNull('district_lead')
+            ->where('role', 'officer')
+            ->where('status', 1)
+            ->get();
 
-//         // Insert the assigned district if validation passes
-//         $assign_district = DB::table('assign_district')->insert([
-//             'officer_name' => $request->officer_name,
-//             'district' => $request->district,
-//         ]);
+        return view('Admin.assignDistrict', compact('officers'));
+    }
 
-//         // Check if the insert was successful
-//         if ($assign_district) {
-//             return redirect()->back()->with('success', 'Assign District added successfully');
-//         } else {
-//             return redirect()->back()->with('error', 'Failed to add Assign District');
-//         }
-//   }
+    public function CreateAssign(Request $request)
+    {
+        $request->validate([
+            'officer_name' => 'required',
+            'district' => 'required',
+        ], [
+            'officer_name.required' => 'Officer name field is required',
+            'district.required' => 'District field is required',
+        ]);
 
-    
+        // Insert into the database
+        $assign_district = DB::table('assign_district')->insert([
+            'officer_name' => $request->officer_name,
+            'district' => $request->district,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        if ($assign_district) {
+            return redirect()->back()->with('success', 'District assigned successfully!');
+        } else {
+            return redirect()->back()->with('error', 'Failed to assign district.');
+        }
+    }
+
+   
 }
       
