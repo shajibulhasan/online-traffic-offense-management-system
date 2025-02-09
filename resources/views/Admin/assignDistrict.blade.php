@@ -20,26 +20,33 @@
                     <h3><b>Assign District Lead</b></h3>
                 </div>
                 <div class="card-body">
-                    <form action="{{ route('Admin.assignDistrict') }}" method="POST">
+                <form action="{{ route('Admin.assignDistrict') }}" method="POST">
                         @csrf
+                        <!-- Officer Name Dropdown -->
                         <div class="mb-4">
                             <label for="officer" class="form-label"><b>Officer Name:</b> <span class="text-danger">*</span></label>
                             <div class="input-group">
                                 <span class="input-group-text bg-light"><i class="bi bi-house-door-fill"></i></span>
-                                <select id="officer" name="officer" class="form-select shadow-sm">
-                                <option value="">Select Officer</option>
+                                <select id="officer" name="officer_name" class="form-select shadow-sm">
+                                    <option value="">Select Officer</option>
+                                    @foreach($officers as $officer)
+                                        <option 
+                                            value="{{ $officer->id }}" 
+                                            {{ old('officer_name') == $officer->id ? 'selected' : '' }}>
+                                            {{ $officer->name }}
+                                        </option>
+                                    @endforeach
                                 </select>
                             </div>
-                            @error('officer')
+                            @error('officer_name')
                                 <div class="text-danger mt-2">{{ $message }}</div>
                             @enderror
                         </div>
-
                         <div class="mb-4">
                             <label for="district" class="form-label"><b>District:</b> <span class="text-danger">*</span></label>
                             <div class="input-group">
                                 <span class="input-group-text"><i class="bi bi-geo-fill"></i></span>
-                                <select id="district" name="districtName" class="form-select shadow-sm">
+                                <select id="district" name="district" class="form-select shadow-sm">
                                     <option value="">Select District</option>
                                     <option value="Dhaka">Dhaka</option>
                                     <option value="Gazipur">Gazipur</option>
@@ -107,7 +114,7 @@
                                     <option value="Sunamganj">Sunamganj </option>
                                 </select>
                             </div>
-                            @error('districtName')
+                            @error('district')
                                 <div class="text-danger mt-2">{{ $message }}</div>
                             @enderror
                         </div>
