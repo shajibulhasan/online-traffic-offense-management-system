@@ -70,7 +70,7 @@
                                 </a>
                                 <ul class="dropdown-menu " aria-labelledby="navbarDarkDropdownMenuLink">
                                     <li> <a class="dropdown-item" href="{{ route('Admin.assignOfficer') }}">{{ __('AssignOfficer') }}</a></li>
-                                    <li><a class="dropdown-item" href="{{ route('Admin.assignOfficerList') }}">{{ __('AssignofficerList') }}</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('Admin.assignOfficerList') }}">{{ __('AssignOfficerList') }}</a></li>
                                     <li><a class="dropdown-item" href="{{ route('Admin.addArea') }}">{{ __('addArea') }}</a></li>
                                     <li><a class="dropdown-item" href="{{ route('Admin.areaList') }}">{{ __('areaList') }}</a></li>
                                 </ul>

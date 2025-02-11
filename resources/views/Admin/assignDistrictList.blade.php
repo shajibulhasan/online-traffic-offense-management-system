@@ -34,7 +34,7 @@
                                     <td>{{ $assign->id }}</td>
                                     <td>{{ $assign->officer_name }}</td>
                                     <td>{{ $assign->district }}</td>
-                                    <td><a href="{{ route('Admin.assignDistrict', $assign->id) }}" class="btn btn-sm btn-primary">Edit</a>
+                                    <td><a href="{{ route('Admin.updateAssignDistrict', $assign->id) }}" class="btn btn-sm btn-primary">Edit</a>
                                     <form action="{{ route('Admin.assignDistrict.delete', $assign->id) }}" method="POST" class="d-inline">
                                         @csrf
                                         @method('DELETE')

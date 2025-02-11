@@ -269,6 +269,36 @@ class AdminController extends Controller
             return redirect()->route('Admin.assignDistrictList')->with('error', $e->getMessage());
         }
     }
+    
+    public function updateAssignDistrict(Request $request, $id)
+    {
+        if ($request->isMethod('POST')) { 
+            $request->validate([
+                'officer_name' => 'required|string|max:255',
+                'district' => 'required|string|max:255',  
+               
+            ]);
+    
+            $updated = DB::table('assign_district')
+                        ->where('id', $id)
+                        ->update([
+                            'officer_name' => $request->officer_name,
+                            'district' => $request->district,  
+                        ]);
+    
+            if ($updated) {
+                return redirect()->route('Admin.updateAssignDistrict', $id)
+                                 ->with('success', 'Thana updated successfully');
+            } else {
+                return redirect()->route('Admin.updateAssignDistrict', $id)
+                                 ->with('error', 'Thana update failed');
+            }
+        }
+    
+        $assign_district = DB::table('assign_district')->where('id', $id)->first();
+    
+        return view('Admin.updateAssignDistrict', compact('assign_district'));
+    }
    
 }
       

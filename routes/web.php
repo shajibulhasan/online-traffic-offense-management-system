@@ -29,11 +29,11 @@ Route::get('/Admin/updateThana/{id}', [AdminController::class, 'UpdateThana'])->
 Route::get('/Admin/updateArea/{id}', [AdminController::class, 'UpdateArea'])->name('Admin.updateArea');
 Route::get('/Admin/assignDistrict', [AdminController::class, 'assignDistrict'])->name('Admin.assignDistrict');
 Route::get('/Admin/assignDistrict', [AdminController::class, 'assignDistrict'])->name('Admin.assignDistrict');
-
-
+Route::get('/Admin/updateAssignDistrict/{id}', [AdminController::class, 'updateAssignDistrict'])->name('Admin.updateAssignDistrict');
 
 
 //post route
+Route::post('/Admin/updateAssignDistrict/{id}', [AdminController::class, 'updateAssignDistrict'])->name('Admin.updateAssignDistrict');
 Route::post('/Admin/assignDistrict', [AdminController::class, 'CreateAssign'])->name('Admin.createAssign');
 Route::post('/Admin/addArea', [AdminController::class, 'area'])->name('Admin.addArea');
 Route::post('/Admin/addThana', [AdminController::class, 'Createthana'])->name('Admin.addThana');
