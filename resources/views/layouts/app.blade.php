@@ -10,15 +10,19 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Fonts -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <link rel="dns-prefetch" href="//fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+
 
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+        <nav class="navbar navbar-expand-md navbar-light bg- shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
                     {{ config('app.name', 'Laravel') }}
@@ -30,8 +34,56 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav me-auto">
+                        <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
+                            <ul class="navbar-nav">
+                                <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                DivisionLead
+                                </a>
+                                <ul class="dropdown-menu " aria-labelledby="navbarDarkDropdownMenuLink">
+                                    <li> <a class="dropdown-item" href="{{ route('Admin.assignDistrict') }}">{{ __('AssignDistrict') }}</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('Admin.assignDistrictList') }}">{{ __('AssignDistrictList') }}</a></li>
+                                </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
+                            <ul class="navbar-nav">
+                                <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                   DistrictLead
+                                </a>
+                                <ul class="dropdown-menu " aria-labelledby="navbarDarkDropdownMenuLink">
+                                    <li> <a class="dropdown-item" href="{{ route('Admin.assign-thana') }}">{{ __('AssignThana') }}</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('Admin.show-assign-thana') }}">{{ __('AssignThanaList') }}</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('Admin.addThana') }}">{{ __('AddThana') }}</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('Admin.thanaList') }}">{{ __('ThanaList') }}</a></li>
+                                </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
+                            <ul class="navbar-nav">
+                                <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                   ThanaLead
+                                </a>
+                                <ul class="dropdown-menu " aria-labelledby="navbarDarkDropdownMenuLink">
+                                    <li> <a class="dropdown-item" href="{{ route('Admin.assignOfficer') }}">{{ __('AssignOfficer') }}</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('Admin.assignOfficerList') }}">{{ __('AssignOfficerList') }}</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('Admin.addArea') }}">{{ __('addArea') }}</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('Admin.areaList') }}">{{ __('areaList') }}</a></li>
+                                </ul>
+                                </li>
+                            </ul>
+                        </div>
 
+                        
+                        <li class="nav-item">
+                             <a class="nav-link" href="{{ route('Admin.verify-officer-account') }}">{{ __('Verifyofficeracount') }}</a>
+                        </li>
                     </ul>
+
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ms-auto">
