@@ -58,7 +58,7 @@
                             </ul>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('Admin.verify-officer-account') }}">Verify Officer Account</a>
+                            <a class="nav-link" href="{{ route('Admin.verifyOfficerAccount') }}">VerifyOfficerAccount</a>
                         </li>
                     </ul>
 

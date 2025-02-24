@@ -43,7 +43,25 @@ class AdminController extends Controller
     }
     public function verifyOfficerAccount()
     {
-        return view('Admin.verify-officer-account');
+        $officers = DB::table('users')
+        ->whereNull('thana_lead')
+        ->where('role', 'officer')
+        ->where('status', 0)
+        ->get();
+        return view('Admin.verifyOfficerAccount', compact('officers'));
+    }
+    public function approveOfficer($id)
+    {
+        // Update the status of the officer
+        $updated = DB::table('users')
+            ->where('id', $id)
+            ->update(['status' => 1]);
+
+        if ($updated) {
+            return redirect()->back()->with('success', 'Officer approved successfully.');
+        } else {
+            return redirect()->back()->with('error', 'Officer approval failed.');
+        }
     }
 
     public function assign_thana()
