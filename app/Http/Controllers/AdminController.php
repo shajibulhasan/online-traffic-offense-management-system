@@ -49,7 +49,7 @@ class AdminController extends Controller
     public function assign_thana()
     {
 
-        return view('Admin.assign-thana');
+        return view('Admin.assignThana');
     }
     public function showing_assign_thana()
     {
@@ -300,5 +300,19 @@ class AdminController extends Controller
         return view('Admin.updateAssignDistrict', compact('assign_district'));
     }
    
+    //assign thana 
+
+    public function assignThana()
+    {
+        $officers = DB::table('users')
+            ->whereNull('thana_lead')
+            ->where('role', 'officer')
+            ->where('status', 1)
+            ->get();
+        $thana_list = DB::table('thana')->get();
+
+        return view('Admin.assignThana', compact('officers','thana_list'));
+    }
+
 }
       

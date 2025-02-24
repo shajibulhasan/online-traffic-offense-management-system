@@ -45,39 +45,11 @@
                             <div class="col-md-6">
                                 <input id="phone" type="text" class="form-control @error('phone') is-invalid @enderror" name="phone" value="{{ old('phone') }}" required autocomplete="tel">
 
-                                <!-- @error('phone')
+                                @error('phone')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
-                                @enderror -->
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <label for="thana_lead" class="col-md-4 col-form-label text-md-end">{{ __('Thana Lead') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="thana_lead" type="text" class="form-control @error('thana_lead') is-invalid @enderror" name="thana_lead" value="{{ old('thana_lead') }}" required autocomplete="organization">
-
-                                <!-- @error('thana_lead')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror -->
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <label for="district_lead" class="col-md-4 col-form-label text-md-end">{{ __('District Lead') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="district_lead" type="text" class="form-control @error('district_lead') is-invalid @enderror" name="district_lead" value="{{ old('district_lead') }}" required autocomplete="organization">
-
-                                <!-- @error('district_lead')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror -->
+                                @enderror
                             </div>
                         </div>
 
