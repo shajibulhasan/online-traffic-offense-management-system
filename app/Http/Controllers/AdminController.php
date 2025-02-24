@@ -52,7 +52,7 @@ class AdminController extends Controller
     }
     public function approveOfficer($id)
     {
-        // Update the status of the officer
+       
         $updated = DB::table('users')
             ->where('id', $id)
             ->update(['status' => 1]);
