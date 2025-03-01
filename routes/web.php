@@ -19,9 +19,9 @@ Route::get('/Admin/addArea', [AdminController::class, 'addArea'])->name('Admin.a
 Route::get('/Admin/areaList', [AdminController::class, 'areaList'])->name('Admin.areaList');
 Route::get('/Admin/assignOfficer', [AdminController::class, 'assignOfficer'])->name('Admin.assignOfficer');
 Route::get('/Admin/assignOfficerList', [AdminController::class, 'assignOfficerList'])->name('Admin.assignOfficerList');
-Route::get('/Admin/verify-officer-account', [AdminController::class, 'verifyOfficerAccount'])->name('Admin.verify-officer-account');
+Route::get('/Admin/verifyOfficerAccount', [AdminController::class, 'verifyOfficerAccount'])->name('Admin.verifyOfficerAccount');
 Route::get('/Admin/thanaList', [AdminController::class, 'thanaList'])->name('Admin.thanaList');
-Route::get('/Admin/assign-thana', [AdminController::class, 'assign_thana'])->name('Admin.assign-thana');
+Route::get('/Admin/assignThana', [AdminController::class, 'assign_thana'])->name('Admin.assignThana');
 Route::get('/Admin/show-assign-thana', [AdminController::class, 'showing_assign_thana'])->name('Admin.show-assign-thana');
 Route::get('/Admin/areaList', [AdminController::class, 'areaList'])->name('Admin.areaList');
 Route::get('/Admin/assignDistrictList', [AdminController::class, 'AssignDistrictList'])->name('Admin.assignDistrictList');
@@ -30,9 +30,10 @@ Route::get('/Admin/updateArea/{id}', [AdminController::class, 'UpdateArea'])->na
 Route::get('/Admin/assignDistrict', [AdminController::class, 'assignDistrict'])->name('Admin.assignDistrict');
 Route::get('/Admin/assignDistrict', [AdminController::class, 'assignDistrict'])->name('Admin.assignDistrict');
 Route::get('/Admin/updateAssignDistrict/{id}', [AdminController::class, 'updateAssignDistrict'])->name('Admin.updateAssignDistrict');
-
+Route::get('/Admin/assignThana',[AdminController::class, 'assignThana'])->name('Admin.assignThana');
 
 //post route
+Route::post('/officers/{id}/approve', [AdminController::class, 'approveOfficer'])->name('officers.approve');
 Route::post('/Admin/updateAssignDistrict/{id}', [AdminController::class, 'updateAssignDistrict'])->name('Admin.updateAssignDistrict');
 Route::post('/Admin/assignDistrict', [AdminController::class, 'CreateAssign'])->name('Admin.createAssign');
 Route::post('/Admin/addArea', [AdminController::class, 'area'])->name('Admin.addArea');

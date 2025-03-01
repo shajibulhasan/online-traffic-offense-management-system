@@ -43,13 +43,31 @@ class AdminController extends Controller
     }
     public function verifyOfficerAccount()
     {
-        return view('Admin.verify-officer-account');
+        $officers = DB::table('users')
+        ->whereNull('thana_lead')
+        ->where('role', 'officer')
+        ->where('status', 0)
+        ->get();
+        return view('Admin.verifyOfficerAccount', compact('officers'));
+    }
+    public function approveOfficer($id)
+    {
+       
+        $updated = DB::table('users')
+            ->where('id', $id)
+            ->update(['status' => 1]);
+
+        if ($updated) {
+            return redirect()->back()->with('success', 'Officer approved successfully.');
+        } else {
+            return redirect()->back()->with('error', 'Officer approval failed.');
+        }
     }
 
     public function assign_thana()
     {
 
-        return view('Admin.assign-thana');
+        return view('Admin.assignThana');
     }
     public function showing_assign_thana()
     {
@@ -300,5 +318,19 @@ class AdminController extends Controller
         return view('Admin.updateAssignDistrict', compact('assign_district'));
     }
    
+    //assign thana 
+
+    public function assignThana()
+    {
+        $officers = DB::table('users')
+            ->whereNull('thana_lead')
+            ->where('role', 'officer')
+            ->where('status', 1)
+            ->get();
+        $thana_list = DB::table('thana')->get();
+
+        return view('Admin.assignThana', compact('officers','thana_list'));
+    }
+
 }
       
