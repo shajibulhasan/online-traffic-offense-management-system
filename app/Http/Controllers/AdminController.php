@@ -9,18 +9,6 @@ class AdminController extends Controller
     {
         return view('Admin.index');
     }
-    // public function AssignDistrict()
-    // {
-    //     return view('Admin.assignDistrict');
-    // }
-    // public function AssignDistrictList()
-    // {
-    //     return view('Admin.assignDistrictList');
-    // }
-    public function divission()
-    {
-        return view('Admin.divission');
-    }
     public function addThana()
     {
         return view('Admin.addThana');
@@ -140,7 +128,7 @@ class AdminController extends Controller
     public function areadestroy($id)
     {
         try {
-            // Using the DB facade to delete the record
+            
             DB::table('area')->where('id', $id)->delete();
             return redirect()->route('Admin.areaList')->with('success', 'area deleted successfully!');
         } catch (\Exception $e) {
@@ -196,7 +184,7 @@ class AdminController extends Controller
 
     public function updateThana(Request $request, $id)
     {
-        if ($request->isMethod('POST')) {  // Using POST instead of PUT
+        if ($request->isMethod('POST')) {  
             $request->validate([
                 'district_name' => 'required|string|max:255',
                 'thana_name' => 'required|string|max:255',  
@@ -242,81 +230,65 @@ class AdminController extends Controller
 
     public function CreateAssign(Request $request)
     {
-        $request->validate([
-            'officer_name' => 'required',
-            'district' => 'required',
-        ], [
-            'officer_name.required' => 'Officer name field is required',
-            'district.required' => 'District field is required',
-        ]);
-    
-        $officer = DB::table('users')->where('id', $request->officer_name)->first();
-    
-        if (!$officer) {
-            return redirect()->back()->with('error', 'Selected officer does not exist.');
-        }
-    
+        $updated = DB::table('users')
+                        ->where('id', $request->officer_name)
+                        ->update([
+                            'district_lead' => $request->district,  
+                        ]);
 
-        $assign_district = DB::table('assign_district')->insert([
-            'officer_name' => $officer->name, 
-            'district' => $request->district,
-            'created_at' => now(),
-            'updated_at' => now(),
-        ]);
-    
-        if ($assign_district) {
+        if ($updated) {
             return redirect()->back()->with('success', 'District assigned successfully.');
         } else {
             return redirect()->back()->with('error', 'Failed to assign district.');
         }
     }
     
-
     public function assignDistrictList()
     {
-        $assign_districts = DB::table('assign_district')->get();
+        $assign_districts = DB::table('users')->where('role','officer')
+        ->whereNotNull('district_lead')->get();
         return view('Admin.assignDistrictList', compact('assign_districts'));
     }
-    public function assignDistrcitdestroy($id)
-    {
-        try {
+    // public function assignDistrcitdestroy($id)
+    // {
+    //     try {
             
-            DB::table('assign_district')->where('id', $id)->delete();
-            return redirect()->route('Admin.assignDistrictList')->with('success', 'Thana deleted successfully!');
-        } catch (\Exception $e) {
-            return redirect()->route('Admin.assignDistrictList')->with('error', $e->getMessage());
-        }
-    }
+    //         DB::table('assign_district')->where('id', $id)->delete();
+    //         return redirect()->route('Admin.assignDistrictList')->with('success', 'Thana deleted successfully!');
+    //     } catch (\Exception $e) {
+    //         return redirect()->route('Admin.assignDistrictList')->with('error', $e->getMessage());
+    //     }
+    // }
     
-    public function updateAssignDistrict(Request $request, $id)
-    {
-        if ($request->isMethod('POST')) { 
-            $request->validate([
-                'officer_name' => 'required|string|max:255',
-                'district' => 'required|string|max:255',  
+    // public function updateAssignDistrict(Request $request, $id)
+    // {
+    //     if ($request->isMethod('POST')) { 
+    //         $request->validate([
+    //             'officer_name' => 'required|string|max:255',
+    //             'district' => 'required|string|max:255',  
                
-            ]);
+    //         ]);
     
-            $updated = DB::table('assign_district')
-                        ->where('id', $id)
-                        ->update([
-                            'officer_name' => $request->officer_name,
-                            'district' => $request->district,  
-                        ]);
+    //         $updated = DB::table('assign_district')
+    //                     ->where('id', $id)
+    //                     ->update([
+    //                         'officer_name' => $request->officer_name,
+    //                         'district' => $request->district,  
+    //                     ]);
     
-            if ($updated) {
-                return redirect()->route('Admin.updateAssignDistrict', $id)
-                                 ->with('success', 'Thana updated successfully');
-            } else {
-                return redirect()->route('Admin.updateAssignDistrict', $id)
-                                 ->with('error', 'Thana update failed');
-            }
-        }
+    //         if ($updated) {
+    //             return redirect()->route('Admin.updateAssignDistrict', $id)
+    //                              ->with('success', 'Thana updated successfully');
+    //         } else {
+    //             return redirect()->route('Admin.updateAssignDistrict', $id)
+    //                              ->with('error', 'Thana update failed');
+    //         }
+    //     }
     
-        $assign_district = DB::table('assign_district')->where('id', $id)->first();
+    //     $assign_district = DB::table('assign_district')->where('id', $id)->first();
     
-        return view('Admin.updateAssignDistrict', compact('assign_district'));
-    }
+    //     return view('Admin.updateAssignDistrict', compact('assign_district'));
+    // }
    
     //assign thana 
 

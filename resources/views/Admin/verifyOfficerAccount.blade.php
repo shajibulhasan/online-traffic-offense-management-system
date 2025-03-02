@@ -15,7 +15,7 @@
         <div class="col-md-10 col-12">
             <div class="card shadow-lg border-0 rounded-4">
                 <div class="card-header text-white bg-dark text-center py-2">
-                    <h4 class="mb-0"><b>officer List</b></h4>
+                    <h4 class="mb-0"><b>Officer List</b></h4>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -24,6 +24,8 @@
                                 <tr>
                                     <th>Serial No.</th>
                                     <th>Officer Name</th>
+                                    <th>Phone</th>
+                                    <th>Email</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -32,6 +34,8 @@
                                 <tr>
                                     <td>{{  $officer->id }}</td>
                                     <td>{{  $officer->name }}</td>
+                                    <td>{{  $officer->phone }}</td>
+                                    <td>{{  $officer->email }}</td>
                                    
                                     <td>
                                         <form action="{{ route('officers.approve', $officer->id) }}" method="POST" style="display: inline;">
