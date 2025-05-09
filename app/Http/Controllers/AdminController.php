@@ -57,11 +57,6 @@ class AdminController extends Controller
 
         return view('Admin.assignThana');
     }
-    public function showing_assign_thana()
-    {
-
-        return view('Admin.show-assign-thana');
-    }
 
     //start the area part
 
@@ -249,52 +244,69 @@ class AdminController extends Controller
         ->whereNotNull('district_lead')->get();
         return view('Admin.assignDistrictList', compact('assign_districts'));
     }
-    // public function assignDistrcitdestroy($id)
-    // {
-    //     try {
-            
-    //         DB::table('assign_district')->where('id', $id)->delete();
-    //         return redirect()->route('Admin.assignDistrictList')->with('success', 'Thana deleted successfully!');
-    //     } catch (\Exception $e) {
-    //         return redirect()->route('Admin.assignDistrictList')->with('error', $e->getMessage());
-    //     }
-    // }
+    public function assignDistrcitdestroy($id)
+    {
+        try {
+            DB::table('users')
+                ->where('id', $id)
+                ->update(['district_lead' => null]);
     
-    // public function updateAssignDistrict(Request $request, $id)
-    // {
-    //     if ($request->isMethod('POST')) { 
-    //         $request->validate([
-    //             'officer_name' => 'required|string|max:255',
-    //             'district' => 'required|string|max:255',  
-               
-    //         ]);
+            return redirect()->route('Admin.assignDistrictList')->with('success', 'District unassigned successfully!');
+        } catch (\Exception $e) {
+            return redirect()->route('Admin.assignDistrictList')->with('error', $e->getMessage());
+        }
+    }
+    public function updateAssignDistrict(Request $request, $id)
+    {
+        if ($request->isMethod('post')) {
+            $validatedData = $request->validate([
+                'name' => 'required|string|max:255',
+                'district_lead' => 'required|string|max:255',
+            ]);
     
-    //         $updated = DB::table('assign_district')
-    //                     ->where('id', $id)
-    //                     ->update([
-    //                         'officer_name' => $request->officer_name,
-    //                         'district' => $request->district,  
-    //                     ]);
+            $updated = DB::table('users')
+                ->where('id', $id)
+                ->update([
+                    'name' => $validatedData['name'],
+                    'district_lead' => $validatedData['district_lead'],
+                ]);
     
-    //         if ($updated) {
-    //             return redirect()->route('Admin.updateAssignDistrict', $id)
-    //                              ->with('success', 'Thana updated successfully');
-    //         } else {
-    //             return redirect()->route('Admin.updateAssignDistrict', $id)
-    //                              ->with('error', 'Thana update failed');
-    //         }
-    //     }
+            if ($updated) {
+                return redirect()->route('Admin.assignDistrictList')
+                                 ->with('success', 'District assignment updated successfully.');
+            } else {
+                return redirect()->route('Admin.assignDistrictList')
+                                 ->with('error', 'No changes made or update failed.');
+            }
+        }
     
-    //     $assign_district = DB::table('assign_district')->where('id', $id)->first();
+        $assign_district = DB::table('users')
+            ->select('id', 'name', 'district_lead')
+            ->where('id', $id)
+            ->first();
     
-    //     return view('Admin.updateAssignDistrict', compact('assign_district'));
-    // }
-   
+        $districts = [ // move to a constant or config if reused
+            'Dhaka', 'Gazipur', 'Munshiganj', 'Kishoreganj', 'Shariatpur', 'Gopalganj', 'Narayanganj', 'Manikganj',
+            'Faridpur', 'Norsingdi', 'Rajbari', 'Tangail', 'Madaripur', 'Mymensingh', 'Sherpur', 'Jamalpur',
+            'Netrokona', 'Chittagong', 'Cox\'s Bazar', 'Bandarban', 'Comilla', 'Brahmanbaria', 'Chandpur', 'Feni',
+            'Lakshmipur', 'Noakhali', 'Rangamati', 'Khagrachari', 'Khulna', 'Jessore', 'Satkhira', 'Kushtia',
+            'Chuadanga', 'Bagerhat', 'Jhenaidah', 'Magura', 'Meherpur', 'Narail', 'Rajshahi', 'Naogaon',
+            'Sirajganj', 'Joypurhat', 'Bogura', 'Chapainawabganj', 'Natore', 'Pabna', 'Nilphamari', 'Dinajpur',
+            'Panchagarh', 'Gaibandha', 'Kurigram', 'Lalmonirhat', 'Rangpur', 'Thakurgaon', 'Bhola', 'Barisal',
+            'Pirojpur', 'Barguna', 'Jhalokathi', 'Patuakhali', 'Moulvibazar', 'Sylhet', 'Habiganj', 'Sunamganj'
+        ];
+    
+        return view('Admin.updateAssignDistrict', compact('assign_district', 'districts'));
+    }
+    
+    
+    
     //assign thana 
 
-    public function assignThana()
+    public function assignThana ()
     {
         $officers = DB::table('users')
+            ->whereNull('district_lead')
             ->whereNull('thana_lead')
             ->where('role', 'officer')
             ->where('status', 1)
@@ -303,6 +315,70 @@ class AdminController extends Controller
 
         return view('Admin.assignThana', compact('officers','thana_list'));
     }
+
+    public function CreateAssignThana(Request $request)
+    {
+        $updated = DB::table('users')
+                        ->where('id', $request->officer_name)
+                        ->update([
+                            'thana_lead' => $request->thana_name,  
+                        ]);
+
+        if ($updated) {
+            return redirect()->back()->with('success', 'thana assigned successfully.');
+        } else {
+            return redirect()->back()->with('error', 'Failed to assign thana.');
+        }
+    }
+    public function showing_assign_thana()
+    {
+        $assign_thana = DB::table('users')->where('role','officer')
+        ->whereNotNull('thana_lead')->get();
+        return view('Admin.show-assign-thana', compact('assign_thana'));
+    }
+    
+    public function assignThanadestroy($id)
+    {
+        try {
+            DB::table('users')
+                ->where('id', $id)
+                ->update(['thana_lead' => null]);
+    
+            return redirect()->route('Admin.show-assign-thana')->with('success', 'thana unassigned successfully!');
+        } catch (\Exception $e) {
+            return redirect()->route('Admin.show-assign-thana')->with('error', $e->getMessage());
+        }
+    }
+
+    public function updateAssignThana(Request $request, $id)
+    {
+        if ($request->isMethod('post')) {
+            $validatedData = $request->validate([
+                'officer_name' => 'required|string|max:255',
+                'thana_name' => 'required|string|max:255',
+            ]);
+    
+            $updated = DB::table('users')
+                        ->where('id', $id)
+                        ->update([
+                            'name' => $validatedData['officer_name'],
+                            'thana_lead' => $validatedData['thana_name'],
+                        ]);
+    
+            if ($updated) {
+                return redirect()->route('Admin.show-assign-thana', $id)
+                                 ->with('success', 'Thana updated successfully.');
+            } else {
+                return redirect()->route('Admin.show-assign-thana', $id)
+                                 ->with('error', 'Update failed. No changes made.');
+            }
+        }
+    
+        $thana = DB::table('users')->where('id', $id)->first();
+        $thana_list = DB::table('thana')->get();
+        return view('Admin.updateAssignThana', compact('thana', 'thana_list'));
+    }
+    
 
 }
       

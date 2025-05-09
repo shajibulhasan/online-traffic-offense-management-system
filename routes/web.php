@@ -30,9 +30,12 @@ Route::get('/Admin/updateArea/{id}', [AdminController::class, 'UpdateArea'])->na
 Route::get('/Admin/assignDistrict', [AdminController::class, 'assignDistrict'])->name('Admin.assignDistrict');
 Route::get('/Admin/updateAssignDistrict/{id}', [AdminController::class, 'updateAssignDistrict'])->name('Admin.updateAssignDistrict');
 Route::get('/Admin/assignThana',[AdminController::class, 'assignThana'])->name('Admin.assignThana');
-
+// Show edit page
+Route::get('/Admin/updateAssignThana/{id}', [AdminController::class, 'updateAssignThana'])->name('Admin.updateAssignThana');
 
 //post route
+Route::post('/Admin/updateAssignThana/{id}', [AdminController::class, 'updateAssignThana'])->name('Admin.updateAssignThana');
+Route::post('/Admin/assignThana', [AdminController::class, 'CreateAssignThana'])->name('Admin.assignThana');
 Route::post('/Admin/assignDistrict', [AdminController::class, 'CreateAssign'])->name('Admin.assignDistrict');
 Route::post('/officers/{id}/approve', [AdminController::class, 'approveOfficer'])->name('officers.approve');
 Route::post('/Admin/updateAssignDistrict/{id}', [AdminController::class, 'updateAssignDistrict'])->name('Admin.updateAssignDistrict');
@@ -41,7 +44,8 @@ Route::post('/Admin/addArea', [AdminController::class, 'area'])->name('Admin.add
 Route::post('/Admin/addThana', [AdminController::class, 'Createthana'])->name('Admin.addThana');
 Route::delete('/thana/{id}', [AdminController::class, 'thanadestroy'])->name('Admin.thana.delete');
 Route::delete('/area/{id}', [AdminController::class, 'areadestroy'])->name('Admin.area.delete');
-Route::delete('/assignDistrcit/{id}', [AdminController::class, 'assignDistrcitdestroy'])->name('Admin.assignDistrict.delete');
+Route::delete('/assignDistrcit/{id}', [AdminController::class, 'assignDistrcitdestroy'])->name('Admin.assignThana.delete');
+Route::delete('/assignThana/{id}', [AdminController::class, 'assignThanadestroy'])->name('Admin.assignDistrict.delete');
 Route::post('/Admin/updateThana/{id}', [AdminController::class, 'updateThana'])->name('Admin.updateThana');
 Route::post('/Admin/updateArea/{id}', [AdminController::class, 'updateArea'])->name('Admin.updateArea');
 
