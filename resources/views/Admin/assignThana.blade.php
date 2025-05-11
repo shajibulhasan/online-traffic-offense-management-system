@@ -1,6 +1,10 @@
 @extends("layouts.app")
 @section("content")
-
+@if(session('success'))
+    <div class="alert alert-success">{{ session('success') }}</div>
+@elseif(session('error'))
+    <div class="alert alert-danger">{{ session('error') }}</div>
+@endif
 <div class="container-fluid">
     <div class="row justify-content-center allign-iteams-center" style="main-height: 50vh">
         <div class="col-md-6 col-12">
@@ -9,7 +13,7 @@
                 <h3><b>Assign Thana</b></h3>
                 </div>
                 <div class="card-body">
-                    <form action="{{Route('Admin.assignThana')}}">
+                    <form action="{{Route('Admin.assignThana')}}" method="POST">
                         @csrf
                         <div class="mb-4">
                             <label for=""><b>Officer Name:</b><span class="text-danger">*</span></label>
@@ -31,14 +35,14 @@
                             <div class="input-group">
                                 <span class="input-group-text bg-light"><i class="bi bi-house-door"></i>
                                 </span>
-                                <select name="thana-list" id="thana-list" class="form-select shadow-sm">
+                                <select name="thana_name" id="thana" class="form-select shadow-sm">
                                     <option value="">Selcet Thana List</option>
                                     @foreach($thana_list as $thana)
-                                    <option value="{{ $thana->id }}">{{ $thana->thana_name }}</option>
+                                    <option value="{{ $thana->thana_name }}">{{ $thana->thana_name }}</option>
                                     @endforeach
                                 </select>
                             </div>
-                            @error('thana-list')
+                            @error('thana')
                                 <div class="text-danger mt-2">{{ $message }}</div>
                             @enderror
                         </div>
