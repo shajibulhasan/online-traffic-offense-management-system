@@ -24,7 +24,7 @@
                             <label for="name" class="form-label"><b>Officer Name:</b> <span class="text-danger">*</span></label>
                             <div class="input-group">
                                 <span class="input-group-text"><i class="bi bi-person-fill"></i></span>
-                                <input type="text" class="form-control shadow-sm" id="name" name="name" value="{{ old('name', $assign_district->name) }}" required>
+                                <input type="text" class="form-control shadow-sm" id="name" name="name" value="{{ old('name', $assign_district->name) }}" required disabled>
                             </div>
                             @error('name')
                                 <div class="text-danger mt-2">{{ $message }}</div>

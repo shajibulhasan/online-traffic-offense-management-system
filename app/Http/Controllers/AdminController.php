@@ -21,10 +21,7 @@ class AdminController extends Controller
     {
         return view('Admin.areaList');
     }
-    public function assignOfficer()
-    {
-        return view('Admin.assignOfficer');
-    }
+
     public function assignOfficerList()
     {
         return view('Admin.assignOfficerList');
@@ -379,6 +376,46 @@ class AdminController extends Controller
         return view('Admin.updateAssignThana', compact('thana', 'thana_list'));
     }
     
+// asssign officer information  
+  
+    public function assignOfficer ()
+    {
+        $officers = DB::table('users')
+            ->whereNull('district_lead')
+            ->whereNull('thana_lead')
+            ->where('role', 'officer')
+            ->where('status', 1)
+            ->get();
+        $area_list= DB::table('area')->get();
 
+        return view('Admin.assignOfficer', compact('officers','area_list'));
+    }
+
+    public function createOfficer(Request $req)
+    {
+
+        $req->validate([
+            'officer_name' => 'required',
+            'area_name'=> 'required|max:225',
+        ],[
+            'officer_name.required' => 'officer name field is requerd',
+            'area_name.required' => 'area field is requerd',
+        ]);
+
+        $officer_create =DB::table('officer')->insert([
+
+            'officer_name' => $req->officer_name,
+            'area' => $req->area_name,
+        ]);
+
+        if($officer_create)
+        {
+            return redirect()->back()->with('success','officer added successfully');
+        }else{
+            return redirect()->back()->with('faild','Failed to add officer');
+        }
+    }
+
+    
 }
       
