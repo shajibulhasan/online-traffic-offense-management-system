@@ -10,6 +10,7 @@
         {{ session('error') }}
     </div>
 @endif
+<!--  -->
 <div class="container py-5">
     <div class="row justify-content-center">
         <div class="col-md-10 col-12">
@@ -29,9 +30,13 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @php 
+                                    $id = 1;
+                                @endphp
                                 @foreach($assign_districts as  $assign)
+                                
                                 <tr>
-                                    <td>{{ $assign->id }}</td>
+                                    <td>{{ $id++ }}</td>
                                     <td>{{ $assign->name }}</td>
                                     <td>{{ $assign->district_lead }}</td>
                                     <td><a href="{{ route('Admin.updateAssignDistrict', $assign->id) }}" class="btn btn-sm btn-primary">Edit</a>
