@@ -21,13 +21,12 @@
                             <label for="officer" class="form-label"><b>Officer Name:</b> <span class="text-danger">*</span></label>
                             <div class="input-group">
                                 <span class="input-group-text bg-light"><i class="bi bi-person-badge-fill"></i></span>
-                                <select id="officer" name="officer_name" class="form-select shadow-sm">
+                               <select id="officer" name="officer" class="form-select shadow-sm">
                                     <option value="">Select Officer</option>
                                     @foreach($officers as $officer)
-                                        <option value="{{ $officer->name }}">{{ $officer->name }}</option>
+                                        <option value="{{ $officer->id }}">{{ $officer->name }}</option>
                                     @endforeach
                                 </select>
-
                             </div>
                             @error('officer_name')
                                 <div class="text-danger mt-2">{{ $message }}</div>

@@ -36,7 +36,7 @@
                             <div class="mb-4">
                                 <label for="details_area" class="form-label"><b>Details Area:</b> <span class="text-danger">*</span></label>
                                 <div class="input-group">
-                                    <span class="input-group-text"><i class="bi bi-telephone-fill"></i></span>
+                                    <span class="input-group-text"><i class="bi bi-map"></i></span>
                                     <input type="text" class="form-control shadow-sm" id="details_area" name="details_area" value="{{ old('details_area', $area->details_area) }}">
                                 </div>
                                 @error('details_area')

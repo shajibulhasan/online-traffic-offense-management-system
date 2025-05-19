@@ -30,9 +30,9 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                {
-                                 $id = 1;
-                                }
+                                @php 
+                                    $id = 1;
+                                @endphp
                                 @foreach($officers as  $officer)
                                 <tr>
                                     <td>{{  $id++ }}</td>
