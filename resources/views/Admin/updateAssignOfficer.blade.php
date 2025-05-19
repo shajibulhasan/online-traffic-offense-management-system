@@ -32,7 +32,7 @@
                         <div class="mb-4">
                             <label for="area" class="form-label"><b>Area List:</b> <span class="text-danger">*</span></label>
                             <div class="input-group">
-                                <span class="input-group-text bg-light"><i class="bi bi-house-door-fill"></i></span>
+                                <span class="input-group-text bg-light"><i class="bi bi-list-task"></i></span>
                                 <select id="area" name="area_name" class="form-select shadow-sm" required>
                                     <option value="">Select area</option>
                                     @foreach($area_list as $area)
