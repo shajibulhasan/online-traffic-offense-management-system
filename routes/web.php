@@ -30,10 +30,14 @@ Route::get('/Admin/updateArea/{id}', [AdminController::class, 'UpdateArea'])->na
 Route::get('/Admin/assignDistrict', [AdminController::class, 'assignDistrict'])->name('Admin.assignDistrict');
 Route::get('/Admin/updateAssignDistrict/{id}', [AdminController::class, 'updateAssignDistrict'])->name('Admin.updateAssignDistrict');
 Route::get('/Admin/assignThana',[AdminController::class, 'assignThana'])->name('Admin.assignThana');
+Route::get('/Admin/assignOfficerList', [AdminController::class, 'areaOficerList'])->name('Admin.assignOfficerList');
+Route::get('/Admin/updateAssignOfficer', [AdminController::class, 'updateAssignOfficer'])->name('Admin.updateAssignOfficer');
 // Show edit page
 Route::get('/Admin/updateAssignThana/{id}', [AdminController::class, 'updateAssignThana'])->name('Admin.updateAssignThana');
-
+Route::get('/Admin/updateAssignOfficer/{id}', [AdminController::class, 'updateAssignOfficer'])->name('Admin.updateAssignOfficer');
 //post route
+Route::post('/Admin/updateAssignOfficer/{id}', [AdminController::class, 'updateAssignOfficer'])->name('Admin.updateAssignOfficer');
+Route::post('/Admin/assignOfficer', [AdminController::class, 'createAssignOfficer'])->name('Admin.assignOfficer');
 Route::post('/Admin/updateAssignThana/{id}', [AdminController::class, 'updateAssignThana'])->name('Admin.updateAssignThana');
 Route::post('/Admin/assignThana', [AdminController::class, 'CreateAssignThana'])->name('Admin.assignThana');
 Route::post('/Admin/assignDistrict', [AdminController::class, 'CreateAssign'])->name('Admin.assignDistrict');
@@ -44,9 +48,12 @@ Route::post('/Admin/addArea', [AdminController::class, 'area'])->name('Admin.add
 Route::post('/Admin/addThana', [AdminController::class, 'Createthana'])->name('Admin.addThana');
 Route::delete('/thana/{id}', [AdminController::class, 'thanadestroy'])->name('Admin.thana.delete');
 Route::delete('/area/{id}', [AdminController::class, 'areadestroy'])->name('Admin.area.delete');
-Route::delete('/assignDistrcit/{id}', [AdminController::class, 'assignDistrcitdestroy'])->name('Admin.assignThana.delete');
-Route::delete('/assignThana/{id}', [AdminController::class, 'assignThanadestroy'])->name('Admin.assignDistrict.delete');
+Route::delete('/assignOfficer/{id}', [AdminController::class, 'assignOfficerdestroy'])->name('Admin.assignOfficer.delete');
+Route::delete('/Admin/assignDistrict/{id}', [AdminController::class, 'assignDistrcitdestroy'])->name('Admin.assignDistrict.delete');
+Route::delete('/Admin/show-assign-thana/{id}', [AdminController::class, 'assignThanadestroy'])->name('Admin.show-assign-thana.delete');
 Route::post('/Admin/updateThana/{id}', [AdminController::class, 'updateThana'])->name('Admin.updateThana');
 Route::post('/Admin/updateArea/{id}', [AdminController::class, 'updateArea'])->name('Admin.updateArea');
 
 //End Admin controller
+
+//Officer controller 

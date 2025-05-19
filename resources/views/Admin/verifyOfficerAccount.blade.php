@@ -30,9 +30,12 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @php 
+                                    $id = 1;
+                                @endphp
                                 @foreach($officers as  $officer)
                                 <tr>
-                                    <td>{{  $officer->id }}</td>
+                                    <td>{{  $id++ }}</td>
                                     <td>{{  $officer->name }}</td>
                                     <td>{{  $officer->phone }}</td>
                                     <td>{{  $officer->email }}</td>

@@ -10,6 +10,7 @@
         {{ session('error') }}
     </div>
 @endif
+
 <div class="container py-5">
     <div class="row justify-content-center">
         <div class="col-md-10 col-12">
@@ -31,25 +32,52 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($thanas as  $thana)
+                                @php $id = 1; @endphp
+                                @foreach($thanas as $thana)
                                 <tr>
-                                    <td>{{ $thana->id }}</td>
+                                    <td>{{ $id++ }}</td>
                                     <td>{{ $thana->district_name }}</td>
                                     <td>{{ $thana->thana_name }}</td>
                                     <td>{{ $thana->contact }}</td>
                                     <td>{{ $thana->address }}</td>
-                                    <td><a href="{{ route('Admin.updateThana', $thana->id) }}" class="btn btn-sm btn-primary">Edit</a>
-                                    <form action="{{ route('Admin.thana.delete', $thana->id) }}" method="POST" class="d-inline">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?')">Delete</button>
-                                    </form>
-                                </td>
+                                    <td>
+                                        <!-- Edit Button -->
+                                        <a href="{{ route('Admin.updateThana', $thana->id) }}" class="btn btn-sm btn-primary">Edit</a>
+
+                                        <!-- Delete Button (Triggers Modal) -->
+                                        <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal{{ $thana->id }}">
+                                            Delete
+                                        </button>
+
+                                        <!-- Delete Confirmation Modal -->
+                                        <div class="modal fade" id="deleteModal{{ $thana->id }}" tabindex="-1" aria-labelledby="deleteModalLabel{{ $thana->id }}" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered">
+                                                <div class="modal-content border-0 rounded-3 shadow">
+                                                    <div class="modal-header bg-danger text-white">
+                                                        <h5 class="modal-title" id="deleteModalLabel{{ $thana->id }}">Confirm Delete</h5>
+                                                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        Are you sure you want to delete <strong>{{ $thana->thana_name }}</strong>?
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                                        <form action="{{ route('Admin.thana.delete', $thana->id) }}" method="POST" class="d-inline">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit" class="btn btn-danger">Yes, Delete</button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                       
+                                    </td>
                                 </tr>
                                 @endforeach
                             </tbody>
                         </table>
-                    </div> <!-- table-responsive -->
+                    </div> 
                 </div>
             </div>
         </div>
