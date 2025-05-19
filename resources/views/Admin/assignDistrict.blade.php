@@ -20,7 +20,7 @@
                         <div class="mb-4">
                             <label for="officer" class="form-label"><b>Officer Name:</b> <span class="text-danger">*</span></label>
                             <div class="input-group">
-                                <span class="input-group-text bg-light"><i class="bi bi-house-door-fill"></i></span>
+                                <span class="input-group-text bg-light"><i class="bi bi-person-badge"></i></span>
                                 <select id="officer" name="officer_name" class="form-select shadow-sm">
                                     <option value="">Select Officer</option>
                                     @foreach($officers as $officer)
