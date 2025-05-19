@@ -65,14 +65,9 @@ class AdminController extends Controller
     {
         $request->validate(
             [
-                'area_name' => 'required',
-                'details_area' => 'required',
-            ],
-            [
-                'area_name.required' => 'are field is required',
-                'details_area.required' => 'details field is required'
-            ]
-        );
+                'area_name' => ['required', 'string', 'max:100'],
+                'details_area' =>[ 'required','string', 'max:500']
+            ]);
     
         $area_create = DB::table('area')->insert([
             'area_name' => $request->area_name,
@@ -80,9 +75,9 @@ class AdminController extends Controller
         ]);
     
         if ($area_create) {
-            return redirect()->back()->with('success', 'Area added successfully');
+            return redirect()->route('Admin.areaList')->with('success', 'Area added successfully');
         } else {
-            return redirect()->back()->with('error', 'Failed to add area');
+            return redirect()->route('Admin.area')->with('error', 'Failed to add area');
         }
     }
         
@@ -139,15 +134,10 @@ class AdminController extends Controller
     {
         $req->validate(
         [
-            'district_name' => 'required',
-            'thana_name' => 'required|string|max:255',
-            'contact' => 'required|numeric',
-            'address' => 'required|string|max:500',
-        ], [
-            'district_name.required' => 'District field is required',
-            'thana_name.required' => 'Thana name field is required',
-            'contact.required' => 'Number field is required',
-            'address.required' => 'Address field is required',
+            'district_name' => ['required','string', 'max:100'],
+            'thana_name' => ['required','string', 'max:255'],
+            'contact' => ['required','unique:thana'],
+            'address' => ['required', 'string', 'max:500'],
         ]);
         
         $thana_create = DB::table('thana')->insert([
@@ -200,7 +190,7 @@ class AdminController extends Controller
                         ]);
     
             if ($updated) {
-                return redirect()->route('Admin.updateThana', $id)
+                return redirect()->route('Admin.thanaList', $id)
                                  ->with('success', 'Thana updated successfully');
             } else {
                 return redirect()->route('Admin.updateThana', $id)
@@ -238,9 +228,9 @@ class AdminController extends Controller
                         ]);
 
         if ($create) {
-            return redirect()->back()->with('success', 'District Lead assigned successfully.');
+            return redirect()->route('Admin.assignDistrictList')->with('success', 'District Lead assigned successfully.');
         } else {
-            return redirect()->back()->with('error', 'Failed to assign district Lead.');
+            return redirect()->route('Admin.assignDistrict')->with('error', 'Failed to assign district Lead.');
         }
     }
     
@@ -332,9 +322,9 @@ class AdminController extends Controller
                         ]);
 
         if ($create) {
-            return redirect()->back()->with('success', 'Assign thana lead successfully.');
+            return redirect()->route('Admin.show-assign-thana')->with('success', 'Assign thana lead successfully.');
         } else {
-            return redirect()->back()->with('error', 'Failed to assign thana lead.');
+            return redirect()->route('Admin.assignThana')->with('error', 'Failed to assign thana lead.');
         }
     }
 
@@ -412,9 +402,9 @@ class AdminController extends Controller
                 ]);
 
         if ($create) {
-            return redirect()->back()->with('success', 'Assign area lead successfully.');
+            return redirect()->route('Admin.assignOfficerList')->with('success', 'Assign area lead successfully.');
         } else {
-            return redirect()->back()->with('error', 'Failed to assign area lead.');
+            return redirect()->rote('Admin.assignOfficer')->with('error', 'Failed to assign area lead.');
         }
     }
     

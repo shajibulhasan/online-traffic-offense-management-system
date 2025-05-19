@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('district_name');
             $table->string('thana_name');
-            $table->integer('contact')->unique();
+            $table->string('contact')->unique();
             $table->string('address');
             $table->timestamps();
         });
