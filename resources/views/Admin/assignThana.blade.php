@@ -42,7 +42,7 @@
                                     @endforeach
                                 </select>
                             </div>
-                            @error('thana')
+                            @error('thana_name')
                                 <div class="text-danger mt-2">{{ $message }}</div>
                             @enderror
                         </div>

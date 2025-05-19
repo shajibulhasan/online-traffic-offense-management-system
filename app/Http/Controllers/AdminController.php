@@ -221,6 +221,13 @@ class AdminController extends Controller
 
     public function CreateAssign(Request $request)
     {
+        $request->validate([
+              
+                'officer_name' => ['required', 'string', 'max:255'],
+                 'district' => ['required', 'string', 'max:255'],
+
+            ]);
+    
        $create = DB::table('users')
                         ->where('id', $request->officer_name)
                         ->update([
@@ -236,6 +243,7 @@ class AdminController extends Controller
     
     public function assignDistrictList()
     {
+
         $assign_districts = DB::table('users')->where('role','officer')
         ->whereNotNull('district_lead')->get();
         return view('Admin.assignDistrictList', compact('assign_districts'));
@@ -315,6 +323,12 @@ class AdminController extends Controller
 
     public function CreateAssignThana(Request $request)
     {
+        $request->validate([
+                          'officer_name' => ['required', 'string', 'max:255'],
+                           'thana_name' => ['required', 'string', 'max:255'],
+
+            ]);
+
         $create = DB::table('users')
                         ->where('id', $request->officer_name)
                         ->update([
@@ -395,6 +409,12 @@ class AdminController extends Controller
 
     public function createAssignOfficer(Request $request)
     {
+         $request->validate([
+                          'officer' => ['required', 'string', 'max:255'],
+                           'area_name' => ['required', 'string', 'max:255'],
+
+            ]);
+
         $create = DB::table('users')
                 ->where('id', $request->officer)
                 ->update([
@@ -404,7 +424,7 @@ class AdminController extends Controller
         if ($create) {
             return redirect()->route('Admin.assignOfficerList')->with('success', 'Assign area lead successfully.');
         } else {
-            return redirect()->rote('Admin.assignOfficer')->with('error', 'Failed to assign area lead.');
+            return redirect()->route('Admin.assignOfficer')->with('error', 'Failed to assign area lead.');
         }
     }
     
