@@ -33,7 +33,7 @@
                         <div class="mb-4">
                             <label for="thana-list"><b>Thana List:</b><span class="text-danger">*</span></label>
                             <div class="input-group">
-                                <span class="input-group-text bg-light"><i class="bi bi-house-door"></i>
+                                <span class="input-group-text bg-light"><i class="bi bi-list-task"></i>
                                 </span>
                                 <select name="thana_name" id="thana" class="form-select shadow-sm">
                                     <option value="">Selcet Thana List</option>
@@ -42,7 +42,7 @@
                                     @endforeach
                                 </select>
                             </div>
-                            @error('thana')
+                            @error('thana_name')
                                 <div class="text-danger mt-2">{{ $message }}</div>
                             @enderror
                         </div>

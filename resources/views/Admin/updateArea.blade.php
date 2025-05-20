@@ -45,7 +45,7 @@
                             </div>
 
                             <div class="d-grid mt-4">
-                                <button type="submit" class="btn btn-warning d-flex justify-content-center align-items-center">
+                                <button type="submit" class="btn  btn-dark d-flex justify-content-center align-items-center">
                                     <i class="bi bi-pencil-square me-2"></i><b>Update Area</b>
                                 </button>
                             </div>

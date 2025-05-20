@@ -35,7 +35,7 @@
                         <div class="mb-4">
                             <label for="thana_name" class="form-label"><b>Thana List:</b> <span class="text-danger">*</span></label>
                             <div class="input-group">
-                                <span class="input-group-text bg-light"><i class="bi bi-house-door"></i></span>
+                                <span class="input-group-text bg-light"><i class="bi bi-list-task"></i></span>
                                 <select name="thana_name" id="thana_name" class="form-select shadow-sm" required>
                                     <option value="">Select Thana</option>
                                     @foreach($thana_list as $item)

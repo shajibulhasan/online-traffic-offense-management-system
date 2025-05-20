@@ -41,7 +41,7 @@
                         <div class="mb-4">
                             <label for="thana" class="form-label"><b>Thana Name:</b> <span class="text-danger">*</span></label>
                             <div class="input-group">
-                                <span class="input-group-text"><i class="bi bi-house-door"></i></span>
+                                <span class="input-group-text"><i class="bi bi-buildings"></i></span>
                                 <input type="text" class="form-control shadow-sm" id="thana" name="thana_name" value="{{ $thana->thana_name }}">
                             </div>
                             @error('thana_name')
@@ -73,7 +73,7 @@
                             @enderror
                         </div>
                         <div class="d-grid mt-4">
-                            <button type="submit" class="btn btn-warning d-flex justify-content-center align-items-center">
+                            <button type="submit" class="btn  btn-dark d-flex justify-content-center align-items-center">
                                 <i class="bi bi-pencil-square me-2"></i><b>Update Thana</b>
                             </button>
                         </div>

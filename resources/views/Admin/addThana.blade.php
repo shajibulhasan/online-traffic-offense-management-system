@@ -102,7 +102,7 @@
                         <div class="mb-4">
                             <label for="thana" class="form-label"><b>Thana Name:</b> <span class="text-danger">*</span></label>
                             <div class="input-group">
-                                <span class="input-group-text"><i class="bi bi-house-door"></i></span>
+                                <span class="input-group-text"><i class="bi bi-buildings"></i></span>
                                 <input type="text" class="form-control shadow-sm" id="thana" name="thana_name" placeholder="Enter Thana Name" value="{{ old('thana_name') }}">
                             </div>
                             @error('thana_name')
