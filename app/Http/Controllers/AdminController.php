@@ -235,7 +235,7 @@ class AdminController extends Controller
                         ]);
 
         if ($create) {
-            return redirect()->route('Admin.assignDistrictList')->with('success', 'District Lead assigned successfully.');
+            return redirect()->route('Admin.assignDistrictList')->with('success', 'District Lead officer assigned successfully.');
         } else {
             return redirect()->route('Admin.assignDistrict')->with('error', 'Failed to assign district Lead.');
         }
@@ -255,7 +255,7 @@ class AdminController extends Controller
                 ->where('id', $id)
                 ->update(['district_lead' => null]);
     
-            return redirect()->route('Admin.assignDistrictList')->with('success', 'District lead unassigned successfully!');
+            return redirect()->route('Admin.assignDistrictList')->with('success', 'District lead officer unassigned successfully!');
         } catch (\Exception $e) {
             return redirect()->route('Admin.assignDistrictList')->with('error', $e->getMessage());
         }
@@ -277,7 +277,7 @@ class AdminController extends Controller
     
             if ($updated) {
                 return redirect()->route('Admin.assignDistrictList')
-                                 ->with('success', 'District lead assigned updated successfully.');
+                                 ->with('success', 'District lead assigned officer updated successfully.');
             } else {
                 return redirect()->route('Admin.assignDistrictList')
                                  ->with('error', 'No changes made or update failed.');
@@ -336,9 +336,9 @@ class AdminController extends Controller
                         ]);
 
         if ($create) {
-            return redirect()->route('Admin.show-assign-thana')->with('success', 'Assign thana lead successfully.');
+            return redirect()->route('Admin.show-assign-thana')->with('success', 'Assign thana lead officer successfully.');
         } else {
-            return redirect()->route('Admin.assignThana')->with('error', 'Failed to assign thana lead.');
+            return redirect()->route('Admin.assignThana')->with('error', 'Failed to assign thana lead officer.');
         }
     }
 
@@ -356,7 +356,7 @@ class AdminController extends Controller
                 ->where('id', $id)
                 ->update(['thana_lead' => null]);
     
-            return redirect()->route('Admin.show-assign-thana')->with('success', 'Assign thana unassigned successfully!');
+            return redirect()->route('Admin.show-assign-thana')->with('success', 'Assign thana officer unassigned successfully!');
         } catch (\Exception $e) {
             return redirect()->route('Admin.show-assign-thana')->with('error', $e->getMessage());
         }
@@ -378,7 +378,7 @@ class AdminController extends Controller
     
             if ($updated) {
                 return redirect()->route('Admin.show-assign-thana', $id)
-                                 ->with('success', 'Assign Thana lead updated successfully.');
+                                 ->with('success', 'Assign Thana lead officer updated successfully.');
             } else {
                 return redirect()->route('Admin.show-assign-thana', $id)
                                  ->with('error', 'Update failed. No changes made.');
@@ -410,21 +410,21 @@ class AdminController extends Controller
     public function createAssignOfficer(Request $request)
     {
          $request->validate([
-                          'officer' => ['required', 'string', 'max:255'],
+                          'officer_name' => ['required', 'string', 'max:255'],
                            'area_name' => ['required', 'string', 'max:255'],
 
             ]);
 
         $create = DB::table('users')
-                ->where('id', $request->officer)
+                ->where('id', $request->officer_name)
                 ->update([
                     'area_lead'=>$request->area_name,
                 ]);
 
         if ($create) {
-            return redirect()->route('Admin.assignOfficerList')->with('success', 'Assign area lead successfully.');
+            return redirect()->route('Admin.assignOfficerList')->with('success', 'Assign area lead officer successfully.');
         } else {
-            return redirect()->route('Admin.assignOfficer')->with('error', 'Failed to assign area lead.');
+            return redirect()->route('Admin.assignOfficer')->with('error', 'Failed to assign area lead officer.');
         }
     }
     

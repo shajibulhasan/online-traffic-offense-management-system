@@ -21,7 +21,7 @@
                             <label for="officer" class="form-label"><b>Officer Name:</b> <span class="text-danger">*</span></label>
                             <div class="input-group">
                                 <span class="input-group-text bg-light"><i class="bi bi-person-badge-fill"></i></span>
-                               <select id="officer" name="officer" class="form-select shadow-sm">
+                               <select id="officer" name="officer_name" class="form-select shadow-sm">
                                     <option value="">Select Officer</option>
                                     @foreach($officers as $officer)
                                         <option value="{{ $officer->id }}">{{ $officer->name }}</option>
@@ -48,7 +48,7 @@
                         @enderror
                        
                         <div class="d-grid mt-4">
-                            <button type="submit" class="btn btn-custom">
+                            <button type="submit" class="btn btn-custom d-flex justify-content-center align-items-center">
                                 <i class="bi bi-plus-circle-fill me-2"></i> <b>Assign Officer</b>
                             </button>
                         </div>
@@ -61,30 +61,3 @@
 
 @endsection
 
-@push('styles')
-<style>
-    .btn-custom {
-        background-color: #4CAF50;
-        color: white;
-        font-size: 16px;
-        font-weight: bold;
-        padding: 12px 25px;
-        border: none;
-        border-radius: 5px;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-        box-shadow: 0 3px 5px rgba(0, 0, 0, 0.15);
-        transition: all 0.3s ease-in-out;
-    }
-    .btn-custom:hover {
-        background-color: #45a049;
-        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-        transform: translateY(-2px);
-    }
-    .btn-custom:active {
-        background-color: #3e8e41;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        transform: translateY(2px);
-    }
-</style>
-@endpush
