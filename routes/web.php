@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\OfficerController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -56,4 +57,15 @@ Route::post('/Admin/updateArea/{id}', [AdminController::class, 'updateArea'])->n
 
 //End Admin controller
 
-//Officer controller 
+//start Officer controller 
+Route::get('/Officer/addOffense', [OfficerController::class, 'addOffense'])->name('Officer.addOffense');
+Route::get('/Officer/offenseList', [OfficerController::class, 'offenseList'])->name('Officer.offenseList');
+Route::get('/Officer/updateOffense', [OfficerController::class, 'updateOffense'])->name('Officer.updateOffense');
+Route::get('/officer/search-driver', [OfficerController::class, 'searchDriver'])->name('officer.searchDriver');
+// post method
+Route::post('/Officer/addOffense', [OfficerController::class, 'createAddOffense'])->name('Officer.addOffense');
+Route::delete('/offense/{id}', [OfficerController::class, 'offensedestroy'])->name('Officer.offense.delete');
+Route::get('/officer/driver', [OfficerController::class, 'Driver'])->name('officer.Driver');
+//End officer controller
+
+//strat Driver controller

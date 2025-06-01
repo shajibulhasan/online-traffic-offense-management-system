@@ -60,7 +60,15 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('Admin.verifyOfficerAccount') }}">VerifyOfficerAccount</a>
                         </li>
+                         <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">TrafficOfficer</a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="{{ route('Officer.addOffense') }}">AddOffense</a></li>
+                                <li><a class="dropdown-item" href="{{ route('Officer.offenseList') }}">OffenseList</a></li>
+                            </ul>
+                        </li>
                     </ul>
+                        
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ms-auto">
