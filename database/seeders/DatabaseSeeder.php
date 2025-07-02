@@ -20,15 +20,15 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
-        DB::table('division')->insert([
-            ['id' => 1, 'email' => 'admin.chittagong@gmail.com', 'password' => Hash::make('12345678')],
-            ['id' => 2, 'email' => 'admin.dhaka@gmail.com', 'password' => Hash::make('12345678')],
-            ['id' => 3, 'email' => 'admin.comilla@gmail.com', 'password' => Hash::make('12345678')],
-            ['id' => 4, 'email' => 'admin.barishal@gmail.com', 'password' => Hash::make('12345678')],
-            ['id' => 5, 'email' => 'admin.khulna@gmail.com', 'password' => Hash::make('12345678')],
-            ['id' => 6, 'email' => 'admin.mymensingh@gmail.com', 'password' => Hash::make('12345678')],
-            ['id' => 7, 'email' => 'admin.rajshahi@gmail.com', 'password' => Hash::make('12345678')],
-            ['id' => 8, 'email' => 'admin.rangpur@gmail.com', 'password' => Hash::make('12345678')],
+        DB::table('users')->insert([
+            ['name' => 'Chattogram Leader',  'division_lead' => 'chattogram', 'email' => 'admin.chattogram@gmail.com', 'password' => Hash::make('12345678')],
+            ['name' => 'Dhaka Leader', 'division_lead' => 'dhaka', 'email' => 'admin.dhaka@gmail.com', 'password' => Hash::make('12345678')],
+            ['name' => 'Sylhet', 'division_lead' => 'sylhet', 'email' => 'admin.Sylhet@gmail.com', 'password' => Hash::make('12345678')],
+            ['name' => 'Barishal Leader', 'division_lead' => 'barishal', 'email' => 'admin.barishal@gmail.com', 'password' => Hash::make('12345678')],
+            ['name' => 'Khulna Leader', 'division_lead' => 'khulna', 'email' => 'admin.khulna@gmail.com', 'password' => Hash::make('12345678')],
+            ['name' => 'Mymensingh Leader', 'division_lead' => 'mymensingh', 'email' => 'admin.mymensingh@gmail.com', 'password' => Hash::make('12345678')],
+            ['name' => 'Rajshahi Leader', 'division_lead' => 'rajshahi', 'email' => 'admin.rajshahi@gmail.com', 'password' => Hash::make('12345678')],
+            ['name' => 'Rangpur Leader', 'division_lead' => 'rangpur', 'email' => 'admin.rangpur@gmail.com', 'password' => Hash::make('12345678')],
         ]);
     }
 }
