@@ -17,7 +17,7 @@ class ValidateOfficer
     public function handle(Request $request, Closure $next): Response
     {
         if (Auth::check()) {
-            if (Auth::user()->role == 'officer') {
+            if (Auth::user()->role == 'officer' || Auth::user()->division_lead != null) {
                 return $next($request);
             } else {
                 return redirect('/');

@@ -17,7 +17,7 @@ class ValidateUser
     public function handle(Request $request, Closure $next): Response
     {
        if(Auth::check()){
-            if(Auth::user()->role == 'user'){
+            if(Auth::user()->role == 'user' || Auth::user()->division_lead != null){
                 return $next($request);
             }
             else{

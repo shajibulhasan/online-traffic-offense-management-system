@@ -23,7 +23,21 @@
         <nav class="navbar navbar-expand-md navbar-light bg-light shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
+                    @guest
+                        <span>Laravel</span>
+                    @elseif(Auth::check() && Auth::user()->division_lead != null)
+                        <span>Division Leader</span>
+                    @elseif(Auth::check() && Auth::user()->district_lead != null)
+                        <span>District Leader</span>
+                    @elseif(Auth::check() && Auth::user()->thana_lead != null)
+                        <span>Thana Leader</span>
+                    @elseif(Auth::check() && Auth::user()->area_lead != null)
+                        <span>Traffic Officer</span>
+                    @elseif(Auth::check() && Auth::user()->role == 'officer')
+                        <span>Officer</span>
+                    @else
+                        <span>User</span>
+                    @endguest
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent">
                     <span class="navbar-toggler-icon"></span>
@@ -32,41 +46,51 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav me-auto">
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">DivisionLead</a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="{{ route('Admin.assignDistrict') }}">AssignDistrict</a></li>
-                                <li><a class="dropdown-item" href="{{ route('Admin.assignDistrictList') }}">AssignDistrictList</a></li>
-                            </ul>
+                        @guest
+                        @elseif(Auth::check() && Auth::user()->division_lead != null)
+                         <li class="nav-item">
+                            <a class="nav-link" href="{{ route('Admin.assignDistrict') }}">AssignDistrict</a>
                         </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">DistrictLead</a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="{{ route('Admin.assignThana') }}">AssignThana</a></li>
-                                <li><a class="dropdown-item" href="{{ route('Admin.show-assign-thana') }}">AssignThanaList</a></li>
-                                <li><a class="dropdown-item" href="{{ route('Admin.addThana') }}">AddThana</a></li>
-                                <li><a class="dropdown-item" href="{{ route('Admin.thanaList') }}">ThanaList</a></li>
-                            </ul>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">ThanaLead</a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="{{ route('Admin.assignOfficer') }}">AssignOfficer</a></li>
-                                <li><a class="dropdown-item" href="{{ route('Admin.assignOfficerList') }}">AssignOfficerList</a></li>
-                                <li><a class="dropdown-item" href="{{ route('Admin.addArea') }}">AddArea</a></li>
-                                <li><a class="dropdown-item" href="{{ route('Admin.areaList') }}">AreaList</a></li>
-                            </ul>
+                         <li class="nav-item">
+                            <a class="nav-link" href="{{ route('Admin.assignDistrictList') }}">AssignDistrictList</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('Admin.verifyOfficerAccount') }}">VerifyOfficerAccount</a>
                         </li>
-                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">TrafficOfficer</a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="{{ route('Officer.addOffense') }}">AddOffense</a></li>
-                                <li><a class="dropdown-item" href="{{ route('Officer.offenseList') }}">OffenseList</a></li>
-                            </ul>
+                        @elseif(Auth::check() && Auth::user()->district_lead != null)
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('Admin.assignThana') }}">AssignThana</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('Admin.show-assign-thana') }}">AssignThanaList</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('Admin.addThana') }}">AddThana</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('Admin.thanaList') }}">ThanaList</a>
+                        </li>                        
+                        @elseif(Auth::check() && Auth::user()->thana_lead != null)
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('Admin.assignOfficer') }}">AssignOfficer</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('Admin.assignOfficerList') }}">AssignOfficerList</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('Admin.addArea') }}">AddArea</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('Admin.areaList') }}">AreaList</a>
+                        </li>                    
+                        @elseif(Auth::check() && Auth::user()->area_lead != null)
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('Officer.addOffense') }}">AddOffense</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('Officer.offenseList') }}">OffenseList</a>
+                        </li>
+                        @endguest
                     </ul>
                         
 
