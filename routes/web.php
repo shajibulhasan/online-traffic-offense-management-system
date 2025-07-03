@@ -8,6 +8,7 @@ use App\Http\Middleware\ValidateOfficer;
 use App\Http\Middleware\DivisionLead;
 use App\Http\Middleware\DistrictLead;
 use App\Http\Middleware\ThanaLead;
+use App\Http\Middleware\AreaLead;
 
 Route::get('/', function () {
     return view('welcome');
@@ -66,10 +67,10 @@ Route::post('/Admin/updateArea/{id}', [AdminController::class, 'updateArea'])->n
 //End Admin controller
 
 //start Officer controller 
-Route::get('/Officer/addOffense', [OfficerController::class, 'addOffense'])->name('Officer.addOffense')->middleware(ValidateOfficer::class);
-Route::get('/Officer/offenseList', [OfficerController::class, 'offenseList'])->name('Officer.offenseList')->middleware(ValidateOfficer::class);
-Route::get('/Officer/updateOffense', [OfficerController::class, 'updateOffense'])->name('Officer.updateOffense')->middleware(ValidateOfficer::class);
-Route::get('/officer/search-driver', [OfficerController::class, 'searchDriver'])->name('officer.searchDriver')->middleware(ValidateOfficer::class);
+Route::get('/Officer/addOffense', [OfficerController::class, 'addOffense'])->name('Officer.addOffense')->middleware(AreaLead::class);
+Route::get('/Officer/offenseList', [OfficerController::class, 'offenseList'])->name('Officer.offenseList')->middleware(AreaLead::class);
+Route::get('/Officer/updateOffense', [OfficerController::class, 'updateOffense'])->name('Officer.updateOffense')->middleware(AreaLead::class);
+Route::get('/officer/search-driver', [OfficerController::class, 'searchDriver'])->name('officer.searchDriver')->middleware(AreaLead::class);
 // post method
 Route::post('/Officer/addOffense', [OfficerController::class, 'createAddOffense'])->name('Officer.addOffense')->middleware(ValidateOfficer::class);
 Route::delete('/offense/{id}', [OfficerController::class, 'offensedestroy'])->name('Officer.offense.delete')->middleware(ValidateOfficer::class);
