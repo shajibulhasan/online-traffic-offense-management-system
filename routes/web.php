@@ -7,6 +7,7 @@ use App\Http\Middleware\ValidateUser;
 use App\Http\Middleware\ValidateOfficer;
 use App\Http\Middleware\DivisionLead;
 use App\Http\Middleware\DistrictLead;
+use App\Http\Middleware\ThanaLead;
 
 Route::get('/', function () {
     return view('welcome');
@@ -26,18 +27,19 @@ Route::get('/Admin/show-assign-thana', [AdminController::class, 'showing_assign_
 Route::get('/Admin/addThana', [AdminController::class, 'addThana'])->name('Admin.addThana')->middleware(DistrictLead::class);
 Route::get('/Admin/thanaList', [AdminController::class, 'thanaList'])->name('Admin.thanaList')->middleware(DistrictLead::class);
 
+Route::get('/Admin/assignOfficer', [AdminController::class, 'assignOfficer'])->name('Admin.assignOfficer')->middleware(ThanaLead::class);
+Route::get('/Admin/assignOfficerList', [AdminController::class, 'areaOficerList'])->name('Admin.assignOfficerList')->middleware(ThanaLead::class);
+Route::get('/Admin/addArea', [AdminController::class, 'addArea'])->name('Admin.addArea')->middleware(ThanaLead::class);
+Route::get('/Admin/areaList', [AdminController::class, 'areaList'])->name('Admin.areaList')->middleware(ThanaLead::class);
+
 Route::get('/Admin/index', [AdminController::class, 'index'])->name('Admin.index')->middleware(ValidateOfficer::class);
 Route::get('/Admin/divission', [AdminController::class, 'divission'])->name('Admin.divission')->middleware(ValidateOfficer::class);
-Route::get('/Admin/addArea', [AdminController::class, 'addArea'])->name('Admin.addArea')->middleware(ValidateOfficer::class);
-Route::get('/Admin/areaList', [AdminController::class, 'areaList'])->name('Admin.areaList')->middleware(ValidateOfficer::class);
-Route::get('/Admin/assignOfficer', [AdminController::class, 'assignOfficer'])->name('Admin.assignOfficer')->middleware(ValidateOfficer::class);
-Route::get('/Admin/assignOfficerList', [AdminController::class, 'assignOfficerList'])->name('Admin.assignOfficerList')->middleware(ValidateOfficer::class);
-Route::get('/Admin/areaList', [AdminController::class, 'areaList'])->name('Admin.areaList')->middleware(ValidateOfficer::class);
+// Route::get('/Admin/assignOfficerList', [AdminController::class, 'assignOfficerList'])->name('Admin.assignOfficerList')->middleware(ValidateOfficer::class);
+// Route::get('/Admin/areaList', [AdminController::class, 'areaList'])->name('Admin.areaList')->middleware(ValidateOfficer::class);
 Route::get('/Admin/updateThana/{id}', [AdminController::class, 'UpdateThana'])->name('Admin.updateThana')->middleware(ValidateOfficer::class);
 Route::get('/Admin/updateArea/{id}', [AdminController::class, 'UpdateArea'])->name('Admin.updateArea')->middleware(ValidateOfficer::class);
 Route::get('/Admin/updateAssignDistrict/{id}', [AdminController::class, 'updateAssignDistrict'])->name('Admin.updateAssignDistrict')->middleware(ValidateOfficer::class);
 // Route::get('/Admin/assignThana',[AdminController::class, 'assignThana'])->name('Admin.assignThana')->middleware(ValidateOfficer::class);
-Route::get('/Admin/assignOfficerList', [AdminController::class, 'areaOficerList'])->name('Admin.assignOfficerList')->middleware(ValidateOfficer::class);
 Route::get('/Admin/updateAssignOfficer', [AdminController::class, 'updateAssignOfficer'])->name('Admin.updateAssignOfficer')->middleware(ValidateOfficer::class);
 // Show edit page
 Route::get('/Admin/updateAssignThana/{id}', [AdminController::class, 'updateAssignThana'])->name('Admin.updateAssignThana')->middleware(ValidateOfficer::class);
