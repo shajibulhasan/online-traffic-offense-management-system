@@ -300,7 +300,7 @@ class AdminController extends Controller
             'Pirojpur', 'Barguna', 'Jhalokathi', 'Patuakhali', 'Moulvibazar', 'Sylhet', 'Habiganj', 'Sunamganj'
         ];
     
-        return view('Admin.updateAssignDistrict', compact('assign_district', 'districts'));
+        return view('Admin.updateAssignDistrict', compact('assign_district'));
     }
     
     

@@ -49,46 +49,46 @@
                         @guest
                         @elseif(Auth::check() && Auth::user()->division_lead != null)
                          <li class="nav-item">
-                            <a class="nav-link" href="{{ route('Admin.assignDistrict') }}">AssignDistrict</a>
+                            <a class="nav-link" href="{{ route('Admin.assignDistrict') }}">Assign District</a>
                         </li>
                          <li class="nav-item">
-                            <a class="nav-link" href="{{ route('Admin.assignDistrictList') }}">AssignDistrictList</a>
+                            <a class="nav-link" href="{{ route('Admin.assignDistrictList') }}">Assign District List</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('Admin.verifyOfficerAccount') }}">VerifyOfficerAccount</a>
+                            <a class="nav-link" href="{{ route('Admin.verifyOfficerAccount') }}">Verify Officer Account</a>
                         </li>
                         @elseif(Auth::check() && Auth::user()->district_lead != null)
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('Admin.assignThana') }}">AssignThana</a>
+                            <a class="nav-link" href="{{ route('Admin.assignThana') }}">Assign Thana</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('Admin.show-assign-thana') }}">AssignThanaList</a>
+                            <a class="nav-link" href="{{ route('Admin.show-assign-thana') }}">Assign Thana List</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('Admin.addThana') }}">AddThana</a>
+                            <a class="nav-link" href="{{ route('Admin.addThana') }}">Add Thana</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('Admin.thanaList') }}">ThanaList</a>
+                            <a class="nav-link" href="{{ route('Admin.thanaList') }}">Thana List</a>
                         </li>                        
                         @elseif(Auth::check() && Auth::user()->thana_lead != null)
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('Admin.assignOfficer') }}">AssignOfficer</a>
+                            <a class="nav-link" href="{{ route('Admin.assignOfficer') }}">Assign Officer</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('Admin.assignOfficerList') }}">AssignOfficerList</a>
+                            <a class="nav-link" href="{{ route('Admin.assignOfficerList') }}">Assign Officer List</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('Admin.addArea') }}">AddArea</a>
+                            <a class="nav-link" href="{{ route('Admin.addArea') }}">Add Area</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('Admin.areaList') }}">AreaList</a>
+                            <a class="nav-link" href="{{ route('Admin.areaList') }}">Area List</a>
                         </li>                    
                         @elseif(Auth::check() && Auth::user()->area_lead != null)
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('Officer.addOffense') }}">AddOffense</a>
+                            <a class="nav-link" href="{{ route('Officer.addOffense') }}">Add Offense</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('Officer.offenseList') }}">OffenseList</a>
+                            <a class="nav-link" href="{{ route('Officer.offenseList') }}">Offense List</a>
                         </li>
                         @endguest
                     </ul>

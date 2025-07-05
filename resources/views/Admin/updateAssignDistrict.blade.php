@@ -35,15 +35,47 @@
                         <div class="mb-4">
                             <label for="district_lead" class="form-label"><b>District:</b> <span class="text-danger">*</span></label>
                             <div class="input-group">
-                                <span class="input-group-text"><i class="bi bi-geo-alt-fill"></i></span>
-                                <select id="district_lead" name="district_lead" class="form-select shadow-sm" required>
-                                    <option value="">Select District</option>
-                                    @foreach($districts as $district)
-                                        <option value="{{ $district }}" {{ old('district_lead', $assign_district->district_lead) == $district ? 'selected' : '' }}>
-                                            {{ $district }}
-                                        </option>
-                                    @endforeach
-                                </select>
+                                <span class="input-group-text"><i class="bi bi-geo-alt-fill"></i></span>    
+                                    <select id="district" name="district_lead" class="form-select shadow-sm">
+                                        <option value="">Select District</option>
+                                        @if(Auth::user()->division_lead == 'chattogram')
+                                            @foreach(['Bandarban', 'Bramanbaria', 'Chandpur', 'Comilla', 'Chittagong', 'Coxsbazar', 
+                                                    'Feni', 'Khagrachari', 'Lakshmipur', 'Noakhali', 'Rangamati'] as $district)
+                                                <option value="{{ $district }}" {{ old('district_lead', $assign_district->district_lead) == $district ? 'selected' : '' }}>{{ $district }}</option>
+                                            @endforeach
+                                        @elseif(Auth::user()->division_lead == 'dhaka')
+                                            @foreach(['Dhaka', 'Faridpur', 'Gazipur', 'Gopalganj', 'Kishoreganj', 'Madaripur', 'Manikganj',  
+                                                    'Munshiganj', 'Narayanganj', 'Narsingdi', 'Rajbari', 'Shariatpur', 'Tangail'] as $district)
+                                                <option value="{{ $district }}" {{ old('district_lead', $assign_district->district_lead) == $district ? 'selected' : '' }}>{{ $district }}</option>
+                                            @endforeach
+                                        @elseif(Auth::user()->division_lead == 'khulna')
+                                            @foreach(['Bagerhat', 'Chuadanga', 'Jashore', 'Jhenaidah', 'Khulna', 
+                                                    'Kushtia', 'Magura', 'Meherpur', 'Narail', 'Satkhira'] as $district)
+                                                <option value="{{ $district }}" {{ old('district_lead', $assign_district->district_lead) == $district ? 'selected' : '' }}>{{ $district }}</option>
+                                            @endforeach
+                                        @elseif(Auth::user()->division_lead == 'rajshahi')
+                                            @foreach(['Bogura', 'Chapainawabganj', 'Joypurhat', 'Natore', 'Naogaon', 
+                                                    'Pabna', 'Rajshahi', 'Sirajganj'] as $district)
+                                                <option value="{{ $district }}" {{ old('district_lead', $assign_district->district_lead) == $district ? 'selected' : '' }}>{{ $district }}</option>
+                                            @endforeach
+                                        @elseif(Auth::user()->division_lead == 'barisal')
+                                            @foreach(['Barisal', 'Barguna', 'Bhola', 'Jhalokati', 'Patuakhali', 
+                                                    'Pirojpur'] as $district)
+                                                <option value="{{ $district }}" {{ old('district_lead', $assign_district->district_lead) == $district ? 'selected' : '' }}>{{ $district }}</option>
+                                            @endforeach
+                                        @elseif(Auth::user()->division_lead == 'sylhet')
+                                            @foreach(['Habiganj', 'Moulvibazar', 'Sunamganj', 'Sylhet'] as $district)
+                                                <option value="{{ $district }}" {{ old('district_lead', $assign_district->district_lead) == $district ? 'selected' : '' }}>{{ $district }}</option>
+                                            @endforeach
+                                        @elseif(Auth::user()->division_lead == 'rangpur')
+                                            @foreach(['Dinajpur', 'Gaibandha', 'Kurigram', 'Lalmonirhat', 'Nilphamari', 
+                                                    'Panchagarh', 'Rangpur', 'Thakurgaon'] as $district)
+                                                <option value="{{ $district }}" {{ old('district_lead', $assign_district->district_lead) == $district ? 'selected' : '' }}>{{ $district }}</option>
+                                            @endforeach
+                                        @else
+                                            <option value="">No districts available</option>
+                                        @endif
+                                    </select>
                             </div>
                             @error('district_lead')
                                 <div class="text-danger mt-2">{{ $message }}</div>
