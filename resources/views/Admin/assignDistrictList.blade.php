@@ -33,6 +33,19 @@
                         <tbody>
                             @php $id = 1; @endphp
                             @foreach($assign_districts as $assign)
+                                @if(Auth::user()->division_lead == 'chattogram' && !in_array($assign->district_lead, ['Bandarban', 'Bramanbaria', 'Chandpur', 'Comilla', 'Chittagong', 'Coxsbazar', 'Feni', 'Khagrachari', 'Lakshmipur', 'Noakhali', 'Rangamati']))
+                                    @continue
+                                @elseif(Auth::user()->division_lead == 'dhaka' && !in_array($assign->district_lead, ['Dhaka', 'Faridpur', 'Gazipur', 'Gopalganj', 'Kishoreganj', 'Madaripur', 'Manikganj', 'Munshiganj', 'Narayanganj', 'Narsingdi', 'Rajbari', 'Shariatpur', 'Tangail']))
+                                    @continue
+                                @elseif(Auth::user()->division_lead == 'khulna' && !in_array($assign->district_lead, ['Bagerhat', 'Chuadanga', 'Jashore', 'Jhenaidah', 'Khulna', 'Kushtia', 'Magura', 'Meherpur', 'Narail', 'Satkhira']))
+                                    @continue
+                                @elseif(Auth::user()->division_lead == 'rajshahi' && !in_array($assign->district_lead, ['Bogura', 'Chapainawabganj', 'Joypurhat', 'Natore', 'Naogaon', 'Pabna', 'Rajshahi', 'Sirajganj']))
+                                    @continue
+                                @elseif(Auth::user()->division_lead == 'barishal' && !in_array($assign->district_lead, ['Barishal', 'Bhola', 'Jhalokathi', 'Patuakhali', 'Pirojpur']))
+                                    @continue
+                                @elseif(Auth::user()->division_lead == 'sylhet' && !in_array($assign->district_lead, ['Moulvibazar', 'Sylhet', 'Habiganj', 'Sunamganj']))
+                                    @continue                                                               
+                                @endif
                             <tr>
                                 <td>{{ $id++ }}</td>
                                 <td>{{ $assign->name }}</td>

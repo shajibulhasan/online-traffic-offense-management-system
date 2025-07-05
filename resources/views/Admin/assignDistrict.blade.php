@@ -40,20 +40,50 @@
                                 <span class="input-group-text"><i class="bi bi-geo-fill"></i></span>
                                 <select id="district" name="district" class="form-select shadow-sm">
                                     <option value="">Select District</option>
-                                    @foreach(['Dhaka', 'Gazipur', 'Munshiganj', 'Kishoreganj', 'Shariatpur', 'Gopalganj', 
-                                              'Narayanganj', 'Manikganj', 'Faridpur', 'Norsigdi', 'Rajbari', 'Tangail', 
-                                              'Madaripur', 'Mymensingh', 'Sherpur', 'Jamalpur', 'Netrokona', 
-                                              'Chittagong', 'Coxsbazar', 'Bandarban', 'Comilla', 'Bramanbaria', 'Chandpur', 
-                                              'Feni', 'lakhimpur', 'Noakahli', 'Rangamati', 'khagrachari', 
-                                              'Khulna', 'Jessor', 'Satkhira', 'Kushtia', 'Chuadanga', 'Bagerhat', 
-                                              'Jhenaidah', 'Magura', 'Meherpur', 'Norail', 'Rajshahi', 'Nouga', 
-                                              'Shirajganj', 'Joypurhat', 'Bogura', 'Chapainawabganj', 'Natore', 
-                                              'Pabna', 'Nilphamari', 'Dinajpur', 'Panchagar', 'Gaibandha', 
-                                              'Kurigram', 'Lalmonirhat', 'Rangpur', 'Thakurgaon', 'Bhola', 
-                                              'Barisal', 'Pirojpur', 'Borguna', 'Jhalokath', 'Patuakhali', 
-                                              'Moulvibazar', 'Sylhet', 'Habiganj', 'Sunamganj'] as $district)
-                                        <option value="{{ $district }}">{{ $district }}</option>
-                                    @endforeach
+                                    @if(Auth::user()->division_lead == 'chattogram'){
+                                        @foreach(['Bandarban', 'Bramanbaria', 'Chandpur', 'Comilla', 'Chittagong', 'Coxsbazar', 
+                                                  'Feni', 'Khagrachari', 'Lakshmipur', 'Noakhali', 'Rangamati'] as $district)
+                                            <option value="{{ $district }}">{{ $district }}</option>
+                                        @endforeach
+                                    }
+                                    @elseif(Auth::user()->division_lead == 'dhaka'){
+                                        @foreach(['Dhaka', 'Faridpur', 'Gazipur', 'Gopalganj', 'Kishoreganj', 'Madaripur', 'Manikganj',  
+                                                'Munshiganj', 'Narayanganj', 'Narsingdi', 'Rajbari', 'Shariatpur', 'Tangail'] as $district)
+                                            <option value="{{ $district }}">{{ $district }}</option>
+                                        @endforeach
+                                    }
+                                    @elseif(Auth::user()->division_lead == 'khulna'){
+                                        @foreach(['Bagerhat', 'Chuadanga', 'Jashore', 'Jhenaidah', 'Khulna', 
+                                                  'Kushtia', 'Magura', 'Meherpur', 'Narail', 'Satkhira'] as $district)
+                                            <option value="{{ $district }}">{{ $district }}</option>
+                                        @endforeach
+                                    }
+                                    @elseif(Auth::user()->division_lead == 'rajshahi'){
+                                        @foreach(['Bogura', 'Chapainawabganj', 'Joypurhat', 'Natore', 'Naogaon', 
+                                                  'Pabna', 'Rajshahi', 'Sirajganj'] as $district)
+                                            <option value="{{ $district }}">{{ $district }}</option>
+                                        @endforeach
+                                    }
+                                    @elseif(Auth::user()->division_lead == 'barisal'){
+                                        @foreach(['Barisal', 'Barguna', 'Bhola', 'Jhalokati', 'Patuakhali', 
+                                                  'Pirojpur'] as $district)
+                                            <option value="{{ $district }}">{{ $district }}</option>
+                                        @endforeach
+                                    }
+                                    @elseif(Auth::user()->division_lead == 'sylhet'){
+                                        @foreach(['Habiganj', 'Moulvibazar', 'Sunamganj', 'Sylhet'] as $district)
+                                            <option value="{{ $district }}">{{ $district }}</option>
+                                        @endforeach
+                                    }
+                                    @elseif(Auth::user()->division_lead == 'rangpur'){
+                                        @foreach(['Dinajpur', 'Gaibandha', 'Kurigram', 'Lalmonirhat', 'Nilphamari', 
+                                                  'Panchagarh', 'Rangpur', 'Thakurgaon'] as $district)
+                                            <option value="{{ $district }}">{{ $district }}</option>
+                                        @endforeach
+                                    }
+                                    @else
+                                        <option value="">No districts available</option>
+                                    @endif
                                 </select>
                             </div>
                             @error('district')
