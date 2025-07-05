@@ -23,7 +23,8 @@ Route::get('/Admin/verifyOfficerAccount', [AdminController::class, 'verifyOffice
 Route::get('/Admin/assignDistrictList', [AdminController::class, 'AssignDistrictList'])->name('Admin.assignDistrictList')->middleware(DivisionLead::class);
 Route::get('/Admin/assignDistrict', [AdminController::class, 'assignDistrict'])->name('Admin.assignDistrict')->middleware(DivisionLead::class);
 
-Route::get('/Admin/assignThana', [AdminController::class, 'assign_thana'])->name('Admin.assignThana')->middleware(DistrictLead::class);
+Route::get('/Admin/assignThana',[AdminController::class, 'assignThana'])->name('Admin.assignThana')->middleware(DistrictLead::class);
+// Route::get('/Admin/assignThana', [AdminController::class, 'assign_thana'])->name('Admin.assignThana')->middleware(DistrictLead::class);
 Route::get('/Admin/show-assign-thana', [AdminController::class, 'showing_assign_thana'])->name('Admin.show-assign-thana')->middleware(DistrictLead::class);
 Route::get('/Admin/addThana', [AdminController::class, 'addThana'])->name('Admin.addThana')->middleware(DistrictLead::class);
 Route::get('/Admin/thanaList', [AdminController::class, 'thanaList'])->name('Admin.thanaList')->middleware(DistrictLead::class);
@@ -40,7 +41,6 @@ Route::get('/Admin/divission', [AdminController::class, 'divission'])->name('Adm
 Route::get('/Admin/updateThana/{id}', [AdminController::class, 'UpdateThana'])->name('Admin.updateThana')->middleware(ValidateOfficer::class);
 Route::get('/Admin/updateArea/{id}', [AdminController::class, 'UpdateArea'])->name('Admin.updateArea')->middleware(ValidateOfficer::class);
 Route::get('/Admin/updateAssignDistrict/{id}', [AdminController::class, 'updateAssignDistrict'])->name('Admin.updateAssignDistrict')->middleware(ValidateOfficer::class);
-// Route::get('/Admin/assignThana',[AdminController::class, 'assignThana'])->name('Admin.assignThana')->middleware(ValidateOfficer::class);
 Route::get('/Admin/updateAssignOfficer', [AdminController::class, 'updateAssignOfficer'])->name('Admin.updateAssignOfficer')->middleware(ValidateOfficer::class);
 // Show edit page
 Route::get('/Admin/updateAssignThana/{id}', [AdminController::class, 'updateAssignThana'])->name('Admin.updateAssignThana')->middleware(ValidateOfficer::class);

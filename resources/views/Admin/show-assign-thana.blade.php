@@ -33,7 +33,7 @@
                             </thead>
                             <tbody>
                                 @php $id = 1; @endphp
-                                @foreach($assign_thana as $thana)
+                                @foreach($assign_thana as $thana)                                    
                                 <tr>
                                     <td>{{ $id++ }}</td>
                                     <td>{{ $thana->name }}</td>

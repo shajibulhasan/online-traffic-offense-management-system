@@ -34,6 +34,9 @@
                             <tbody>
                                 @php $id = 1; @endphp
                                 @foreach($thanas as $thana)
+                                    @if($thana->district_name != Auth::user()->district_lead)
+                                        @continue
+                                    @endif
                                 <tr>
                                     <td>{{ $id++ }}</td>
                                     <td>{{ $thana->district_name }}</td>
