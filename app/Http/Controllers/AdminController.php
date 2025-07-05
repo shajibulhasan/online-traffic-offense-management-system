@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
 {
@@ -344,8 +345,12 @@ class AdminController extends Controller
 
     public function showing_assign_thana()
     {
-        $assign_thana = DB::table('users')->where('role','officer')
-        ->whereNotNull('thana_lead')->get();
+        $assign_thana = DB::table('users')
+            ->select('users.*', 'thana.thana_name', 'thana.district_name')
+            ->join('thana', 'users.thana_lead', '=', 'thana.thana_name')
+            ->where('users.role', 'officer')
+            ->where('thana.district_name', Auth::user()->district_lead)
+            ->whereNotNull('thana_lead')->get();
         return view('Admin.show-assign-thana', compact('assign_thana'));
     }
     
@@ -386,7 +391,8 @@ class AdminController extends Controller
         }
     
         $thana = DB::table('users')->where('id', $id)->first();
-        $thana_list = DB::table('thana')->get();
+        $thana_list = DB::table('thana')
+                        ->where('district_name', Auth::user()->district_lead)->get();
         return view('Admin.updateAssignThana', compact('thana', 'thana_list'));
     }
     

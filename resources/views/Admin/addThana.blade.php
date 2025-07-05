@@ -25,73 +25,8 @@
                             <label for="district" class="form-label"><b>District:</b> <span class="text-danger">*</span></label>
                             <div class="input-group">
                                 <span class="input-group-text"><i class="bi bi-geo-fill"></i></span>
-                                <select id="district" name="district_name" class="form-select shadow-sm">
-                                    <option value="">Select District</option>
-                                    <option value="Dhaka">Dhaka</option>
-                                    <option value="Gazipur">Gazipur</option>
-                                    <option value="Munshiganj">Munshiganj</option>
-                                    <option value="Kishoreganj">Kishoreganj </option>
-                                    <option value="Shariatpur">Shariatpur </option>
-                                    <option value="Gopalganj">Gopalganj</option>
-                                    <option value="Narayanganj">Narayanganj </option>
-                                    <option value="Manikganj">Manikganj </option>
-                                    <option value="Faridpur">Faridpur</option>
-                                    <option value="Norsigdi">Norsigdi</option>
-                                    <option value="Rajbari">Rajbari </option>
-                                    <option value="Tangail">Tangail</option>
-                                    <option value="Madaripur">Madaripur</option>
-                                    <option value="Mymensingh">Mymensingh</option>
-                                    <option value="Sherpur">Sherpur</option>
-                                    <option value="Jamalpur">Jamalpur</option>
-                                    <option value="Netrokona">Netrokona</option>
-                                    <option value="Chittagong">Chittagong</option>
-                                    <option value="Coxsbazar">Coxsbazar</option>
-                                    <option value="">Bandarban</option>
-                                    <option value="Bandarban">Comilla</option>
-                                    <option value="Bramanbaria">Bramanbaria</option>
-                                    <option value="Chandpur">Chandpur</option>
-                                    <option value="Feni">Feni</option>
-                                    <option value="lakhimpur">lakhimpur</option>
-                                    <option value="Noakahli">Noakahli</option>
-                                    <option value="Rangamati">Rangamati</option>
-                                    <option value="khagrachari">khagrachari </option>
-                                    <option value="Khulna">Khulna</option>
-                                    <option value="Jessor">Jessor</option>
-                                    <option value="Satkhira">Satkhira</option>
-                                    <option value="Kushtia">Kushtia</option>
-                                    <option value="Chuadanga">Chuadanga </option>
-                                    <option value="Bagerhat">Bagerhat </option>
-                                    <option value="Jhenaidah">Jhenaidah </option>
-                                    <option value="Magura">Magura</option>
-                                    <option value="Meherpur">Meherpur</option>
-                                    <option value="Norail">Norail</option>
-                                    <option value="Rajshahi">Rajshahi</option>
-                                    <option value="Nouga">Nouga</option>
-                                    <option value="Shirajganj">Shirajganj</option>
-                                    <option value="Joypurhat">Joypurhat </option>
-                                    <option value="Bogura">Bogura</option>
-                                    <option value="Chapainawabganj">Chapainawabganj</option>
-                                    <option value="Natore">Natore</option>
-                                    <option value="Pabna">Pabna</option>
-                                    <option value="Nilphamari">Nilphamari</option>
-                                    <option value="Dinajpur">Dinajpur</option>
-                                    <option value="Panchagar">Panchagar</option>
-                                    <option value="Gaibandha">Gaibandha</option>
-                                    <option value="Kurigram">Kurigram </option>
-                                    <option value="Lalmonirhat">Lalmonirhat</option>
-                                    <option value="Rangpur">Rangpur </option>
-                                    <option value="Thakurgaon">Thakurgaon</option>
-                                    <option value="Bhola">Bhola</option>
-                                    <option value="Barisal">Barisal</option>
-                                    <option value="Pirojpur">Pirojpur</option>
-                                    <option value="Borguna">Borguna</option>
-                                    <option value="Jhalokath">Jhalokath</option>
-                                    <option value="Patuakhali">Patuakhali</option>
-                                    <option value="Moulvibazar">Moulvibazar</option>
-                                    <option value="Sylhet">Sylhet</option>
-                                    <option value="Habiganj">Habiganj </option>
-                                    <option value="Sunamganj">Sunamganj </option>
-                                </select>
+                                    <select id="district" name="district_name" class="form-select shadow-sm">
+                                    <option value="{{ Auth::user()->district_lead }}">{{ Auth::user()->district_lead }}</option>
                             </div>
                             @error('district_name')
                                 <div class="text-danger mt-2">{{ $message }}</div>

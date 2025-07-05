@@ -38,6 +38,9 @@
                                 <select name="thana_name" id="thana" class="form-select shadow-sm">
                                     <option value="">Selcet Thana List</option>
                                     @foreach($thana_list as $thana)
+                                        @if($thana->district_name != Auth::user()->district_lead)
+                                            @continue
+                                        @endif
                                     <option value="{{ $thana->thana_name }}">{{ $thana->thana_name }}</option>
                                     @endforeach
                                 </select>
