@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class OfficerController extends Controller
 {
     public function addOffense()
     {
-         $thana_list = DB::table('thana')->get();
+         $thana_list = DB::table('area')
+                        ->where('area_name', Auth::user()->area_lead)->get();
          return view('Officer.addOffense', compact('thana_list'));
     }
 public function createAddOffense(Request $request)
