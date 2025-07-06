@@ -26,6 +26,7 @@
                             <thead class="table-dark">
                                 <tr>
                                     <th>Serial No.</th>
+                                    <th>Thana Name</th>
                                     <th>Area Name</th>
                                     <th>Details Area</th>
                                     <th>Action</th>
@@ -34,8 +35,12 @@
                             <tbody>
                                 @php $id = 1; @endphp
                                 @foreach($areas as $area)
+                                    @if($area->thana_name != Auth::user()->thana_lead)
+                                        @continue
+                                    @endif
                                 <tr>
                                     <td>{{ $id++ }}</td>
+                                    <td>{{ $area->thana_name }}</td>
                                     <td>{{ $area->area_name }}</td>
                                     <td>{{ $area->details_area }}</td>
                                     <td>

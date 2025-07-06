@@ -23,6 +23,18 @@
                 <div class="card-body">
                     <form action="{{ route('Admin.addArea') }}" method="POST">
                         @csrf
+                        <!-- Officer Name -->
+                        <div class="mb-4">
+                            <label for="officer_name" class="form-label"><b>Thana Name:</b> <span class="text-danger">*</span></label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-building"></i></span>
+                                <input type="text" class="form-control shadow-sm" id="thana_name" name="thana_name" value="{{ Auth::user()->thana_lead }}" required disabled>
+                                <input type="text" class="form-control shadow-sm" id="thana_name" name="thana_name" value="{{ Auth::user()->thana_lead }}" required hidden>
+                            </div>
+                            @error('thana_name')
+                                <div class="text-danger mt-2">{{ $message }}</div>
+                            @enderror
+                        </div> 
 
                         <!-- Area Name Field -->
                         <div class="mb-4">

@@ -27,6 +27,7 @@
                                 <tr>
                                     <th>Serial</th>
                                     <th>Officer Name</th>
+                                    <th>Thana Name</th>
                                     <th>Area Lead</th>
                                     <th>Action</th>
                                 </tr>
@@ -37,6 +38,7 @@
                                 <tr>
                                     <td>{{ $id++ }}</td>
                                     <td>{{ $assign->name }}</td>
+                                    <td>{{ Auth::user()->thana_lead }}</td>
                                     <td>{{ $assign->area_lead }}</td>
                                     <td>
                                         <a href="{{ route('Admin.updateAssignOfficer', $assign->id) }}" class="btn btn-sm btn-primary me-1">Edit</a>

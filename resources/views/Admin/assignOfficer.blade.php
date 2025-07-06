@@ -39,6 +39,9 @@
                                 <select id="area" name="area_name" class="form-select shadow-sm">
                                     <option value="">Select area</option>
                                     @foreach($area_list as $area)
+                                        @if($area->thana_name != Auth::user()->thana_lead)
+                                            @continue
+                                        @endif
                                         <option value="{{ $area->area_name }}">{{ $area->area_name }}</option>
                                     @endforeach
                                 </select>
