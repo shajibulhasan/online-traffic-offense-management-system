@@ -23,6 +23,16 @@
                             @method('POST') 
 
                             <div class="mb-4">
+                                <label for="thana" class="form-label"><b>Thana Name:</b> <span class="text-danger">*</span></label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-house-door"></i></span>
+                                    <input type="text" class="form-control shadow-sm" id="thana" name="thana_name" value="{{ old('thana_name', $area->thana_name) }}" disabled>
+                                </div>
+                                @error('area_name')
+                                    <div class="text-danger mt-2">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="mb-4">
                                 <label for="area" class="form-label"><b>Area Name:</b> <span class="text-danger">*</span></label>
                                 <div class="input-group">
                                     <span class="input-group-text"><i class="bi bi-house-door"></i></span>

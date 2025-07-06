@@ -66,11 +66,14 @@ class AdminController extends Controller
     {
         $request->validate(
             [
-                'area_name' => ['required', 'string', 'max:100'],
+                'thana_name' => ['required', 'string'],
+                'area_name' => ['required', 'string'],
                 'details_area' =>[ 'required','string', 'max:500']
             ]);
+            // dd($request->all());
     
         $area_create = DB::table('area')->insert([
+            'thana_name' => $request->thana_name,
             'area_name' => $request->area_name,
             'details_area' => $request->details_area,
         ]);
