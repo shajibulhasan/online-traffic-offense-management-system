@@ -71,15 +71,10 @@
                             <div class="mb-4">
                                 <label for="thana"><b>Thana:</b><span class="text-danger">*</span></label>
                                 <div class="input-group">
-                                    <span class="input-group-text"><i class="bi bi-house-add-fill"></i></span>
-                                    <select name="thana_name" id="thana" class="form-select @error('thana_name') is-invalid @enderror">
-                                        <option value="">Select Thana</option>
-                                        @foreach($thana_list as $thana)
-                                            <option value="{{ $thana->thana_name }}" {{ old('thana_name') == $thana->thana_name ? 'selected' : '' }}>
-                                                {{ $thana->thana_name }}
-                                            </option>
-                                        @endforeach
-                                    </select>
+                                    <span class="input-group-text"><i class="bi bi-house-add-fill"></i></span> 
+                                    @foreach($thana_list as $thana)                                   
+                                    <input type="text" class="form-control" value="{{ $thana->thana_name }}" id="thana" name="thana_name" readonly>
+                                    @endforeach
                                 </div>
                                 @error('thana_name')
                                     <div class="text-danger mt-2">{{ $message }}</div>
