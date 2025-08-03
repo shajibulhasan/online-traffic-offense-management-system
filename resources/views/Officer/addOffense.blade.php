@@ -69,11 +69,11 @@
 
                             {{-- Thana --}}
                             <div class="mb-4">
-                                <label for="thana"><b>Thana:</b><span class="text-danger">*</span></label>
+                                <label for="thana"><b>Area Lead:</b><span class="text-danger">*</span></label>
                                 <div class="input-group">
                                     <span class="input-group-text"><i class="bi bi-house-add-fill"></i></span> 
                                     @foreach($thana_list as $thana)                                   
-                                    <input type="text" class="form-control" value="{{ $thana->thana_name }}" id="thana" name="thana_name" readonly>
+                                        <input type="text" class="form-control mb-2" value="{{ $thana->thana_name ?? $thana->area_name }}" id="thana" name="thana_name" readonly>
                                     @endforeach
                                 </div>
                                 @error('thana_name')

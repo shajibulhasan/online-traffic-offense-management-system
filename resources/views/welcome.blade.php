@@ -6,6 +6,6 @@
     @elseif(session('error'))
         <div class="alert alert-danger">{{ session('error') }}</div>
     @endif
-    @include('auth.login');
+    <!-- @include('auth.login'); -->
 </div>
 @endsection

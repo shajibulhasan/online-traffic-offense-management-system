@@ -41,7 +41,7 @@
                                     <th>Serial No.</th>
                                     <th>Driver Name</th>
                                     <th>Officer Name</th>
-                                    <th>Thana Name</th>
+                                    <th>Area Name</th>
                                     <th>Details Offense</th>
                                     <th>Fine</th>
                                     <th>Point</th>
@@ -118,9 +118,6 @@ $(document).ready(function() {
                                 <td>${offense.point ?? ''}</td>
                                 <td>
                                     <a href="/Officer/updateOffense/${offense.id}" class="btn btn-sm btn-info">Edit</a>
-                                    <button type="button" class="btn btn-sm btn-danger" data-id="${offense.id}" data-bs-toggle="modal" data-bs-target="#deleteModal${offense.id}">Delete</button>
-
-                                    <!-- Delete Modal -->
                                     <div class="modal fade" id="deleteModal${offense.id}" tabindex="-1" aria-labelledby="deleteModalLabel${offense.id}" aria-hidden="true">
                                         <div class="modal-dialog modal-dialog-centered">
                                             <div class="modal-content border-0 rounded-3 shadow">
@@ -159,33 +156,6 @@ $(document).ready(function() {
         });
     });
 
-    // Handle delete form submission
-    $(document).on('submit', '.delete-form', function(e) {
-        e.preventDefault();
-        let form = $(this);
-        let id = form.data('id');
-
-        $.ajax({
-            url: `/Officer/offense/delete/${id}`,
-            type: 'POST',
-            data: {
-                _token: '{{ csrf_token() }}',
-                _method: 'DELETE'
-            },
-            success: function(res) {
-                if (res.success) {
-                    alert('Offense deleted successfully.');
-                    form.closest('tr').remove();
-                    $(`#deleteModal${id}`).modal('hide');
-                } else {
-                    alert('Failed to delete offense.');
-                }
-            },
-            error: function() {
-                alert('Error occurred while deleting.');
-            }
-        });
-    });
 });
 </script>
 @endsection
