@@ -10,10 +10,6 @@ use App\Http\Middleware\DistrictLead;
 use App\Http\Middleware\ThanaLead;
 use App\Http\Middleware\AreaLead;
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
@@ -78,3 +74,4 @@ Route::get('/officer/driver', [OfficerController::class, 'Driver'])->name('offic
 //End officer controller
 
 //strat Driver controller
+

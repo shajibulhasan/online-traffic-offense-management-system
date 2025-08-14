@@ -220,6 +220,7 @@ class AdminController extends Controller
             ->where('status', 1)
             ->get();
 
+        // return view('Admin.assignDistrict', compact('officers'));
         return view('Admin.assignDistrict', compact('officers'));
     }
 

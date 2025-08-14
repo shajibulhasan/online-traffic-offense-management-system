@@ -50,8 +50,8 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav me-auto">
-                        @guest
-                        @elseif(Auth::check() && Auth::user()->division_lead != null)
+                        
+                        @if(Auth::check() && Auth::user()->division_lead != null)
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('Admin.assignDistrict') }}">Assign District</a>
                             </li>
@@ -94,7 +94,7 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('Officer.offenseList') }}">Offense List</a>
                             </li>
-                        @endguest
+                        @endif
                     </ul>
 
                     <!-- Right Side Of Navbar -->

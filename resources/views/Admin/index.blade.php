@@ -1,4 +1,6 @@
-@extends("layouts.app")
+@extends("layouts2.app")
 @section("content")
-<h1>addmin dashboard</h1>
+<div class="container">
+    <h1>Admin Dashboard</h1>
+</div>
 @endsection
