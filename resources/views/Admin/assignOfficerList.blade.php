@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts2.app')
 
 @section('content')
 @if(session('success'))
@@ -14,7 +14,7 @@
 @endif
 
 <div class="container py-5">
-    <div class="row justify-content-center">
+    <div class="row justify-content-center align-items-center">
         <div class="col-lg-10 col-md-11">
             <div class="card border-0 shadow rounded-4">
                 <div class="card-header bg-dark text-white text-center rounded-top-4">

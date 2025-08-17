@@ -1,11 +1,11 @@
-@extends("layouts.app")
+@extends("layouts2.app")
 @section("content")
 @if(session('success'))
     <div class="alert alert-success">{{ session('success') }}</div>
 @elseif(session('error'))
     <div class="alert alert-danger">{{ session('error') }}</div>
 @endif
-<div class="container-fluid">
+<div class="container py-5">
     <div class="row justify-content-center allign-iteams-center" style="main-height: 50vh">
         <div class="col-md-6 col-12">
             <div class="card shadow-lg border-0 rounded-4">

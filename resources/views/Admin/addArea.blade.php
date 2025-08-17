@@ -1,4 +1,4 @@
-@extends("layouts.app")
+@extends("layouts2.app")
 
 @section("content")
 
@@ -13,7 +13,7 @@
     </div>
 @endif
 
-<div class="container-fluid">
+<div class="container py-5">
     <div class="row justify-content-center align-items-center" style="min-height: 50vh;">
         <div class="col-md-6 col-12">
             <div class="card shadow-lg border-0 rounded-4">
@@ -76,41 +76,3 @@
 
 @endsection
 
-@push('styles')
-<style>
-    .btn-custom {
-        background-color: #4CAF50; 
-        color: white;
-        font-size: 16px; 
-        font-weight: bold; 
-        padding: 12px 25px; 
-        border: none; 
-        border-radius: 5px; 
-        text-transform: uppercase;
-        letter-spacing: 0.5px; 
-        box-shadow: 0 3px 5px rgba(0, 0, 0, 0.15); 
-        transition: all 0.3s ease-in-out; 
-    }
-
-    .btn-custom:hover {
-        background-color: #45a049;
-        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2); 
-        transform: translateY(-2px); 
-    }
-    
-    .btn-custom:active {
-        background-color: #3e8e41; 
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
-        transform: translateY(2px); 
-    }
-
-    .btn-custom i {
-        margin-right: 8px; 
-        font-size: 18px; 
-    }
-
-    .btn-custom b {
-        font-size: 16px; 
-    }
-</style>
-@endpush

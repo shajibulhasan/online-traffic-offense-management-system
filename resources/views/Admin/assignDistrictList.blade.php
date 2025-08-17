@@ -1,5 +1,4 @@
-@extends('layouts.app')
-
+@extends('layouts2.app')
 @section('content')
 @if(session('success'))
     <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -14,7 +13,7 @@
 @endif
 
 <div class="container py-5">
-    <div class="row justify-content-center">
+    <div class="row justify-content-center align-items-center">
         <div class="col-md-10 col-12">
             <div class="card shadow-lg border-0 rounded-4">
                 <div class="card-header bg-dark text-white text-center py-2">

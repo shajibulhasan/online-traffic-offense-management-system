@@ -1,4 +1,4 @@
-@extends("layouts.app")
+@extends("layouts2.app")
 @section("content")
 @if(session('success'))
     <div class="alert alert-success">{{ session('success') }}</div>
@@ -6,7 +6,7 @@
     <div class="alert alert-danger">{{ session('error') }}</div>
 @endif
 
-<div class="container-fluid">
+<div class="container py-5">
     <div class="row justify-content-center align-items-center" style="min-height: 50vh;">
         <div class="col-md-6 col-12">
             <div class="card shadow-lg border-0 rounded-4">
@@ -21,7 +21,7 @@
                             <label for="officer" class="form-label"><b>Officer Name:</b> <span class="text-danger">*</span></label>
                             <div class="input-group">
                                 <span class="input-group-text bg-light"><i class="bi bi-person-badge-fill"></i></span>
-                               <select id="officer" name="officer_name" class="form-select shadow-sm">
+                                <select id="officer" name="officer_name" class="form-select shadow-sm">
                                     <option value="">Select Officer</option>
                                     @foreach($officers as $officer)
                                         <option value="{{ $officer->id }}">{{ $officer->name }}</option>

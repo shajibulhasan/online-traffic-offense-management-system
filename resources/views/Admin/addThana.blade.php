@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts2.app')
 @section('content')
 @if(session('success'))
     <div class="alert alert-success">
@@ -11,9 +11,9 @@
 @endif
 
 <div class="container py-5">
-    <div class="row justify-content-center">
-        <div class="col-md-8 col-12">
-            <div class="card shadow-lg border-0 rounded-4">
+    <div class="row justify-content-center allign-iteams-center" style="min-height: 50vh">
+        <div class="col-md-6 col-12">
+            <div class="card shadow-lg border-0 rounded-4 overflow-hidden">
                 <div class="card-header text-white bg-dark text-center py-3">
                     <h4><b>Add Thana</b></h4>
                 </div>
@@ -21,29 +21,32 @@
                     <form action="{{ route('Admin.addThana') }}" method="post">
                         @csrf
                         <!-- District Dropdown -->
-                        <div class="mb-4">
-                            <label for="district" class="form-label"><b>District:</b> <span class="text-danger">*</span></label>
-                            <div class="input-group">
-                                <span class="input-group-text"><i class="bi bi-geo-fill"></i></span>
-                                    <select id="district" name="district_name" class="form-select shadow-sm">
-                                    <option value="{{ Auth::user()->district_lead }}">{{ Auth::user()->district_lead }}</option>
-                            </div>
-                            @error('district_name')
-                                <div class="text-danger mt-2">{{ $message }}</div>
-                            @enderror
+                            <!-- District -->
+                    <div class="mb-4">
+                        <label for="district" class="form-label"><b>District:</b> <span class="text-danger">*</span></label>
+                        <div class="input-group shadow-sm">
+                            <span class="input-group-text"><i class="bi bi-geo-fill"></i></span>
+                            <select id="district" name="district_name" class="form-select">
+                                <option value="{{ Auth::user()->district_lead }}">{{ Auth::user()->district_lead }}</option>
+                            </select>
                         </div>
+                        @error('district_name')
+                            <div class="text-danger mt-2">{{ $message }}</div>
+                        @enderror
+                    </div>
 
-                        <!-- Thana Name -->
-                        <div class="mb-4">
-                            <label for="thana" class="form-label"><b>Thana Name:</b> <span class="text-danger">*</span></label>
-                            <div class="input-group">
-                                <span class="input-group-text"><i class="bi bi-buildings"></i></span>
-                                <input type="text" class="form-control shadow-sm" id="thana" name="thana_name" placeholder="Enter Thana Name" value="{{ old('thana_name') }}">
-                            </div>
-                            @error('thana_name')
-                                <div class="text-danger mt-2">{{ $message }}</div>
-                            @enderror
+                    <!-- Thana Name -->
+                    <div class=" mb-4">
+                        <label for="thana_name" class="form-label fw-bold">Thana Name <span class="text-danger">*</span></label>
+                        <div class="input-group shadow-sm">
+                            <span class="input-group-text bg-light"><i class="bi bi-buildings"></i></span>
+                            <input type="text" class="form-control shadow-sm" id="thana_name" name="thana_name" placeholder="Enter Thana Name" value="{{ old('thana_name') }}" required>
                         </div>
+                        @error('thana_name')
+                            <div class="text-danger small mt-2">{{ $message }}</div>
+                        @enderror
+                    </div>
+                        
                         <!-- Contact -->
                         <div class="mb-4">
                             <label for="thana_contact" class="form-label"><b>Contact:</b> <span class="text-danger">*</span></label>
