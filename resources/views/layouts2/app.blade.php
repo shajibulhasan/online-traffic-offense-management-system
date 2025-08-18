@@ -68,10 +68,7 @@
                 </a>
                 <div class="d-flex align-items-center ms-4 mb-4">
                     <div class="ms-3 text-white">
-                        <h6 class="mb-0 ">{{ Auth::user()->name }} ({{ Auth::user()->role }})</h6>
-                          @guest
-                        <span>Laravel</span>
-                        @elseif(Auth::check() && Auth::user()->division_lead != null)
+                        @if(Auth::check() && Auth::user()->division_lead != null)
                             <span>Division Lead</span>
                         @elseif(Auth::check() && Auth::user()->district_lead != null)
                             <span>District Lead</span>
@@ -83,10 +80,11 @@
                             <span>Officer</span>
                         @else
                             <span>User</span>
-                        @endguest
+                        @endif
                     </div>
                 </div>
                 <div class="navbar-nav w-100">
+                    
                     <a href="{{ route('Admin.index') }}" class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
                     @if(Auth::check() && Auth::user()->division_lead != null)
                     <a href="{{ route('Admin.assignDistrict') }}" class="nav-item nav-link text-white"><i class="fa fa-user me-2"></i>Assign District</a>
