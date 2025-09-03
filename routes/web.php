@@ -12,7 +12,7 @@ use App\Http\Middleware\AreaLead;
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 // start Admin controller  
 Route::get('/Admin/verifyOfficerAccount', [AdminController::class, 'verifyOfficerAccount'])->name('Admin.verifyOfficerAccount')->middleware(DivisionLead::class);
@@ -65,12 +65,13 @@ Route::post('/Admin/updateArea/{id}', [AdminController::class, 'updateArea'])->n
 //start Officer controller 
 Route::get('/Officer/addOffense', [OfficerController::class, 'addOffense'])->name('Officer.addOffense')->middleware(AreaLead::class);
 Route::get('/Officer/offenseList', [OfficerController::class, 'offenseList'])->name('Officer.offenseList')->middleware(AreaLead::class);
-Route::get('/Officer/updateOffense', [OfficerController::class, 'updateOffense'])->name('Officer.updateOffense')->middleware(AreaLead::class);
+Route::get('/Officer/updateOffense/{id}', [OfficerController::class, 'editOffense'])->name('Officer.updateOffense')->middleware(AreaLead::class);
 Route::get('/officer/search-driver', [OfficerController::class, 'searchDriver'])->name('officer.searchDriver')->middleware(AreaLead::class);
 // post method
 Route::post('/Officer/addOffense', [OfficerController::class, 'createAddOffense'])->name('Officer.addOffense')->middleware(ValidateOfficer::class);
 Route::delete('/offense/{id}', [OfficerController::class, 'offensedestroy'])->name('Officer.offense.delete')->middleware(ValidateOfficer::class);
 Route::get('/officer/driver', [OfficerController::class, 'Driver'])->name('officer.Driver')->middleware(ValidateOfficer::class);
+Route::post('/Officer/updateOffense/{id}', [OfficerController::class, 'updateOffense'])->name('Officer.updateOffense.update')->middleware(AreaLead::class);
 //End officer controller
 
 //strat Driver controller
