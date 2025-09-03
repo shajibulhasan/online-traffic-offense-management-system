@@ -105,34 +105,36 @@ public function createAddOffense(Request $request)
         return view('Officer.offenseList', compact('Offense_list'));
     }
 
+public function editOffense($id)
+{
+    // offense data load করার জন্য আলাদা edit method
+    $offense = DB::table('traffic_officer')->where('id', $id)->first();
 
-    public function updateOffense(Request $request)
-    {
-        $request->validate([
-            'id'              => ['required', 'exists:traffic_officer,id'],
-            'driver_id'       => ['required', 'exists:users,id'],
-            'thana_name'      => ['required', 'string', 'max:250'],
-            'details_offense' => ['required', 'string', 'max:500'],
-            'fine'            => ['required'],
-            'point'           => ['required'],
+    return view('Officer.updateOffense', compact('offense'));
+}
+
+public function updateOffense(Request $request, $id)
+{
+    // driver খুঁজে বের করা
+    $driver = DB::table('users')
+        ->where('id', $request->driver_id) // এখন form থেকে driver_id আসবে
+        ->first();
+
+    $update = DB::table('traffic_officer')
+        ->where('id', $id)
+        ->update([
+            'driver_id'       => $driver->id,
+            'officer_id'      => auth()->id(),
+            'thana_name'      => $request->thana_name,
+            'details_offense' => $request->details_offense,
+            'fine'            => $request->fine,
+            'point'           => $request->point,
+            'updated_at'      => now(),
         ]);
 
-        $update = DB::table('traffic_officer')
-            ->where('id', $request->id)
-            ->update([
-                'driver_id'       => $request->driver_id,
-                'officer_id'      => auth()->user()->id,
-                'thana_name'      => $request->thana_name,
-                'details_offense' => $request->details_offense,
-                'fine'            => $request->fine,
-                'point'           => $request->point,
-                'updated_at'      => now(),
-            ]);
+    return $update
+        ? redirect()->route('Officer.offenseList')->with('success', 'Offense updated successfully')
+        : redirect()->route('Officer.offenseList')->with('error', 'Failed to update offense');
+}
 
-        if ($update) {
-            return redirect()->route('Officer.offenseList')->with('success', 'Offense updated successfully');
-        } else {
-            return redirect()->route('Officer.offenseList')->with('error', 'Failed to update offense');
-        }
-    }
 }
