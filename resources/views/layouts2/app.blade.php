@@ -106,7 +106,8 @@
                     @elseif(Auth::check() && Auth::user()->area_lead != null)
                     <a href="{{ route('Officer.addOffense') }}" class="nav-item nav-link text-white"><i class="fa fa-plus me-2"></i>Add Offense</a>
                     <a href="{{ route('Officer.offenseList') }}" class="nav-item nav-link text-white"><i class="fa fa-list me-2"></i>Offense List</a>
-
+                    @else
+                    <a href="{{ route('User.index') }}" class="nav-item nav-link text-white"><i class="fa fa-user me-2"></i>My Offense</a>
                     @endif
 
                     </div>

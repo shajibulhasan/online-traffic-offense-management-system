@@ -9,6 +9,7 @@ use App\Http\Middleware\DivisionLead;
 use App\Http\Middleware\DistrictLead;
 use App\Http\Middleware\ThanaLead;
 use App\Http\Middleware\AreaLead;
+use App\Http\Controllers\UserController;
 
 Auth::routes();
 
@@ -80,3 +81,5 @@ Route::post('/Officer/updateOffense/{id}', [OfficerController::class, 'updateOff
 
 //strat Driver controller
 
+
+Route::get('/User/index', [UserController::class, 'index'])->name('User.index')->middleware(ValidateUser::class);
