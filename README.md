@@ -60,7 +60,7 @@
 5. **Run Database Migrations:**
 
     ```bash
-     php artisan migrate
+     php artisan migrate --seed
     ```
 
 6. **Start the Development Server:**
