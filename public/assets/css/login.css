@@ -1,0 +1,102 @@
+body {
+            background: linear-gradient(135deg, #2dce89 0%, #2dce89cc 100%);
+            min-height: 100vh;
+            font-family: 'Segoe UI', sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .auth-container {
+            
+            max-width: 480px;
+            margin: 3rem auto;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        .auth-header {
+            background: linear-gradient(135deg, #2dce89 0%, #2d7a5f 100%);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            border-radius: 15px 15px 0 0;
+        }
+        .auth-header .logo {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        .auth-body {
+            background: white;
+            padding: 3rem;
+            border-radius: 0 0 15px 15px;
+        }
+        .form-title {
+            color: #333;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+            text-align: center;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #2dce89 0%, #2d7a5f 100%);
+            border: none;
+            padding: 0.75rem 0;
+            font-weight: 600;
+            border-radius: 8px;
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(45, 206, 137, 0.4);
+        }
+        .divider {
+            display: flex;
+            align-items: center;
+            text-align: center;
+            margin: 1.5rem 0;
+            color: #6c757d;
+        }
+        .divider::before, .divider::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px solid #dee2e6;
+        }
+        .divider::before { margin-right: 0.5rem; }
+        .divider::after { margin-left: 0.5rem; }
+        .social-login {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+        .social-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #dee2e6;
+            color: #495057;
+            text-decoration: none;
+        }
+        .social-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+        }
+        .form-link {
+            text-align: center;
+            margin-top: 1rem;
+            color: #6c757d;
+        }
+        .form-link a {
+            color: #2dce89;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .form-link a:hover {
+            text-decoration: underline;
+        }
+        .error-message {
+            color: #dc3545;
+            font-size: 0.875rem;
+            display: none;
+        }
