@@ -107,7 +107,7 @@ public function createAddOffense(Request $request)
 
 public function editOffense($id)
 {
-    // offense data load করার জন্য আলাদা edit method
+  
     $offense = DB::table('traffic_officer')->where('id', $id)->first();
 
     return view('Officer.updateOffense', compact('offense'));
@@ -115,9 +115,9 @@ public function editOffense($id)
 
 public function updateOffense(Request $request, $id)
 {
-    // driver খুঁজে বের করা
+   
     $driver = DB::table('users')
-        ->where('id', $request->driver_id) // এখন form থেকে driver_id আসবে
+        ->where('id', $request->driver_id) 
         ->first();
 
     $update = DB::table('traffic_officer')

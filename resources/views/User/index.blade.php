@@ -28,7 +28,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="5" class="text-center">offense</td>
+                            <td colspan="5" class="text-center">No offenses found</td>
                         </tr>
                     @endforelse
 
