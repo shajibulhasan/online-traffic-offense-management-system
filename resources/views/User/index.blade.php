@@ -18,7 +18,6 @@
                 }
             @endphp
 
-
             @if($unpaid_point >= 15)
                 <h4 class="alert-heading text-center">You have 15 or more points in the last 30 days. Your license has been suspended until all payments are made.</h4>
             @elseif($point >= 15)
@@ -60,7 +59,8 @@
                                 @if($offense->status === 'paid')
                                     <span class="badge bg-success">Pay by Bkash</span>
                                 @else
-                                    <button class="btn btn-primary">Pay Now</button>
+                                <a class="btn btn-primary" href="{{ route('bkash-create-payment') }}">Pay Now</a>
+                                
                                 @endif
                             </td>
                                     

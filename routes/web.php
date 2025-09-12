@@ -83,3 +83,16 @@ Route::post('/Officer/updateOffense/{id}', [OfficerController::class, 'updateOff
 
 
 Route::get('/User/index', [UserController::class, 'index'])->name('User.index')->middleware(ValidateUser::class);
+
+
+//end Driver controller
+
+
+// bkash payment gateway
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/bkash/payment', [App\Http\Controllers\BkashTokenizePaymentController::class,'index'])->name('bkash-payment');
+    Route::get('/bkash/create-payment', [App\Http\Controllers\BkashTokenizePaymentController::class,'createPayment'])->name('bkash-create-payment');
+    Route::get('/bkash/callback', [App\Http\Controllers\BkashTokenizePaymentController::class,'callBack'])->name('bkash-callBack');
+
+});
