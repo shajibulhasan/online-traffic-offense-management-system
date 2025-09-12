@@ -86,6 +86,14 @@
                         <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
                     @enderror
                 </div>
+                <div class="form-floating mb-3">
+                    <input type="number" name="nid" class="form-control @error('nid') is-invalid @enderror"
+                           value="{{ old('nid') }}" id="regNid" placeholder="Enter Nid Number" required>
+                    <label for="regNid">Nid Number</label>
+                    @error('nid')
+                        <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+                    @enderror
+                </div>
 
                 <!-- Submit -->
                 <button type="submit" class="btn btn-primary w-100">Register</button>
