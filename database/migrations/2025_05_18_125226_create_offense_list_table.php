@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('traffic_officer', function (Blueprint $table) {
+        Schema::create('offense_list', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('driver_id');
             $table->unsignedBigInteger('officer_id');
@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('details_offense');
             $table->string('fine');
             $table->string('point');
+            $table->string('status')->default('unpaid');
             $table->timestamps();
             // Ensure referenced user IDs exist in users table
             $table->foreign('officer_id')->references('id')->on('users')->onDelete('cascade');
@@ -31,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('traffic_officer');
+        Schema::dropIfExists('offense_list');
     }
 };

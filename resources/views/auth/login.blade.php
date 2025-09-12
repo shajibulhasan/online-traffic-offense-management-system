@@ -13,6 +13,16 @@
 </head>
 <body>
     <div class="container auth-container">
+        <!-- Display Success or Error Messages -->
+        @if(session('success'))
+            <div class="alert alert-success">
+                {{ session('success') }}
+            </div>
+        @elseif(session('error'))
+            <div class="alert alert-danger">
+                {{ session('error') }}
+            </div>
+        @endif
         <div class="auth-header">
             <div class="logo">
                 <i class="fas fa-car"></i> OTOMS

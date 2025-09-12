@@ -24,7 +24,7 @@ public function createAddOffense(Request $request)
         'point'           => ['required'],
     ]);
 
-    $create = DB::table('traffic_officer')->insert([
+    $create = DB::table('offense_list')->insert([
         'driver_id'       => $request->driver_id,
         'officer_id'      => auth()->user()->id,
         'thana_name'      => $request->thana_name,
@@ -82,12 +82,12 @@ public function createAddOffense(Request $request)
                 ->first();
 
             if ($driver) {
-                $Offense_list = DB::table('traffic_officer')
-                    ->join('users as officers', 'traffic_officer.officer_id', '=', 'officers.id')
-                    ->join('users as drivers', 'traffic_officer.driver_id', '=', 'drivers.id')
-                    ->where('traffic_officer.driver_id', $driver->id)
+                $Offense_list = DB::table('offense_list')
+                    ->join('users as officers', 'offense_list.officer_id', '=', 'officers.id')
+                    ->join('users as drivers', 'offense_list.driver_id', '=', 'drivers.id')
+                    ->where('offense_list.driver_id', $driver->id)
                     ->select(
-                        'traffic_officer.*',
+                        'offense_list.*',
                         'officers.name as officer_name',
                         'drivers.name as driver_name'
                     )
@@ -108,7 +108,7 @@ public function createAddOffense(Request $request)
 public function editOffense($id)
 {
   
-    $offense = DB::table('traffic_officer')->where('id', $id)->first();
+    $offense = DB::table('offense_list')->where('id', $id)->first();
 
     return view('Officer.updateOffense', compact('offense'));
 }
@@ -120,7 +120,7 @@ public function updateOffense(Request $request, $id)
         ->where('id', $request->driver_id) 
         ->first();
 
-    $update = DB::table('traffic_officer')
+    $update = DB::table('offense_list')
         ->where('id', $id)
         ->update([
             'driver_id'       => $driver->id,

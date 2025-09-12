@@ -9,6 +9,7 @@
                 <option value="phone">Phone</option>
                 <option value="email">Email</option>
                 <option value="license">License</option>
+                <option value="nid">NID</option>
             </select>
         </div>
         <div class="col-md-5">
@@ -78,10 +79,15 @@ $(document).ready(function(){
                                     <td>${item.details_offense ?? ''}</td>
                                     <td>${item.fine ?? ''}</td>
                                     <td>${item.point ?? ''}</td>
-                                    <td>${item.payment_status ?? ''}</td>
                                     <td>
-                                        <a href="/Officer/updateOffense/${item.id}" class="btn btn-sm btn-info">Edit</a>
-                                        <button class="btn btn-sm btn-danger" onclick="deleteOffense(${item.id})">Delete</button>
+                                        ${item.status === 'paid' ? '<span class="badge bg-success">Paid</span>' : '<span class="badge bg-danger">Unpaid</span>'}
+                                    </td>
+                                    <td>
+                                        ${item.status === 'paid'
+                                            ? `<span class="badge bg-success">Pay by Bkash</span>`
+                                            : `<a href="/Officer/updateOffense/${item.id}" class="btn btn-sm btn-info">Edit</a>
+                                            <button class="btn btn-sm btn-danger" onclick="deleteOffense(${item.id})">Delete</button>`
+                                        }
                                     </td>
                                 </tr>
                             `);

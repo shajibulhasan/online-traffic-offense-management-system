@@ -15,6 +15,7 @@
                         <th  class="text-center">Fine</th>
                         <th  class="text-center">Point</th>
                         <th class="text-center">Payment Status</th>
+                        <th class="text-center action">Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -23,12 +24,26 @@
                             <td class="text-center">{{ $offense->thana }}</td>
                             <td class="text-center">{{ $offense->details }}</td>
                             <td class="text-center">{{ $offense->fine }}</td>
-                            <td class="text-center">{{ $offense->point }}</td>  
-                             <td class="text-center"><button class="btn btn-primary">Pay Now</button></td>                           
+                            <td class="text-center">{{ $offense->point }}</td>   
+                            <td class="text-center">
+                                @if($offense->status === 'paid')
+                                    <span class="badge bg-success">Paid</span>
+                                @else
+                                    <span class="badge bg-danger">Unpaid</span>
+                                @endif
+                            </td>
+                            <td class="text-center action">
+                                @if($offense->status === 'paid')
+                                    <span class="badge bg-success">Pay by Bkash</span>
+                                @else
+                                    <button class="btn btn-primary">Pay Now</button>
+                                @endif
+                            </td>
+                                    
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="5" class="text-center">No offenses found</td>
+                            <td colspan="5" class="text-center">offense</td>
                         </tr>
                     @endforelse
 
@@ -38,3 +53,4 @@
     </div>
 </div>
 @endsection
+

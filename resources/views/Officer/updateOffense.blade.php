@@ -29,9 +29,9 @@
                         </div>
 
                         <div class="mb-3">
-                            <label for="thana_name" class="form-label">Area Name</label>
+                            <label for="thana_name" class="form-label">Thana Name</label>
                             <input type="text" class="form-control" id="thana_name" name="thana_name"
-                                value="{{ $offense->thana_name }}" required>
+                                value="{{ $offense->thana_name }}" required readonly>
                         </div>
 
                         <div class="mb-3">

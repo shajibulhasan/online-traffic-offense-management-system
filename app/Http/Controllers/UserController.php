@@ -12,14 +12,15 @@ class UserController extends Controller
     { 
         $user = Auth::user();
 
-        $offenseList = DB::table('traffic_officer')
+        $offenseList = DB::table('offense_list')
             ->where('driver_id', $user->id)
             ->select(
                 'id',
                 'thana_name as thana', 
                 'details_offense as details',
                 'fine',
-                'point'
+                'point',
+                'status'
             )
             ->get();
 

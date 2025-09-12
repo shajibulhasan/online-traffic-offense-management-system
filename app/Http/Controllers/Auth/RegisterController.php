@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Http\Request;
 
 class RegisterController extends Controller
 {
@@ -53,6 +54,7 @@ class RegisterController extends Controller
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'phone' => ['required', 'unique:users'],
             'password' => ['required', 'string', 'min:6', 'confirmed'],
+            'nid' => ['required', 'unique:users'],
         ]);
     }
 
@@ -69,7 +71,21 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'phone' => $data['phone'],
             'role' => $data['role'],
+            'nid' => $data['nid'],
             'password' => Hash::make($data['password']),
         ]);
     }
+     /**
+     * The user has been registered.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  mixed  $user
+     * @return mixed
+     */
+    protected function registered(Request $request, $user)
+    {
+        session()->flash('success', 'Registration successful!');
+    }
+    
+
 }
