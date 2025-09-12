@@ -20,7 +20,9 @@ class UserController extends Controller
                 'details_offense as details',
                 'fine',
                 'point',
-                'status'
+                'status',
+                'created_at',
+                'updated_at'
             )
             ->get();
 
