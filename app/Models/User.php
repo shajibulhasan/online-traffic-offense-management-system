@@ -25,6 +25,7 @@ class User extends Authenticatable
         'thana_lead',
         'role',    
         'password',
+        'nid',
     ];
 
     /**

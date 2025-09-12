@@ -47,6 +47,7 @@
                                     <option value="phone">Phone</option>
                                     <option value="email">Email</option>
                                     <option value="license">Driver License</option>
+                                    <option value="nid">NID</option>
                                 </select>
                                 <input type="text" id="searchValue" class="form-control" placeholder="Select search type first" disabled>
                                 <button type="button" onclick="searchDriver()" class="btn btn-outline-primary" disabled id="searchBtn">Search</button>
@@ -153,7 +154,8 @@
         const placeholders = {
             phone: "Enter phone number...",
             email: "Enter email address...",
-            license: "Enter driver license number..."
+            license: "Enter driver license number...",
+            nid: "Enter NID number..."
         };
 
         searchInput.placeholder = placeholders[searchType] || "Enter value...";
@@ -188,7 +190,7 @@
                 }
             })
             .catch(() => {
-                resultDiv.innerHTML = `<span class="text-danger">Something went wrong.</span>`;
+                resultDiv.innerHTML = `<span class="text-danger">Something wrong.</span>`;
             });
     }
 
