@@ -84,7 +84,9 @@ $(document).ready(function(){
                                     </td>
                                     <td>
                                         ${item.status === 'paid'
-                                            ? `<span class="badge bg-success">Pay by Bkash</span>`
+                                            ? `<span>
+                                                    Transaction ID: <span class="badge bg-success">${ item.transaction_id }</span>                                     
+                                                </span>`
                                             : `<a href="/Officer/updateOffense/${item.id}" class="btn btn-sm btn-info">Edit</a>
                                             <button class="btn btn-sm btn-danger" onclick="deleteOffense(${item.id})">Delete</button>`
                                         }
