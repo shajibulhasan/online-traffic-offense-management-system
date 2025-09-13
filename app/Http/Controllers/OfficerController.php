@@ -48,21 +48,33 @@ public function createAddOffense(Request $request)
     public function searchDriver(Request $request)
     {
         $request->validate([
-            'type'  => 'required|in:phone,email,license',
+            'type'  => 'required|in:phone,email,license,nid',
             'value' => 'required|string|max:255',
         ]);
-
-        $column = $request->type === 'license' ? 'license' : $request->type;
-
+        if ($request->type === 'license') {
+            $column = 'license';
+        } elseif ($request->type === 'nid') {
+            $column = 'nid';
+        } else {
+            $column = $request->type; // phone বা email
+        }
         $driver = DB::table('users')
             ->where($column, $request->value)
             ->where('role', 'user')
             ->first();
-
         if ($driver) {
-            return response()->json(['success' => true, 'driver' => ['id' => $driver->id, 'name' => $driver->name]]);
+            return response()->json([
+                'success' => true,
+                'driver'  => [
+                    'id'   => $driver->id,
+                    'name' => $driver->name
+                ]
+            ]);
         } else {
-            return response()->json(['success' => false, 'message' => 'Driver not found']);
+            return response()->json([
+                'success' => false,
+                'message' => 'Driver not found'
+            ]);
         }
     }
 
