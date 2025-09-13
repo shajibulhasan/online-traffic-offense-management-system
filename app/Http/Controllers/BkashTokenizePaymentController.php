@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Karim007\LaravelBkashTokenize\Facade\BkashPaymentTokenize;
 use Karim007\LaravelBkashTokenize\Facade\BkashRefundTokenize;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\DB;
 
 class BkashTokenizePaymentController extends Controller
 {
@@ -11,14 +13,16 @@ class BkashTokenizePaymentController extends Controller
     {
         return view('bkashT::bkash-payment');
     }
-    public function createPayment(Request $request)
+    public function createPayment(Request $request, $ammout, $id)
     {
+        session()->put('offense_id', $id);
+
         $inv = uniqid();
         $request['intent'] = 'sale';
         $request['mode'] = '0011'; //0011 for checkout
         $request['payerReference'] = $inv;
         $request['currency'] = 'BDT';
-        $request['amount'] = 10;
+        $request['amount'] = $ammout; //dynamic amount
         $request['merchantInvoiceNumber'] = $inv;
         $request['callbackURL'] = config("bkash.callbackURL");;
 
@@ -49,10 +53,15 @@ class BkashTokenizePaymentController extends Controller
             }
 
             if (isset($response['statusCode']) && $response['statusCode'] == "0000" && $response['transactionStatus'] == "Completed") {
-                /*
-                 * for refund need to store
-                 * paymentID and trxID
-                 * */
+                $offense_id = session()->get('offense_id');
+                DB::table('offense_list')
+                ->where('id', $offense_id)
+                ->update([
+                    'status' => 'paid',
+                    'transaction_id' => $response['trxID'],
+                    'updated_at' => now()
+                ]);
+                session()->forget('offense_id');
                 return BkashPaymentTokenize::success('Thank you for your payment', $response['trxID']);
             }
             return BkashPaymentTokenize::failure($response['statusMessage']);

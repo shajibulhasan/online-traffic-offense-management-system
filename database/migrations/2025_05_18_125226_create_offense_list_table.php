@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('details_offense');
             $table->string('fine');
             $table->string('point');
+            $table->string('transaction_id')->nullable();
             $table->string('status')->default('unpaid');
             $table->timestamps();
             // Ensure referenced user IDs exist in users table
