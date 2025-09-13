@@ -85,7 +85,7 @@
                 </div>
                 <div class="navbar-nav w-100">
                     
-                    <a href="{{ route('Admin.index') }}" class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
+                    <a href="{{ route('Admin.index') }}" class="nav-item nav-link text-white"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
                     @if(Auth::check() && Auth::user()->division_lead != null)
                     <a href="{{ route('Admin.assignDistrict') }}" class="nav-item nav-link text-white"><i class="fa fa-user me-2"></i>Assign District</a>
                     <a href="{{ route('Admin.assignDistrictList') }}" class="nav-item nav-link text-white"><i class="fa fa-list me-2"></i>Assign District List</a>
@@ -107,7 +107,9 @@
                     <a href="{{ route('Officer.addOffense') }}" class="nav-item nav-link text-white"><i class="fa fa-plus me-2"></i>Add Offense</a>
                     <a href="{{ route('Officer.offenseList') }}" class="nav-item nav-link text-white"><i class="fa fa-list me-2"></i>Offense List</a>
                     @elseif(Auth::check() && Auth::user()->role == 'user')
-                    <a href="{{ route('User.index') }}" class="nav-item nav-link text-white"><i class="fa fa-user me-2"></i>My Offense</a>
+                    <a href="{{ route('User.index') }}" class="nav-item nav-link text-white"><i class="fa fa-exclamation-triangle me-2"></i>My Offense</a>
+                    <a href="{{ route('User.profileShow') }}" class="nav-item nav-link text-white"><i class="fa fa-user me-2"></i>My Profile</a>
+                    <a href="{{ route('profile.edit') }}" class="nav-item nav-link text-white"><i class="fa fa-edit me-2"></i>Edit Profile</a>
                     @endif
 
                     </div>

@@ -26,19 +26,19 @@
                 <h4 class="alert-heading text-center">You have {{ $point ?? 0 }} points in the last 30 days. Drive Safely!</h4>
             @endif
         </div>
-        <div class="card-header text-white bg-dark text-center py-2">
+        <div class="card-header text-white bg-success text-center py-2">
             <h4 class="mb-0"><b>My Offense List</b></h4>
         </div>
         <div class="card-body">
-            <table class="table table-bordered table-striped">
-                <thead class="table-dark">
-                    <tr>
-                        <th  class="text-center">Thana</th>
-                        <th  class="text-center">Details</th>
-                        <th  class="text-center">Fine</th>
-                        <th  class="text-center">Point</th>
-                        <th class="text-center">Payment Status</th>
-                        <th class="text-center action">Action</th>
+            <table class="table table-responsive table">
+                <thead class="table bg-success">
+                    <tr class="text-white">
+                        <th  class="text-center text-white">Thana</th>
+                        <th  class="text-center text-white">Details</th>
+                        <th  class="text-center text-white">Fine</th>
+                        <th  class="text-center text-white">Point</th>
+                        <th class="text-center text-white">Payment Status</th>
+                        <th class="text-center text-white">Action</th>
                     </tr>
                 </thead>
                 <tbody>

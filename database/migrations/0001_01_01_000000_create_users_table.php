@@ -21,6 +21,8 @@ return new class extends Migration
             $table->string('district_lead')->nullable();
             $table->string('thana_lead')->nullable();
             $table->string('area_lead')->nullable();
+            $table->string('license')->nullable();
+            $table->string('profile_image')->nullable();
             $table->string('role')->nullable();
             $table->integer('status')->default(0);
             $table->timestamp('email_verified_at');
