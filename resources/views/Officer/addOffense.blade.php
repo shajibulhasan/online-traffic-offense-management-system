@@ -189,8 +189,8 @@
                     document.getElementById('offenseFormFields').style.display = 'none';
                 }
             })
-            .catch(() => {
-                resultDiv.innerHTML = `<span class="text-danger">Something wrong.</span>`;
+            .catch((e) => {
+                resultDiv.innerHTML = `<span class="text-danger">Error: ${e}</span>`;
             });
     }
 
