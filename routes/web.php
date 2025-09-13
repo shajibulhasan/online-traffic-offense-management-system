@@ -83,6 +83,9 @@ Route::post('/Officer/updateOffense/{id}', [OfficerController::class, 'updateOff
 
 
 Route::get('/User/index', [UserController::class, 'index'])->name('User.index')->middleware(ValidateUser::class);
+Route::get('/User/profileShow', [UserController::class, 'show'])->name('User.profileShow')->middleware(ValidateUser::class);
+Route::get('/User/ProfileEdit', [UserController::class, 'edit'])->name('profile.edit')->middleware(ValidateUser::class);
+Route::post('/User/ProfileEdit', [UserController::class, 'update'])->name('profile.update')->middleware(ValidateUser::class);
 
 
 //end Driver controller

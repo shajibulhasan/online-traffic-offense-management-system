@@ -29,4 +29,57 @@ class UserController extends Controller
 
         return view('User.index', ['offenseList' => $offenseList]);
     }
+     public function show()
+    {
+        $user = Auth::user();
+        return view('User.profileShow', compact('user'));
+    }
+    public function edit()
+    {
+        $user = Auth::user();
+        return view('User.profileEdit', compact('user'));
+    }
+
+    // Update Profile
+   public function update(Request $request)
+{
+    $user = Auth::user();
+
+    $request->validate([
+        'name'    => 'required|string|max:255',
+        'email'   => 'required|email|unique:users,email,' . $user->id,
+        'phone'   => 'nullable|string|max:20',
+        'nid'     => 'nullable|string|max:50',
+        'license' => 'nullable|string|max:50',
+        'profile_image' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+    ]);
+
+    // Upload image if exists
+    if ($request->hasFile('profile_image')) {
+        // পুরাতন image delete
+        if ($user->profile_image && file_exists(public_path('images/' . $user->profile_image))) {
+            unlink(public_path('images/' . $user->profile_image));
+        }
+
+        // original file name use করা হবে
+        $fileName = $request->file('profile_image')->getClientOriginalName();
+
+        // ফোল্ডারে save
+        $request->file('profile_image')->move(public_path('images'), $fileName);
+
+        // database এ file name save
+        $user->profile_image = $fileName;
+    }
+
+    // Update user info
+    $user->name    = $request->name;
+    $user->email   = $request->email;
+    $user->phone   = $request->phone;
+    $user->nid     = $request->nid;
+    $user->license = $request->license;
+    $user->save();
+
+    return redirect()->route('User.profileShow')->with('success', 'Profile updated successfully!');
+}
+
 }
