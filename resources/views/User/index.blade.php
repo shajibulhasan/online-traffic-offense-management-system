@@ -27,7 +27,7 @@
             @endif
         </div>
         <div class="card-header text-white bg-dark text-center py-2">
-            <h4 class="mb-0"><b>{{ Auth::user()->name }} Offense List</b></h4>
+            <h4 class="mb-0"><b>My Offense List</b></h4>
         </div>
         <div class="card-body">
             <table class="table table-bordered table-striped">
@@ -57,17 +57,22 @@
                             </td>
                             <td class="text-center action">
                                 @if($offense->status === 'paid')
-                                    <span class="badge bg-success">Pay by Bkash</span>
+                                    <span>
+                                        Transaction ID: <span class="badge bg-success">{{ $offense-> transaction_id }}</span>                                     
+                                    </span>
+                                    
                                 @else
-                                <a class="btn btn-primary" href="{{ route('bkash-create-payment') }}">Pay Now</a>
-                                
+                                <form action="{{ route('bkash-create-payment', [$offense->fine, $offense->id]) }}" method="POST">
+                                    @csrf
+                                    <button type="submit" class="btn btn-primary">Pay Now</button>
+                                </form>                                
                                 @endif
                             </td>
                                     
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="5" class="text-center">offense</td>
+                            <td colspan="6" class="text-center">NO Offense</td>
                         </tr>
                     @endforelse
 

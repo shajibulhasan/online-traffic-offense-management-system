@@ -21,6 +21,7 @@ class UserController extends Controller
                 'fine',
                 'point',
                 'status',
+                'transaction_id',
                 'created_at',
                 'updated_at'
             )
