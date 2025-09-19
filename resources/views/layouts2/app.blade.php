@@ -62,12 +62,12 @@
 
         <!-- Sidebar Start -->
         <div class="sidebar pe-4 pb-3">
-            <nav class="navbar bg-secondary navbar-dark">
+            <nav class="navbar navbar-dark">
                 <a href="{{ route('Admin.index') }}" class="navbar-brand mx-4 mb-3">
-                    <h3 class="text-primary"></i>Offense <br> Management</h3>
+                    <h3 class="text-white"></i>Offense <br> Management</h3>
                 </a>
                 <div class="d-flex align-items-center ms-4 mb-4">
-                    <div class="ms-3 text-white">
+                    <div class="ms-3 badge bg-primary text-white">
                         @if(Auth::check() && Auth::user()->division_lead != null)
                             <span>Division Lead</span>
                         @elseif(Auth::check() && Auth::user()->district_lead != null)
@@ -85,31 +85,31 @@
                 </div>
                 <div class="navbar-nav w-100">
                     
-                    <a href="{{ route('Admin.index') }}" class="nav-item nav-link text-white"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
+                    <a href="{{ route('Admin.index') }}" class="nav-item nav-link text-white {{ request()->routeIs('Admin.index') ? 'active' : '' }}"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
                     @if(Auth::check() && Auth::user()->division_lead != null)
-                    <a href="{{ route('Admin.assignDistrict') }}" class="nav-item nav-link text-white"><i class="fa fa-user me-2"></i>Assign District</a>
-                    <a href="{{ route('Admin.assignDistrictList') }}" class="nav-item nav-link text-white"><i class="fa fa-list me-2"></i>Assign District List</a>
-                    <a href="{{ route('Admin.verifyOfficerAccount') }}" class="nav-item nav-link text-white"><i class="fa fa-check me-2"></i>Verify Officer</a>
+                    <a href="{{ route('Admin.assignDistrict') }}" class="nav-item nav-link text-white {{ request()->routeIs('Admin.assignDistrict') ? 'active' : '' }}"><i class="fa fa-user me-2"></i>Assign District</a>
+                    <a href="{{ route('Admin.assignDistrictList') }}" class="nav-item nav-link text-white {{ request()->routeIs('Admin.assignDistrictList') ? 'active' : '' }}"><i class="fa fa-list me-2"></i>Assign District List</a>
+                    <a href="{{ route('Admin.verifyOfficerAccount') }}" class="nav-item nav-link text-white {{ request()->routeIs('Admin.verifyOfficerAccount') ? 'active' : '' }}"><i class="fa fa-check me-2"></i>Verify Officer</a>
 
                     @elseif(Auth::check() && Auth::user()->district_lead != null)
-                    <a href="{{ route('Admin.assignThana') }}" class="nav-item nav-link text-white"><i class="fa fa-user me-2"></i>Assign Thana</a>
-                    <a href="{{ route('Admin.show-assign-thana') }}" class="nav-item nav-link text-white"><i class="fa fa-list me-2"></i>Assign Thana List</a>
-                    <a href="{{ route('Admin.addThana') }}" class="nav-item nav-link text-white"><i class="fa fa-plus me-2"></i>Add Thana</a>
-                    <a href="{{ route('Admin.thanaList') }}" class="nav-item nav-link text-white"><i class="fa fa-list me-2"></i>Thana List</a>
+                    <a href="{{ route('Admin.assignThana') }}" class="nav-item nav-link text-white {{ request()->routeIs('Admin.assignThana') ? 'active' : '' }}"><i class="fa fa-user me-2"></i>Assign Thana</a>
+                    <a href="{{ route('Admin.show-assign-thana') }}" class="nav-item nav-link text-white {{ request()->routeIs('Admin.show-assign-thana') ? 'active' : '' }}"><i class="fa fa-list me-2"></i>Assign Thana List</a>
+                    <a href="{{ route('Admin.addThana') }}" class="nav-item nav-link text-white {{ request()->routeIs('Admin.addThana') ? 'active' : '' }}"><i class="fa fa-plus me-2"></i>Add Thana</a>
+                    <a href="{{ route('Admin.thanaList') }}" class="nav-item nav-link text-white {{ request()->routeIs('Admin.thanaList') ? 'active' : '' }}"><i class="fa fa-list me-2"></i>Thana List</a>
 
                     @elseif(Auth::check() && Auth::user()->thana_lead != null)
-                    <a href="{{ route('Admin.assignOfficer') }}" class="nav-item nav-link text-white"><i class="fa fa-user me-2"></i>Assign Officer</a>
-                    <a href="{{ route('Admin.assignOfficerList') }}" class="nav-item nav-link text-white"><i class="fa fa-list me-2"></i>Assign Officer List</a>
-                    <a href="{{ route('Admin.addArea') }}" class="nav-item nav-link text-white"><i class="fa fa-plus me-2"></i>Add Area</a>
-                    <a href="{{ route('Admin.areaList') }}" class="nav-item nav-link text-white"><i class="fa fa-list me-2"></i>Area List</a>
+                    <a href="{{ route('Admin.assignOfficer') }}" class="nav-item nav-link text-white {{ request()->routeIs('Admin.assignOfficer') ? 'active' : '' }}"><i class="fa fa-user me-2"></i>Assign Officer</a>
+                    <a href="{{ route('Admin.assignOfficerList') }}" class="nav-item nav-link text-white {{ request()->routeIs('Admin.assignOfficerList') ? 'active' : '' }}"><i class="fa fa-list me-2"></i>Assign Officer List</a>
+                    <a href="{{ route('Admin.addArea') }}" class="nav-item nav-link text-white {{ request()->routeIs('Admin.addArea') ? 'active' : '' }}"><i class="fa fa-plus me-2"></i>Add Area</a>
+                    <a href="{{ route('Admin.areaList') }}" class="nav-item nav-link text-white {{ request()->routeIs('Admin.areaList') ? 'active' : '' }}"><i class="fa fa-list me-2"></i>Area List</a>
 
                     @elseif(Auth::check() && Auth::user()->area_lead != null)
-                    <a href="{{ route('Officer.addOffense') }}" class="nav-item nav-link text-white"><i class="fa fa-plus me-2"></i>Add Offense</a>
-                    <a href="{{ route('Officer.offenseList') }}" class="nav-item nav-link text-white"><i class="fa fa-list me-2"></i>Offense List</a>
+                    <a href="{{ route('Officer.addOffense') }}" class="nav-item nav-link text-white {{ request()->routeIs('Officer.addOffense') ? 'active' : '' }}"><i class="fa fa-plus me-2"></i>Add Offense</a>
+                    <a href="{{ route('Officer.offenseList') }}" class="nav-item nav-link text-white {{ request()->routeIs('Officer.offenseList') ? 'active' : '' }}"><i class="fa fa-list me-2"></i>Offense List</a>
                     @elseif(Auth::check() && Auth::user()->role == 'user')
-                    <a href="{{ route('User.index') }}" class="nav-item nav-link text-white"><i class="fa fa-exclamation-triangle me-2"></i>My Offense</a>
-                    <a href="{{ route('User.profileShow') }}" class="nav-item nav-link text-white"><i class="fa fa-user me-2"></i>My Profile</a>
-                    <a href="{{ route('profile.edit') }}" class="nav-item nav-link text-white"><i class="fa fa-edit me-2"></i>Edit Profile</a>
+                    <a href="{{ route('User.index') }}" class="nav-item nav-link text-white {{ request()->routeIs('User.index') ? 'active' : '' }}"><i class="fa fa-exclamation-triangle me-2"></i>My Offense</a>
+                    <a href="{{ route('User.profileShow') }}" class="nav-item nav-link text-white {{ request()->routeIs('User.profileShow') ? 'active' : '' }}"><i class="fa fa-user me-2"></i>My Profile</a>
+                    <a href="{{ route('profile.edit') }}" class="nav-item nav-link text-white {{ request()->routeIs('profile.edit') ? 'active' : '' }}"><i class="fa fa-edit me-2"></i>Edit Profile</a>
                     @endif
 
                     </div>
@@ -122,25 +122,24 @@
         <!-- Content Start -->
         <div class="content">
             <!-- Navbar Start -->
-            <nav class="navbar navbar-expand bg-secondary navbar-dark sticky-top px-4 py-0">
-                <a href="index.html" class="navbar-brand d-flex d-lg-none me-4">
-                    <h2 class="text-primary mb-0"><i class="fa fa-user-edit"></i></h2>
+            <nav class="navbar navbar-expand bg-success navbar-dark sticky-top px-4 py-0">
+                <a href="/" class="navbar-brand d-flex d-lg-none me-4">
+                    <h2 class="text-white mb-0"><i class="fa fa-user-edit"></i></h2>
                 </a>
-                <a href="#" class="sidebar-toggler flex-shrink-0">
+                <a href="#" class="sidebar-toggler text-white flex-shrink-0">
                     <i class="fa fa-bars"></i>
                 </a>
-                <form class="d-none d-md-flex ms-4">
-                    <input class="form-control bg-dark border-0" type="search" placeholder="Search">
-                </form>
+                 <div class="flex-grow-1 d-flex justify-content-center">
+                    <h4 class="text-white mb-0 text-center">Online Traffic Offense Management System</h4>
+                </div>
+                            
                 <div class="navbar-nav align-items-center ms-auto">
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
                             <span class="d-none d-lg-inline-flex text-white">{{ Auth::user()->name }}</span>                        
                         </a>
-                        <div class="dropdown-menu dropdown-menu-end bg-secondary border-0 rounded-0 rounded-bottom m-0" >
-                            <a href="#" class="dropdown-item">My Profile</a>
-                            <a href="#" class="dropdown-item">Settings</a>
-                            <a  href="{{ route('logout') }}" class="dropdown-item" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Log Out</a>
+                        <div class="dropdown-menu dropdown-menu-end bg-success border-0 rounded-0 rounded-bottom m-0" >
+                            <a  href="{{ route('logout') }}" class="dropdown-item  text-white" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Log Out</a>
                         </div>
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                             @csrf

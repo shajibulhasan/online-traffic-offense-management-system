@@ -10,17 +10,17 @@
     <div class="row justify-content-center align-items-center" style="min-height: 50vh;">
         <div class="col-md-6 col-12">
             <div class="card shadow-lg border-0 rounded-4">
-                <div class="card-header text-white bg-dark text-center">
+                <div class="card-header text-white bg-success text-center">
                     <h3><b>Assign District Lead</b></h3>
                 </div>
-                <div class="card-body">
+                <div class="card-body text-white p-4">
                     <form action="{{ route('Admin.assignDistrict') }}" method="POST">
                         @csrf
                         <div class="mb-4">
-                            <label for="officer" class="form-label"><b>Officer Name:</b> <span class="text-danger">*</span></label>
+                            <label for="officer" class="form-label"><b class="text-dark">Officer Name:</b> <span class="text-danger">*</span></label>
                             <div class="input-group">
-                                <span class="input-group-text bg-light"><i class="bi bi-person-badge"></i></span>
-                                <select id="officer" name="officer_name" class="form-select shadow-sm">
+                                <span class="input-group-text"><i class="bi bi-person-badge"></i></span>
+                                <select id="officer" name="officer_name" class="form-select shadow-sm bg-success text-white">
                                     <option value="">Select Officer</option>
                                     @foreach($officers as $officer)
                                         <option value="{{ $officer->id }}">{{ $officer->name }}</option>
@@ -37,7 +37,7 @@
                             <label for="district" class="form-label"><b>District:</b> <span class="text-danger">*</span></label>
                             <div class="input-group">
                                 <span class="input-group-text"><i class="bi bi-geo-fill"></i></span>
-                                <select id="district" name="district" class="form-select shadow-sm">
+                                <select id="district" name="district" class="form-select shadow-sm bg-success text-white">
                                     <option value="">Select District</option>
                                     @if(Auth::user()->division_lead == 'chattogram'){
                                         @foreach(['Bandarban', 'Bramanbaria', 'Chandpur', 'Comilla', 'Chittagong', 'Coxsbazar', 
@@ -91,7 +91,7 @@
                         </div>
                         
                         <div class="d-grid mt-4">
-                            <button type="submit" class="btn btn-custom">
+                            <button type="submit" class="btn btn-custom bagde-success">
                                 <i class="bi bi-plus-circle-fill me-2"></i> <b>Assign District</b>
                             </button>
                         </div>
@@ -128,6 +128,10 @@
         background-color: #3e8e41;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         transform: translateY(2px);
+    }
+    ::placeholder {
+        color: white !important;
+        opacity: 1; /* opacity default 0.5 থাকে, তাই বাড়াতে হবে */
     }
 </style>
 @endpush

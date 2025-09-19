@@ -120,7 +120,11 @@ public function createAddOffense(Request $request)
 public function editOffense($id)
 {
   
-    $offense = DB::table('offense_list')->where('id', $id)->first();
+    $offense = DB::table('offense_list')
+        ->join('users', 'offense_list.driver_id', '=', 'users.id')
+        ->where('offense_list.id', $id)
+        ->select('offense_list.*', 'users.name as driver_name')
+        ->first();
 
     return view('Officer.updateOffense', compact('offense'));
 }

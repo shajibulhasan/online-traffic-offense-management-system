@@ -30,54 +30,56 @@
             <h4 class="mb-0"><b>My Offense List</b></h4>
         </div>
         <div class="card-body">
-            <table class="table table-responsive table">
-                <thead class="table bg-success">
-                    <tr class="text-white">
-                        <th  class="text-center text-white">Thana</th>
-                        <th  class="text-center text-white">Details</th>
-                        <th  class="text-center text-white">Fine</th>
-                        <th  class="text-center text-white">Point</th>
-                        <th class="text-center text-white">Payment Status</th>
-                        <th class="text-center text-white">Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                 @forelse($offenseList as $offense)
+            <div class="table-responsive">
+                <table class="table text-center align-middle">
+                    <thead class="table-success">
                         <tr>
-                            <td class="text-center">{{ $offense->thana }}</td>
-                            <td class="text-center">{{ $offense->details }}</td>
-                            <td class="text-center">{{ $offense->fine }}</td>
-                            <td class="text-center">{{ $offense->point }}</td>   
-                            <td class="text-center">
-                                @if($offense->status === 'paid')
-                                    <span class="badge bg-success">Paid</span>
-                                @else
-                                    <span class="badge bg-danger">Unpaid</span>
-                                @endif
-                            </td>
-                            <td class="text-center action">
-                                @if($offense->status === 'paid')
-                                    <span>
-                                        Transaction ID: <span class="badge bg-success">{{ $offense-> transaction_id }}</span>                                     
-                                    </span>
-                                    
-                                @else
-                                <form action="{{ route('bkash-create-payment', [$offense->fine, $offense->id]) }}" method="POST">
-                                    @csrf
-                                    <button type="submit" class="btn btn-primary">Pay Now</button>
-                                </form>                                
-                                @endif
-                            </td>
-                                    
+                            <th>Thana</th>
+                            <th>Details</th>
+                            <th>Fine</th>
+                            <th>Point</th>
+                            <th>Payment Status</th>
+                            <th>Action</th>
                         </tr>
-                    @empty
-                        <tr>
-                            <td colspan="6" class="text-center">NO Offense</td>
-                        </tr>
-                    @endforelse
+                    </thead>
+                    <tbody>
+                    @forelse($offenseList as $offense)
+                            <tr>
+                                <td class="text-center">{{ $offense->thana }}</td>
+                                <td class="text-center">{{ $offense->details }}</td>
+                                <td class="text-center">{{ $offense->fine }}</td>
+                                <td class="text-center">{{ $offense->point }}</td>   
+                                <td class="text-center">
+                                    @if($offense->status === 'paid')
+                                        <span class="badge bg-success">Paid</span>
+                                    @else
+                                        <span class="badge bg-danger">Unpaid</span>
+                                    @endif
+                                </td>
+                                <td class="text-center action">
+                                    @if($offense->status === 'paid')
+                                        <span>
+                                            Transaction ID: <span class="badge bg-success">{{ $offense-> transaction_id }}</span>                                     
+                                        </span>
+                                        
+                                    @else
+                                    <form action="{{ route('bkash-create-payment', [$offense->fine, $offense->id]) }}" method="POST">
+                                        @csrf
+                                        <button type="submit" class="btn btn-primary">Pay Now</button>
+                                    </form>                                
+                                    @endif
+                                </td>
+                                        
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="6" class="text-center">NO Offense</td>
+                            </tr>
+                        @endforelse
 
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>

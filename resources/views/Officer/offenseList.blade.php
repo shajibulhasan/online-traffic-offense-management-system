@@ -1,10 +1,27 @@
 @extends('layouts2.app')
 
 @section('content')
+@if(session('success'))
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        {{ session('success') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+@elseif(session('error'))
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        {{ session('error') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+@endif
+<style>
+::placeholder {
+    color: white !important;
+    opacity: 1; /* opacity default 0.5 থাকে, তাই বাড়াতে হবে */
+}
+</style>
 <div class="container py-5">
     <div class="row mb-4">
         <div class="col-md-4">
-            <select id="searchType" class="form-select">
+            <select id="searchType" class="form-select bg-success text-white">
                 <option value="">Select Search Type</option>
                 <option value="phone">Phone</option>
                 <option value="email">Email</option>
@@ -13,16 +30,16 @@
             </select>
         </div>
         <div class="col-md-5">
-            <input type="text" id="searchValue" class="form-control" placeholder="Enter search value">
+            <input type="text" id="searchValue" class="form-control bg-success text-white" placeholder="Enter search value">
         </div>
         <div class="col-md-3">
-            <button id="searchBtn" class="btn btn-primary w-100">Search</button>
+            <button id="searchBtn" class="btn btn-success w-100">Search</button>
         </div>
     </div>
     <div class="card">
         <div class="card-body">
-            <table class="table table-bordered table-striped text-black">
-                <thead class="table-dark text-black">
+            <table class="table text-black">
+                <thead class="table-success">
                     <tr>
                         <th>#</th>
                         <th>Driver Name</th>
@@ -37,7 +54,7 @@
                     </tr>
                 </thead>
                 <tbody id="offenseTbody" class="text-black">
-                    <tr><td colspan="8" class="text-center">Please search for a driver.</td></tr>
+                    <tr><td colspan="9" class="text-center">Please search for a driver.</td></tr>
                 </tbody>
             </table>
         </div>

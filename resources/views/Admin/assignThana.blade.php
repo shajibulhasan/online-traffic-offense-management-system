@@ -5,11 +5,17 @@
 @elseif(session('error'))
     <div class="alert alert-danger">{{ session('error') }}</div>
 @endif
+<style>
+::placeholder {
+    color: white !important;
+    opacity: 1; 
+}
+</style>
 <div class="container py-5">
     <div class="row justify-content-center allign-iteams-center" style="main-height: 50vh">
         <div class="col-md-6 col-12">
             <div class="card shadow-lg border-0 rounded-4">
-                <div class="card-header text-white bg-dark text-center">
+                <div class="card-header text-white bg-success text-center">
                 <h3><b>Assign Thana</b></h3>
                 </div>
                 <div class="card-body">
@@ -18,8 +24,8 @@
                         <div class="mb-4">
                             <label for=""><b>Officer Name:</b><span class="text-danger">*</span></label>
                             <div class="input-group">
-                             <span class="input-group-text bg-light"><i class="bi bi-person-badge"></i></span>
-                             <select name="officer_name" id="officer" class="form-select shadow-sm">
+                             <span class="input-group-text"><i class="bi bi-person-badge"></i></span>
+                             <select name="officer_name" id="officer" class="form-select shadow-sm bg-success text-white">
                                 <option value="">Select Officer</option>
                                 @foreach($officers as $officer)
                                 <option value="{{ $officer->id }}">{{ $officer->name }}</option>
@@ -33,9 +39,9 @@
                         <div class="mb-4">
                             <label for="thana-list"><b>Thana List:</b><span class="text-danger">*</span></label>
                             <div class="input-group">
-                                <span class="input-group-text bg-light"><i class="bi bi-list-task"></i>
+                                <span class="input-group-text"><i class="bi bi-list-task"></i>
                                 </span>
-                                <select name="thana_name" id="thana" class="form-select shadow-sm">
+                                <select name="thana_name" id="thana" class="form-select shadow-sm bg-success text-white">
                                     <option value="">Selcet Thana List</option>
                                     @foreach($thana_list as $thana)
                                         @if($thana->district_name != Auth::user()->district_lead)

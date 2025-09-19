@@ -7,11 +7,17 @@
     <div class="alert alert-danger">{{ session('error') }}</div>
 @endif
 
+    <style>
+    ::placeholder {
+        color: white !important;
+        opacity: 1; 
+    }
+    </style>
 <div class="container py-5">
     <div class="row justify-content-center align-items-center">
         <div class="col-md-8 col-12">
             <div class="card shadow-lg border-0 rounded-4">
-                <div class="card-header text-white bg-dark text-center py-3">
+                <div class="card-header text-white bg-success text-center py-3">
                     <h4><b>Update Thana</b></h4>
                 </div>
                 <div class="card-body">
@@ -24,7 +30,7 @@
                             <label for="officer_name" class="form-label"><b>Officer Name:</b> <span class="text-danger">*</span></label>
                             <div class="input-group">
                                 <span class="input-group-text"><i class="bi bi-person-fill"></i></span>
-                                <input type="text" class="form-control shadow-sm" id="officer_name" name="officer_name" value="{{ old('officer_name', $thana->name) }}" required disabled>
+                                <input type="text" class="form-control shadow-sm bg-success text-white" id="officer_name" name="officer_name" value="{{ old('officer_name', $thana->name) }}" required disabled>
                             </div>
                             @error('officer_name')
                                 <div class="text-danger mt-2">{{ $message }}</div>
@@ -36,7 +42,7 @@
                             <label for="thana_name" class="form-label"><b>Thana List:</b> <span class="text-danger">*</span></label>
                             <div class="input-group">
                                 <span class="input-group-text bg-light"><i class="bi bi-list-task"></i></span>
-                                <select name="thana_name" id="thana_name" class="form-select shadow-sm" required>
+                                <select name="thana_name" id="thana_name" class="form-select shadow-sm bg-success text-white" required>
                                     <option value="">Select Thana</option>
                                     @foreach($thana_list as $item)
                                         <option value="{{ $item->thana_name }}" {{ $item->thana_name == $thana->thana_lead ? 'selected' : '' }}>
@@ -52,7 +58,7 @@
 
                         <!-- Submit Button -->
                         <div class="d-grid mt-4">
-                            <button type="submit" class="btn btn-dark d-flex justify-content-center align-items-center">
+                            <button type="submit" class="btn btn-success text-white d-flex justify-content-center align-items-center">
                                 <i class="bi bi-pencil-square me-2"></i><b>Update Thana</b>
                             </button>
                         </div>

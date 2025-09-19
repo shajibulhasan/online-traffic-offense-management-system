@@ -5,12 +5,18 @@
 @elseif(session('error'))
     <div class="alert alert-danger">{{ session('error') }}</div>
 @endif
+<style>
+::placeholder {
+    color: white !important;
+    opacity: 1; 
+}
+</style>
 
 <div class="container py-5">
     <div class="row justify-content-center align-items-center" style="min-height: 50vh;">
         <div class="col-md-6 col-12">
             <div class="card shadow-lg border-0 rounded-4">
-                <div class="card-header text-white bg-dark text-center">
+                <div class="card-header text-white bg-success text-center">
                     <h3><b>Assign Officer</b></h3>
                 </div>
                 <div class="card-body">
@@ -20,8 +26,8 @@
                         <div class="mb-4">
                             <label for="officer" class="form-label"><b>Officer Name:</b> <span class="text-danger">*</span></label>
                             <div class="input-group">
-                                <span class="input-group-text bg-light"><i class="bi bi-person-badge-fill"></i></span>
-                                <select id="officer" name="officer_name" class="form-select shadow-sm">
+                                <span class="input-group-text"><i class="bi bi-person-badge-fill"></i></span>
+                                <select id="officer" name="officer_name" class="form-select shadow-sm bg-success text-white">
                                     <option value="">Select Officer</option>
                                     @foreach($officers as $officer)
                                         <option value="{{ $officer->id }}">{{ $officer->name }}</option>
@@ -35,8 +41,8 @@
                         <div class="mb-4">
                         <label for="area" class="form-label"><b>Area List:</b> <span class="text-danger">*</span></label>
                             <div class="input-group">
-                                <span class="input-group-text bg-light"><i class="bi bi-list-task"></i></span>
-                                <select id="area" name="area_name" class="form-select shadow-sm">
+                                <span class="input-group-text "><i class="bi bi-list-task"></i></span>
+                                <select id="area" name="area_name" class="form-select shadow-sm bg-success text-white">
                                     <option value="">Select area</option>
                                     @foreach($area_list as $area)
                                         @if($area->thana_name != Auth::user()->thana_lead)
@@ -51,7 +57,7 @@
                         @enderror
                        
                         <div class="d-grid mt-4">
-                            <button type="submit" class="btn btn-custom d-flex justify-content-center align-items-center">
+                            <button type="submit" class="btn btn-success d-flex justify-content-center align-items-center">
                                 <i class="bi bi-plus-circle-fill me-2"></i> <b>Assign Officer</b>
                             </button>
                         </div>

@@ -13,17 +13,24 @@
     </div>
 @endif
 
+<style>
+::placeholder {
+    color: white !important;
+    opacity: 1; /* opacity default 0.5 থাকে, তাই বাড়াতে হবে */
+}
+</style>
+
 <div class="container py-5">
     <div class="row justify-content-center align-items-center">
         <div class="col-lg-10 col-md-11">
             <div class="card border-0 shadow rounded-4">
-                <div class="card-header bg-dark text-white text-center rounded-top-4">
+                <div class="card-header bg-success text-white text-center rounded-top-4">
                     <h4 class="fw-bold mb-0">Assign Officer List</h4>
                 </div>
                 <div class="card-body px-4 py-4">
                     <div class="table-responsive">
-                        <table class="table table-hover table-bordered text-center align-middle mb-0">
-                            <thead class="table-dark">
+                        <table class="table text-center align-middle mb-0">
+                            <thead class="table-success">
                                 <tr>
                                     <th>Serial</th>
                                     <th>Officer Name</th>
@@ -73,7 +80,7 @@
                                 </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="4" class="text-muted">No officers assigned yet.</td>
+                                        <td colspan="5" class="text-muted">No officers assigned yet.</td>
                                     </tr>
                                 @endforelse
                             </tbody>

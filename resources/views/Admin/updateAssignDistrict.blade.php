@@ -7,11 +7,17 @@
     <div class="alert alert-danger">{{ session('error') }}</div>
 @endif
 
+    <style>
+    ::placeholder {
+        color: white !important;
+        opacity: 1; 
+    }
+    </style>
 <div class="container py-5">
     <div class="row justify-content-center align-items-center">
         <div class="col-md-8 col-12">
             <div class="card shadow-lg border-0 rounded-4">
-                <div class="card-header text-white bg-dark text-center py-3">
+                <div class="card-header text-white bg-success text-center py-3">
                     <h4><b>Update Assign District</b></h4>
                 </div>
                 <div class="card-body">
@@ -24,7 +30,7 @@
                             <label for="name" class="form-label"><b>Officer Name:</b> <span class="text-danger">*</span></label>
                             <div class="input-group">
                                 <span class="input-group-text"><i class="bi bi-person-fill"></i></span>
-                                <input type="text" class="form-control shadow-sm" id="name" name="name" value="{{ old('name', $assign_district->name) }}" required disabled>
+                                <input type="text" class="form-control shadow-sm bg-success text-white" id="name" name="name" value="{{ old('name', $assign_district->name) }}" required disabled>
                             </div>
                             @error('name')
                                 <div class="text-danger mt-2">{{ $message }}</div>
@@ -36,7 +42,7 @@
                             <label for="district_lead" class="form-label"><b>District:</b> <span class="text-danger">*</span></label>
                             <div class="input-group">
                                 <span class="input-group-text"><i class="bi bi-geo-alt-fill"></i></span>    
-                                    <select id="district" name="district_lead" class="form-select shadow-sm">
+                                    <select id="district" name="district_lead" class="form-select shadow-sm bg-success text-white @error('district_lead') is-invalid @enderror" required>
                                         <option value="">Select District</option>
                                         @if(Auth::user()->division_lead == 'chattogram')
                                             @foreach(['Bandarban', 'Bramanbaria', 'Chandpur', 'Comilla', 'Chittagong', 'Coxsbazar', 
@@ -84,7 +90,7 @@
 
                         <!-- Submit Button -->
                         <div class="d-grid mt-4">
-                            <button type="submit" class="btn btn-dark d-flex justify-content-center align-items-center">
+                            <button type="submit" class="btn btn-success text-white d-flex justify-content-center align-items-center">
                                 <i class="bi bi-pencil-square me-2"></i><b>Update Assign District</b>
                             </button>
                         </div>

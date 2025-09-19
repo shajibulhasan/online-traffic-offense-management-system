@@ -14,13 +14,13 @@
     <div class="row justify-content-center align-items-center">
         <div class="col-md-10 col-12">
             <div class="card shadow-lg border-0 rounded-4">
-                <div class="card-header text-white bg-dark text-center py-2">
+                <div class="card-header text-white bg-success text-center py-2">
                     <h4 class="mb-0"><b>Officer List</b></h4>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table table-striped table-hover table-bordered text-center align-middle">
-                            <thead class="table-dark">
+                        <table class="table table table-hover text-center align-middle">
+                            <thead class="table-success text-white">
                                 <tr>
                                     <th>Serial No.</th>
                                     <th>Officer Name</th>

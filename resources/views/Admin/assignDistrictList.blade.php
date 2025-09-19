@@ -11,17 +11,23 @@
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
 @endif
+<style>
+::placeholder { 
+    color: white !important;
+    opacity: 1; /* opacity default 0.5 থাকে, তাই বাড়াতে হবে */
+}
+</style>
 
 <div class="container py-5">
     <div class="row justify-content-center align-items-center">
         <div class="col-md-10 col-12">
             <div class="card shadow-lg border-0 rounded-4">
-                <div class="card-header bg-dark text-white text-center py-2">
+                <div class="card-header bg-success text-white text-center py-2">
                     <h4 class="mb-0"><b>Assign District List</b></h4>
                 </div>
                 <div class="card-body table-responsive">
-                    <table class="table table-bordered table-hover text-center align-middle">
-                        <thead class="table-dark">
+                    <table class="table table table-hover text-center align-middle">
+                        <thead class="table-success text-white">
                             <tr>
                                 <th>Serial</th>
                                 <th>Officer Name</th>
