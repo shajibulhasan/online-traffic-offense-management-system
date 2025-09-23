@@ -34,6 +34,14 @@
     npm install
 ```
 ```bash
+    composer require karim007/laravel-bkash-tokenize
+```
+
+```bash
+    php artisan vendor:publish --provider="Karim007\LaravelBkashTokenize\BkashTokenizeServiceProvider" --tag="config"
+```
+
+```bash
     npm run dev
 ```
 
