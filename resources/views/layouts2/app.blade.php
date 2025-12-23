@@ -85,7 +85,7 @@
                 </div>
                 <div class="navbar-nav w-100">
                     
-                    <a href="{{ route('Admin.index') }}" class="nav-item nav-link text-white {{ request()->routeIs('Admin.index') ? 'active' : '' }}"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
+                    <a href="{{ route('dashboard') }}" class="nav-item nav-link text-white {{ request()->routeIs('dashboard') ? 'active' : '' }}"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
                     @if(Auth::check() && Auth::user()->division_lead != null)
                     <a href="{{ route('Admin.assignDistrict') }}" class="nav-item nav-link text-white {{ request()->routeIs('Admin.assignDistrict') ? 'active' : '' }}"><i class="fa fa-user me-2"></i>Assign District</a>
                     <a href="{{ route('Admin.assignDistrictList') }}" class="nav-item nav-link text-white {{ request()->routeIs('Admin.assignDistrictList') ? 'active' : '' }}"><i class="fa fa-list me-2"></i>Assign District List</a>
@@ -96,20 +96,26 @@
                     <a href="{{ route('Admin.show-assign-thana') }}" class="nav-item nav-link text-white {{ request()->routeIs('Admin.show-assign-thana') ? 'active' : '' }}"><i class="fa fa-list me-2"></i>Assign Thana List</a>
                     <a href="{{ route('Admin.addThana') }}" class="nav-item nav-link text-white {{ request()->routeIs('Admin.addThana') ? 'active' : '' }}"><i class="fa fa-plus me-2"></i>Add Thana</a>
                     <a href="{{ route('Admin.thanaList') }}" class="nav-item nav-link text-white {{ request()->routeIs('Admin.thanaList') ? 'active' : '' }}"><i class="fa fa-list me-2"></i>Thana List</a>
+                    <a href="{{ route('User.profileShow') }}" class="nav-item nav-link text-white {{ request()->routeIs('User.profileShow') ? 'active' : '' }}"><i class="fa fa-user me-2"></i>My Profile</a>
+                    <a href="{{ route('profile.edit') }}" class="nav-item nav-link text-white {{ request()->routeIs('profile.edit') ? 'active' : '' }}"><i class="fa fa-edit me-2"></i>Update Profile</a>
 
                     @elseif(Auth::check() && Auth::user()->thana_lead != null)
                     <a href="{{ route('Admin.assignOfficer') }}" class="nav-item nav-link text-white {{ request()->routeIs('Admin.assignOfficer') ? 'active' : '' }}"><i class="fa fa-user me-2"></i>Assign Officer</a>
                     <a href="{{ route('Admin.assignOfficerList') }}" class="nav-item nav-link text-white {{ request()->routeIs('Admin.assignOfficerList') ? 'active' : '' }}"><i class="fa fa-list me-2"></i>Assign Officer List</a>
                     <a href="{{ route('Admin.addArea') }}" class="nav-item nav-link text-white {{ request()->routeIs('Admin.addArea') ? 'active' : '' }}"><i class="fa fa-plus me-2"></i>Add Area</a>
                     <a href="{{ route('Admin.areaList') }}" class="nav-item nav-link text-white {{ request()->routeIs('Admin.areaList') ? 'active' : '' }}"><i class="fa fa-list me-2"></i>Area List</a>
+                    <a href="{{ route('User.profileShow') }}" class="nav-item nav-link text-white {{ request()->routeIs('User.profileShow') ? 'active' : '' }}"><i class="fa fa-user me-2"></i>My Profile</a>
+                    <a href="{{ route('profile.edit') }}" class="nav-item nav-link text-white {{ request()->routeIs('profile.edit') ? 'active' : '' }}"><i class="fa fa-edit me-2"></i>Update Profile</a>
 
                     @elseif(Auth::check() && Auth::user()->area_lead != null)
                     <a href="{{ route('Officer.addOffense') }}" class="nav-item nav-link text-white {{ request()->routeIs('Officer.addOffense') ? 'active' : '' }}"><i class="fa fa-plus me-2"></i>Add Offense</a>
                     <a href="{{ route('Officer.offenseList') }}" class="nav-item nav-link text-white {{ request()->routeIs('Officer.offenseList') ? 'active' : '' }}"><i class="fa fa-list me-2"></i>Offense List</a>
+                     <a href="{{ route('User.profileShow') }}" class="nav-item nav-link text-white {{ request()->routeIs('User.profileShow') ? 'active' : '' }}"><i class="fa fa-user me-2"></i>My Profile</a>
+                    <a href="{{ route('profile.edit') }}" class="nav-item nav-link text-white {{ request()->routeIs('profile.edit') ? 'active' : '' }}"><i class="fa fa-edit me-2"></i>Update Profile</a>
                     @elseif(Auth::check() && Auth::user()->role == 'user')
                     <a href="{{ route('User.index') }}" class="nav-item nav-link text-white {{ request()->routeIs('User.index') ? 'active' : '' }}"><i class="fa fa-exclamation-triangle me-2"></i>My Offense</a>
                     <a href="{{ route('User.profileShow') }}" class="nav-item nav-link text-white {{ request()->routeIs('User.profileShow') ? 'active' : '' }}"><i class="fa fa-user me-2"></i>My Profile</a>
-                    <a href="{{ route('profile.edit') }}" class="nav-item nav-link text-white {{ request()->routeIs('profile.edit') ? 'active' : '' }}"><i class="fa fa-edit me-2"></i>Edit Profile</a>
+                    <a href="{{ route('profile.edit') }}" class="nav-item nav-link text-white {{ request()->routeIs('profile.edit') ? 'active' : '' }}"><i class="fa fa-edit me-2"></i>Update Profile</a>
                     @endif
 
                     </div>

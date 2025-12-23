@@ -6,16 +6,23 @@
         <div class="col-lg-8">
             <div class="card shadow-lg border-0 rounded-4">
                 <div class="card-header bg-success text-white text-center py-3">
-                    <h4>Edit Profile</h4>
+                    <h4>Update Profile</h4>
                 </div>
                 <div class="card-body p-4">
                     <form action="{{ route('profile.update') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="mb-3 text-center">
-                            <img src="{{ $user->profile_image ? asset('images/' . $user->profile_image) : asset('images/unknown.jpg') }}" 
-                                 alt="Profile Picture"
-                                 class="rounded-circle border mb-3"
-                                 width="120" height="120">
+                            @if($user->profile_image && file_exists(public_path('images/' . $user->profile_image)))
+                                <img src="{{ asset('images/' . $user->profile_image) }}"
+                                     alt="Profile Picture"
+                                     class="rounded-circle border mb-3"
+                                     width="150" height="150">
+                            @else
+                                <img src="{{ asset('images/unknown.jpg') }}"
+                                     alt="Profile Picture"
+                                     class="rounded-circle border mb-3"
+                                     width="150" height="150">
+                            @endif
                             <input type="file" name="profile_image" class="form-control bg-success text-white">
                         </div>
                         
@@ -35,6 +42,7 @@
                             <label class="form-label">NID</label>
                             <input type="text" name="nid" class="form-control bg-success text-white" value="{{ old('nid', $user->nid) }}" readonly>
                         </div>
+                        @if(auth()->user()->role === 'user')
                         <div class="mb-3">
                             <label class="form-label">License</label>
                             @if(is_null($user->license))
@@ -43,10 +51,11 @@
                                 <input type="text" name="license" class="form-control bg-success text-white" value="{{ old('license', $user->license) }}" readonly>
                             @endif
                         </div>
+                        @endif
 
                         <div class="text-center">
                             <button type="submit" class="btn btn-success">
-                                <i class="bi bi-save"></i> Save Changes
+                                <i class="bi bi-save"></i> Update Profile
                             </button>
                             <a href="{{ route('User.profileShow') }}" class="btn btn-danger">
                                 Cancel

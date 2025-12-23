@@ -10,14 +10,16 @@ use App\Http\Middleware\DistrictLead;
 use App\Http\Middleware\ThanaLead;
 use App\Http\Middleware\AreaLead;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\HomeController;
 
 Auth::routes();
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome')->name('dashboard');
+// });
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/', [HomeController::class, 'dashboard'])->name('dashboard');
+Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 // start Admin controller  
 Route::get('/Admin/verifyOfficerAccount', [AdminController::class, 'verifyOfficerAccount'])->name('Admin.verifyOfficerAccount')->middleware(DivisionLead::class);
@@ -99,3 +101,5 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/bkash/callback', [App\Http\Controllers\BkashTokenizePaymentController::class,'callBack'])->name('bkash-callBack');
 
 });
+
+// end payment gateway
