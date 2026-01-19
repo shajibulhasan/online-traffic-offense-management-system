@@ -10,62 +10,103 @@ class AdminController extends Controller
     {
         return view('Admin.index');
     }
+
+    // Thana 
     public function addThana()
     {
         return view('Admin.addThana');
     }
+     public function Createthana(Request $req)
+    {
+        $req->validate(
+        [
+            'division' => ['required','string', 'max:100'],
+            'district' => ['required','string', 'max:100'],
+            'thana_name' => ['required','string', 'max:255'],
+            'contact' => ['required'],
+            'address' => ['required', 'string', 'max:500'],
+        ]);
+        
+        $thana_create = DB::table('thana')->insert([
+            'division' => $req->division,
+            'district' => $req->district,
+            'thana_name' => $req->thana_name,
+            'contact' => $req->contact,
+            'address' => $req->address,
+        ]);
+
+        if ($thana_create) {
+            return redirect()->route('Admin.thanaList')->with('success', 'Thana added successfully');
+        } else {
+            return redirect()->back()->with('error', 'Failed to add thana');
+        }
+    }
+        
+    public function thanaList()
+    {
+        $thanas = DB::table('thana')->get();
+        return view('Admin.thanaList', compact('thanas'));
+    }
+    public function thanadestroy($id)
+    {
+        try {
+            
+            DB::table('thana')->where('id', $id)->delete();
+            return redirect()->route('Admin.thanaList')->with('success', 'Thana deleted successfully!');
+        } catch (\Exception $e) {
+            return redirect()->route('Admin.thanaList')->with('error', $e->getMessage());
+        }
+    }
+
+    public function updateThana(Request $request, $id)
+    {
+        if ($request->isMethod('POST')) {  
+            $request->validate([
+                'thana_name' => 'required|string|max:255',  
+                'contact' => 'required|string|max:20',
+                'address' => 'required|string',
+            ]);
+    
+            $updated = DB::table('thana')
+                        ->where('id', $id)
+                        ->update([
+                            'thana_name' => $request->thana_name,  
+                            'contact' => $request->contact,
+                            'address' => $request->address,
+                        ]);
+    
+            if ($updated) {
+                return redirect()->route('Admin.thanaList', $id)
+                                 ->with('success', 'Thana updated successfully');
+            } else {
+                return redirect()->route('Admin.updateThana', $id)
+                                 ->with('error', 'Thana update failed');
+            }
+        }
+    
+        $thana = DB::table('thana')->where('id', $id)->first();
+    
+        return view('Admin.updateThana', compact('thana'));
+    }
+
+
+    // Area
     public function addArea()
     {
         return view('Admin.addArea');
     }
-    public function area_list()
+    public function getThanasByDistrict($district)
     {
-        return view('Admin.areaList');
+        return DB::table('thana')->where('district', $district)
+            ->orderBy('thana_name')
+            ->get(['id','thana_name']);
     }
-
-    public function assignOfficerList()
-    {
-        return view('Admin.assignOfficerList');
-    }
-
-    public function assign_thana()
-    {
-
-        return view('Admin.assignThana');
-    }
-
-// strat Verify Officer Account 
-
-    public function verifyOfficerAccount()
-    {
-        $officers = DB::table('users')
-        ->whereNull('thana_lead')
-        ->where('role', 'officer')
-        ->where('status', 0)
-        ->get();
-        return view('Admin.verifyOfficerAccount', compact('officers'));
-    }
-    public function approveOfficer($id)
-    {
-       
-        $updated = DB::table('users')
-            ->where('id', $id)
-            ->update(['status' => 1]);
-
-        if ($updated) {
-            return redirect()->back()->with('success', 'Officer approved successfully.');
-        } else {
-            return redirect()->back()->with('error', 'Officer approval failed.');
-        }
-    }
-
-    
-    //start the area part
 
     public function area(Request $request)
     {
         $request->validate(
             [
+                'district' => ['required', 'string'],
                 'thana_name' => ['required', 'string'],
                 'area_name' => ['required', 'string'],
                 'details_area' =>[ 'required','string', 'max:500']
@@ -73,6 +114,7 @@ class AdminController extends Controller
             // dd($request->all());
     
         $area_create = DB::table('area')->insert([
+            'district' => $request->district,
             'thana_name' => $request->thana_name,
             'area_name' => $request->area_name,
             'details_area' => $request->details_area,
@@ -88,6 +130,7 @@ class AdminController extends Controller
     public function areaList()
     {
         $areas = DB::table('area')->get();
+        // dd( $areas);
         return view('Admin.areaList', compact('areas'));
     }
     
@@ -132,80 +175,51 @@ class AdminController extends Controller
     }
 
 
+    public function assignOfficerList()
+    {
+        return view('Admin.assignOfficerList');
+    }
+
+    public function assign_thana()
+    {
+
+        return view('Admin.assignThana');
+    }
+
+// strat Verify Officer Account 
+
+    public function verifyOfficerAccount()
+    {
+        $officers = DB::table('users')
+        ->whereNull('thana')
+        ->where('role', 'officer')
+        ->where('status', 0)
+        ->get();
+        return view('Admin.verifyOfficerAccount', compact('officers'));
+    }
+    public function approveOfficer($id)
+    {
+       
+        $updated = DB::table('users')
+            ->where('id', $id)
+            ->update(['status' => 1]);
+
+        if ($updated) {
+            return redirect()->back()->with('success', 'Officer approved successfully.');
+        } else {
+            return redirect()->back()->with('error', 'Officer approval failed.');
+        }
+    }
+
+    
+    //start the area part
+
+    
+
+
 // strat thana part
 
-    public function Createthana(Request $req)
-    {
-        $req->validate(
-        [
-            'district_name' => ['required','string', 'max:100'],
-            'thana_name' => ['required','string', 'max:255'],
-            'contact' => ['required','unique:thana'],
-            'address' => ['required', 'string', 'max:500'],
-        ]);
-        
-        $thana_create = DB::table('thana')->insert([
-            'district_name' => $req->district_name,
-            'thana_name' => $req->thana_name,
-            'contact' => $req->contact,
-            'address' => $req->address,
-        ]);
-
-        if ($thana_create) {
-            return redirect()->route('Admin.thanaList')->with('success', 'thana added successfully');
-        } else {
-            return redirect()->back()->with('error', 'Failed to add thana');
-        }
-    }
-        
-    public function thanaList()
-    {
-        $thanas = DB::table('thana')->get();
-        return view('Admin.thanaList', compact('thanas'));
-    }
-    public function thanadestroy($id)
-    {
-        try {
-            
-            DB::table('thana')->where('id', $id)->delete();
-            return redirect()->route('Admin.thanaList')->with('success', 'Thana deleted successfully!');
-        } catch (\Exception $e) {
-            return redirect()->route('Admin.thanaList')->with('error', $e->getMessage());
-        }
-    }
-
-    public function updateThana(Request $request, $id)
-    {
-        if ($request->isMethod('POST')) {  
-            $request->validate([
-                'district_name' => 'required|string|max:255',
-                'thana_name' => 'required|string|max:255',  
-                'contact' => 'required|string|max:20',
-                'address' => 'required|string',
-            ]);
-    
-            $updated = DB::table('thana')
-                        ->where('id', $id)
-                        ->update([
-                            'district_name' => $request->district_name,
-                            'thana_name' => $request->thana_name,  
-                            'contact' => $request->contact,
-                            'address' => $request->address,
-                        ]);
-    
-            if ($updated) {
-                return redirect()->route('Admin.thanaList', $id)
-                                 ->with('success', 'Thana updated successfully');
-            } else {
-                return redirect()->route('Admin.updateThana', $id)
-                                 ->with('error', 'Thana update failed');
-            }
-        }
-    
-        $thana = DB::table('thana')->where('id', $id)->first();
-    
-        return view('Admin.updateThana', compact('thana'));
-    }
+   
 
 
   // Assign district information
@@ -294,7 +308,7 @@ class AdminController extends Controller
             ->where('id', $id)
             ->first();
     
-        $districts = [ // move to a constant or config if reused
+        $districts = [
             'Dhaka', 'Gazipur', 'Munshiganj', 'Kishoreganj', 'Shariatpur', 'Gopalganj', 'Narayanganj', 'Manikganj',
             'Faridpur', 'Norsingdi', 'Rajbari', 'Tangail', 'Madaripur', 'Mymensingh', 'Sherpur', 'Jamalpur',
             'Netrokona', 'Chittagong', 'Cox\'s Bazar', 'Bandarban', 'Comilla', 'Brahmanbaria', 'Chandpur', 'Feni',
@@ -406,8 +420,8 @@ class AdminController extends Controller
     public function assignOfficer ()
     {
         $officers = DB::table('users')
-            ->whereNull('district_lead')
-            ->whereNull('thana_lead')
+            ->whereNull('district')
+            ->whereNull('thana')
             ->whereNull('area_lead')
             ->where('role', 'officer')
             ->where('status', 1)
@@ -419,9 +433,12 @@ class AdminController extends Controller
 
     public function createAssignOfficer(Request $request)
     {
+        // dd($request->all());
          $request->validate([
                           'officer_name' => ['required', 'string', 'max:255'],
                            'area_name' => ['required', 'string', 'max:255'],
+                           'district' => ['required', 'string', 'max:255'],
+                           'thana' => ['required', 'string', 'max:255'],
 
             ]);
 
@@ -429,6 +446,8 @@ class AdminController extends Controller
                 ->where('id', $request->officer_name)
                 ->update([
                     'area_lead'=>$request->area_name,
+                    'district'=>$request->district,
+                    'thana'=>$request->thana,
                 ]);
 
         if ($create) {
@@ -478,7 +497,7 @@ class AdminController extends Controller
         try {
             DB::table('users')
                 ->where('id', $id)
-                ->update(['area_lead' => null]);
+                ->update(['area_lead' => null, 'district' => null, 'thana' => null]);
     
             return redirect()->route('Admin.assignOfficerList')->with('success', 'Area officer lead unassigned successfully!');
         } catch (\Exception $e) {

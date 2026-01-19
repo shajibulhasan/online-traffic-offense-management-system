@@ -13,7 +13,7 @@
 <style>
 ::placeholder {
     color: white !important;
-    opacity: 1; /* opacity default 0.5 থাকে, তাই বাড়াতে হবে */
+    opacity: 1; 
 }
 </style>
 
@@ -26,10 +26,11 @@
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table table-hover text-center align-middle">
+                        <table class="table text-center align-middle">
                             <thead class="table-success text-white">
                                 <tr>
                                     <th>Serial No.</th>
+                                    <th>Division</th>
                                     <th>District</th>
                                     <th>Thana Name</th>
                                     <th>Contact</th>
@@ -40,21 +41,19 @@
                             <tbody>
                                 @php $id = 1; @endphp
                                 @foreach($thanas as $thana)
-                                    @if($thana->district_name != Auth::user()->district_lead)
-                                        @continue
-                                    @endif
                                 <tr>
                                     <td>{{ $id++ }}</td>
-                                    <td>{{ $thana->district_name }}</td>
+                                    <td>{{ $thana->division}}</td>
+                                    <td>{{ $thana->district}}</td>
                                     <td>{{ $thana->thana_name }}</td>
                                     <td>{{ $thana->contact }}</td>
                                     <td>{{ $thana->address }}</td>
                                     <td>
                                         <!-- Edit Button -->
-                                        <a href="{{ route('Admin.updateThana', $thana->id) }}" class="btn btn-sm btn-primary">Edit</a>
+                                        <a href="{{ route('Admin.updateThana', $thana->id) }}" class="btn btn-success my-2">Edit</a>
 
                                         <!-- Delete Button (Triggers Modal) -->
-                                        <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal{{ $thana->id }}">
+                                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal{{ $thana->id }}">
                                             Delete
                                         </button>
 

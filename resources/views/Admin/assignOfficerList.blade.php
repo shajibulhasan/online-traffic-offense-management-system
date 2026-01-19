@@ -16,7 +16,7 @@
 <style>
 ::placeholder {
     color: white !important;
-    opacity: 1; /* opacity default 0.5 থাকে, তাই বাড়াতে হবে */
+    opacity: 1;
 }
 </style>
 
@@ -34,6 +34,7 @@
                                 <tr>
                                     <th>Serial</th>
                                     <th>Officer Name</th>
+                                    <th>District</th>
                                     <th>Thana Name</th>
                                     <th>Area Lead</th>
                                     <th>Action</th>
@@ -45,11 +46,12 @@
                                 <tr>
                                     <td>{{ $id++ }}</td>
                                     <td>{{ $assign->name }}</td>
-                                    <td>{{ Auth::user()->thana_lead }}</td>
+                                    <td>{{ $assign->district }}</td>
+                                    <td>{{ $assign->thana }}</td>
                                     <td>{{ $assign->area_lead }}</td>
                                     <td>
-                                        <a href="{{ route('Admin.updateAssignOfficer', $assign->id) }}" class="btn btn-sm btn-primary me-1">Edit</a>
-                                        <button class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal{{ $assign->id }}">
+                                        <a href="{{ route('Admin.updateAssignOfficer', $assign->id) }}" class="btn btn-success me-1">Edit</a>
+                                        <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal{{ $assign->id }}">
                                             Delete
                                         </button>
 

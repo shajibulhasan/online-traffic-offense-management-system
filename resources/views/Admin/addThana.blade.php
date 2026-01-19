@@ -26,15 +26,42 @@
                 <div class="card-body">
                     <form action="{{ route('Admin.addThana') }}" method="post">
                         @csrf
-                        <!-- District Dropdown -->
-                            <!-- District -->
+                        <!-- Division Name -->
+                        <div class="mb-4">
+                            <label for="division" class="form-label"><b>Division:</b> <span class="text-danger">*</span></label>
+                            <div class="input-group shadow-sm">
+                                <span class="input-group-text"><i class="bi bi-geo-alt-fill"></i></span>
+                                <select id="division" name="division" class="form-select shadow-sm bg-success text-white">
+                                    <option value="">Select Division</option>
+                                    @foreach([
+                                        'Barishal',
+                                        'Chattogram',
+                                        'Dhaka',
+                                        'Khulna',
+                                        'Mymensingh',
+                                        'Rajshahi',
+                                        'Rangpur',
+                                        'Sylhet'
+                                    ] as $division)
+                                        <option value="{{ $division }}">{{ $division }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            @error('division')
+                                <div class="text-danger mt-2">{{ $message }}</div>
+                            @enderror
+                        </div>
+                    <!-- District Name -->
                     <div class="mb-4">
                         <label for="district" class="form-label"><b>District:</b> <span class="text-danger">*</span></label>
                         <div class="input-group shadow-sm">
                             <span class="input-group-text"><i class="bi bi-geo-fill"></i></span>
-                            <input type="text" name="district_name" class="form-control shadow-sm bg-success text-white placeholder-white" value="{{ Auth::user()->district_lead }}" readonly>
+                            <select id="district" name="district" class="form-select shadow-sm bg-success text-white">
+                                    <option value="">Select District</option>
+                                    
+                                </select>
                         </div>
-                        @error('district_name')
+                        @error('district')
                             <div class="text-danger mt-2">{{ $message }}</div>
                         @enderror
                     </div>
@@ -168,4 +195,58 @@
         padding: 20px;
     }
 </style>
+@endpush
+
+
+@push('scripts')
+<script>
+    const divisionDistricts = {
+        "Barishal": [
+            "Barguna","Barisal","Bhola","Jhalokathi","Patuakhali","Pirojpur"
+        ],
+        "Chattogram": [
+            "Bandarban","Brahmanbaria","Chandpur","Chittagong","Comilla",
+            "Coxsbazar","Feni","Khagrachari","Lakshmipur","Noakhali","Rangamati"
+        ],
+        "Dhaka": [
+            "Dhaka","Faridpur","Gazipur","Gopalganj","Kishoreganj","Madaripur",
+            "Manikganj","Munshiganj","Narayanganj","Narsingdi","Rajbari",
+            "Shariatpur","Tangail"
+        ],
+        "Khulna": [
+            "Bagerhat","Chuadanga","Jessore","Jhenaidah","Khulna",
+            "Kushtia","Magura","Meherpur","Narail","Satkhira"
+        ],
+        "Mymensingh": [
+            "Jamalpur","Mymensingh","Netrokona","Sherpur"
+        ],
+        "Rajshahi": [
+            "Bogura","Chapai Nawabganj","Joypurhat","Naogaon",
+            "Natore","Pabna","Rajshahi","Sirajganj"
+        ],
+        "Rangpur": [
+            "Dinajpur","Gaibandha","Kurigram","Lalmonirhat",
+            "Nilphamari","Panchagarh","Rangpur","Thakurgaon"
+        ],
+        "Sylhet": [
+            "Habiganj","Moulvibazar","Sunamganj","Sylhet"
+        ]
+    };
+
+    document.getElementById('division').addEventListener('change', function () {
+        const division = this.value;
+        const districtSelect = document.getElementById('district');
+
+        districtSelect.innerHTML = '<option value="">Select District</option>';
+
+        if (divisionDistricts[division]) {
+            divisionDistricts[division].forEach(district => {
+                const option = document.createElement('option');
+                option.value = district;
+                option.textContent = district;
+                districtSelect.appendChild(option);
+            });
+        }
+    });
+</script>
 @endpush

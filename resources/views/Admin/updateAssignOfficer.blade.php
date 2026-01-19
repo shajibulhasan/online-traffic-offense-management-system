@@ -33,12 +33,28 @@
                                 <input type="text" class="form-control shadow-sm bg-success text-white" id="name" name="name" value="{{ $assign_officer->name }}" required disabled>
                             </div>
                         </div>
+                        <!-- District Name -->
+                        <div class="mb-4">
+                            <label for="district" class="form-label"><b>District:</b> <span class="text-danger">*</span></label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-geo-alt-fill"></i></span>
+                                <input type="text" class="form-control shadow-sm bg-success text-white" id="district" name="district" value="{{ $assign_officer->district }}" required disabled>
+                            </div>
+                        </div>
+                        <!-- Thana Name -->
+                        <div class="mb-4">
+                            <label for="thana" class="form-label"><b>Thana:</b> <span class="text-danger">*</span></label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-geo-alt-fill"></i></span>
+                                <input type="text" class="form-control shadow-sm bg-success text-white" id="thana" name="thana" value="{{ $assign_officer->thana }}" required disabled>
+                            </div>
+                        </div>
 
                         <!-- Area Lead Selection -->
                         <div class="mb-4">
                             <label for="area" class="form-label"><b>Area List:</b> <span class="text-danger">*</span></label>
                             <div class="input-group">
-                                <span class="input-group-text bg-light"><i class="bi bi-list-task"></i></span>
+                                <span class="input-group-text"><i class="bi bi-list-task"></i></span>
                                 <select id="area" name="area_name" class="form-select shadow-sm bg-success text-white" required>
                                     <option value="">Select area</option>
                                     @foreach($area_list as $area)
