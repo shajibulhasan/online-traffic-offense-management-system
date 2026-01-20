@@ -40,6 +40,7 @@
     <div id="driverAlert"></div>
 
     <div class="card">
+        <div id='pdf'></div>
         <div class="card-body">
             <table class="table text-black">
                 <thead class="table-success">
@@ -84,7 +85,7 @@ $(document).ready(function(){
                 let tbody = $('#offenseTbody');
                 tbody.empty();
                 $('#driverAlert').html(res.alert);
-
+                $('#pdf').html(res.pdf);
 
                 if(res.success){
                     $('#driverName').show();

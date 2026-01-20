@@ -29,9 +29,10 @@
             @endif
         </div>
         <div class="card-header text-white bg-success text-center py-2">
-            <h4 class="mb-0"><b>My Offense List</b></h4>
-            
-            <a href="{{ route('Officer.offenseListPdf', Auth::id()) }}" class="btn btn-danger btn-sm float-end">Download PDF</a>
+            <h4 class="mb-0">
+                <b>My Offense List</b>
+                <a href="{{ route('Officer.offenseListPdf', Auth::id()) }}" class="btn btn-danger btn-sm float-end">Download PDF</a>
+            </h4>                       
         </div>
         <div class="card-body">
             <div class="table-responsive">

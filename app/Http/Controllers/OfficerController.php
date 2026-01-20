@@ -82,6 +82,7 @@ public function offenseList(Request $request)
 {
     $Offense_list = collect();
     $alert = null;
+    $pdf = null;
 
     if ($request->has(['type', 'value'])) {
 
@@ -110,6 +111,7 @@ public function offenseList(Request $request)
                 )
                 ->get();
 
+                $pdf = '<a href="' . route('Officer.offenseListPdf', $driver->id) . '" class="btn btn-danger btn-sm float-end">Download PDF</a>';
 
             $point = $Offense_list->sum('point');
             $unpaid_point = $Offense_list->where('status', 'unpaid')->sum('point');
@@ -153,7 +155,8 @@ public function offenseList(Request $request)
         return response()->json([
             'success' => true,
             'alert' => $alert,
-            'data' => $Offense_list
+            'data' => $Offense_list,
+            'pdf' => $pdf,
         ]);
     }
 
