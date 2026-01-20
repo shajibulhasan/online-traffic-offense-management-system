@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2a669039f61e4a4b9931e6520ff78ca1",
+    "content-hash": "52843201c17a44fd875522bf6952ff9e",
     "packages": [
         {
             "name": "brick/math",
@@ -1056,16 +1056,16 @@
         },
         {
             "name": "karim007/laravel-bkash-tokenize",
-            "version": "v2.3",
+            "version": "v2.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/karim-007/laravel-bkash-tokenize.git",
-                "reference": "b3b874ca711d0d125cec603121660b69f945a4bf"
+                "reference": "f3ff1eaa075697985da4137c6632967139476452"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/karim-007/laravel-bkash-tokenize/zipball/b3b874ca711d0d125cec603121660b69f945a4bf",
-                "reference": "b3b874ca711d0d125cec603121660b69f945a4bf",
+                "url": "https://api.github.com/repos/karim-007/laravel-bkash-tokenize/zipball/f3ff1eaa075697985da4137c6632967139476452",
+                "reference": "f3ff1eaa075697985da4137c6632967139476452",
                 "shasum": ""
             },
             "require": {
@@ -1109,9 +1109,9 @@
             ],
             "support": {
                 "issues": "https://github.com/karim-007/laravel-bkash-tokenize/issues",
-                "source": "https://github.com/karim-007/laravel-bkash-tokenize/tree/v2.3"
+                "source": "https://github.com/karim-007/laravel-bkash-tokenize/tree/v2.4"
             },
-            "time": "2024-06-02T05:59:25+00:00"
+            "time": "2025-12-04T07:22:39+00:00"
         },
         {
             "name": "laravel/framework",
@@ -8205,5 +8205,5 @@
         "php": "^8.2"
     },
     "platform-dev": {},
-    "plugin-api-version": "2.6.0"
+    "plugin-api-version": "2.9.0"
 }

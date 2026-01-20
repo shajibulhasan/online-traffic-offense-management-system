@@ -17,9 +17,8 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('phone')->unique()->nullable();
             $table->string('nid')->unique()->nullable();
-            $table->string('division_lead')->nullable();
-            $table->string('district_lead')->nullable();
-            $table->string('thana_lead')->nullable();
+            $table->string('district')->nullable();
+            $table->string('thana')->nullable();
             $table->string('area_lead')->nullable();
             $table->string('license')->nullable();
             $table->string('profile_image')->nullable();
@@ -43,7 +42,7 @@ return new class extends Migration
             $table->string('ip_address', 45)->nullable();
             $table->text('user_agent')->nullable();
             $table->longText('payload');
-            $table->integer('last_activity')->index();
+            $table->integer('last_activity')->index();                     
         });
     }
 

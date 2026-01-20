@@ -29,17 +29,45 @@
                 <div class="card-body">
                     <form action="{{ route('Admin.addArea') }}" method="POST">
                         @csrf
-                        <!-- Officer Name -->
+                        <!-- District Name Field -->
                         <div class="mb-4">
-                            <label for="officer_name" class="form-label"><b>Thana Name:</b> <span class="text-danger">*</span></label>
+                            <label class="form-label"><b>District:</b> <span class="text-danger">*</span></label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-geo-fill"></i></span>
+                                <select id="district" name="district" class="form-select bg-success text-white">
+                                    <option value="">Select District</option>
+                                    @foreach([
+                                        'Bagerhat','Bandarban','Barguna','Barisal','Bhola','Bogura',
+                                        'Brahmanbaria','Chandpur','Chapai Nawabganj','Chittagong',
+                                        'Chuadanga','Comilla','Coxsbazar','Dhaka','Dinajpur','Faridpur',
+                                        'Feni','Gaibandha','Gazipur','Gopalganj','Habiganj','Jamalpur',
+                                        'Jessore','Jhalokathi','Jhenaidah','Joypurhat','Khagrachari',
+                                        'Khulna','Kishoreganj','Kurigram','Kushtia','Lakshmipur',
+                                        'Lalmonirhat','Madaripur','Magura','Manikganj','Meherpur',
+                                        'Moulvibazar','Munshiganj','Mymensingh','Naogaon','Narail',
+                                        'Narayanganj','Narsingdi','Natore','Netrokona','Nilphamari',
+                                        'Noakhali','Pabna','Panchagarh','Patuakhali','Pirojpur',
+                                        'Rajbari','Rajshahi','Rangamati','Rangpur','Satkhira',
+                                        'Shariatpur','Sherpur','Sirajganj','Sunamganj','Sylhet',
+                                        'Tangail','Thakurgaon'
+                                    ] as $district)
+                                        <option value="{{ $district }}">{{ $district }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Thana Name Field -->
+                        <div class="mb-4">
+                            <label class="form-label"><b>Thana:</b> <span class="text-danger">*</span></label>
                             <div class="input-group">
                                 <span class="input-group-text"><i class="bi bi-building"></i></span>
-                                <input type="text" class="form-control shadow-sm bg-success text-white" id="thana_name" name="thana_name" value="{{ Auth::user()->thana_lead }}" required readonly>
+                                <select id="thana" name="thana_name" class="form-select bg-success text-white" required>
+                                    <option value="">Select Thana</option>
+                                </select>
                             </div>
-                            @error('thana_name')
-                                <div class="text-danger mt-2">{{ $message }}</div>
-                            @enderror
-                        </div> 
+                        </div>
+
 
                         <!-- Area Name Field -->
                         <div class="mb-4">
@@ -80,4 +108,38 @@
 </div>
 
 @endsection
+
+
+@push('scripts')
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+    const districtSelect = document.getElementById('district');
+    const thanaSelect = document.getElementById('thana');
+
+    districtSelect.addEventListener('change', function () {
+        const district = this.value;
+        thanaSelect.innerHTML = '<option value="">Loading...</option>';
+
+        if (!district) {
+            thanaSelect.innerHTML = '<option value="">Select Thana</option>';
+            return;
+        }
+
+        fetch(`/get-thanas-by-district/${encodeURIComponent(district)}`)
+            .then(res => res.json())
+            .then(data => {
+                thanaSelect.innerHTML = '<option value="">Select Thana</option>';
+                data.forEach(thana => {
+                    let opt = document.createElement('option');
+                    opt.value = thana.thana_name;
+                    opt.textContent = thana.thana_name;
+                    thanaSelect.appendChild(opt);
+                });
+            });
+    });
+
+});
+</script>
+@endpush
 

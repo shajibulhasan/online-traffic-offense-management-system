@@ -15,7 +15,7 @@
 <style>
 ::placeholder {
     color: white !important;
-    opacity: 1; /* opacity default 0.5 থাকে, তাই বাড়াতে হবে */
+    opacity: 1; 
 }
 </style>
 
@@ -32,6 +32,7 @@
                             <thead class="table-success">
                                 <tr>
                                     <th>Serial No.</th>
+                                    <th>District</th>
                                     <th>Thana Name</th>
                                     <th>Area Name</th>
                                     <th>Details Area</th>
@@ -41,18 +42,16 @@
                             <tbody>
                                 @php $id = 1; @endphp
                                 @foreach($areas as $area)
-                                    @if($area->thana_name != Auth::user()->thana_lead)
-                                        @continue
-                                    @endif
                                 <tr>
                                     <td>{{ $id++ }}</td>
+                                    <td>{{ $area->district }}</td>
                                     <td>{{ $area->thana_name }}</td>
                                     <td>{{ $area->area_name }}</td>
                                     <td>{{ $area->details_area }}</td>
                                     <td>
-                                        <a href="{{ route('Admin.updateArea', $area->id) }}" class="btn btn-sm btn-primary">Edit</a>
+                                        <a href="{{ route('Admin.updateArea', $area->id) }}" class="btn btn-success my-1">Edit</a>
 
-                                        <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal{{ $area->id }}">
+                                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal{{ $area->id }}">
                                             Delete
                                         </button>
 

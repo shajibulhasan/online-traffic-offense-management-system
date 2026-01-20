@@ -19,13 +19,14 @@
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table table table-hover text-center align-middle">
+                        <table class="table table text-center align-middle">
                             <thead class="table-success text-white">
                                 <tr>
                                     <th>Serial No.</th>
                                     <th>Officer Name</th>
                                     <th>Phone</th>
                                     <th>Email</th>
+                                    <th>NID</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -39,11 +40,12 @@
                                     <td>{{  $officer->name }}</td>
                                     <td>{{  $officer->phone }}</td>
                                     <td>{{  $officer->email }}</td>
+                                    <td>{{  $officer->nid }}</td>
                                    
                                     <td>
                                         <form action="{{ route('officers.approve', $officer->id) }}" method="POST" style="display: inline;">
                                             @csrf
-                                            <button type="submit" class="btn btn-sm btn-primary">Approve</button>
+                                            <button type="submit" class="btn btn-sm btn-success">Approve</button>
                                         </form>
                                     </td>
 

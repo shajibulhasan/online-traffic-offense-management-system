@@ -27,19 +27,6 @@
                 <div class="card-body">
                     <form action="{{ route('Admin.updateThana', $thana->id) }}" method="POST">
                         @csrf  <!-- CSRF token for security -->
-                        
-                        <div class="mb-4">
-                            <label for="district" class="form-label"><b>District:</b> <span class="text-danger">*</span></label>
-                            <div class="input-group">
-                                <span class="input-group-text"><i class="bi bi-geo-fill"></i></span>
-                                <select id="district" name="district_name" class="form-select shadow-sm bg-success text-white">
-                                    <option value="{{ Auth::user()->district_lead }}">{{ Auth::user()->district_lead }}</option>
-                                </select>
-                            </div>
-                            @error('district_name')
-                                <div class="text-danger mt-2">{{ $message }}</div>
-                            @enderror
-                        </div>
 
                         <div class="mb-4">
                             <label for="thana" class="form-label"><b>Thana Name:</b> <span class="text-danger">*</span></label>

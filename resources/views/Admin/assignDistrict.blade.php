@@ -39,50 +39,74 @@
                                 <span class="input-group-text"><i class="bi bi-geo-fill"></i></span>
                                 <select id="district" name="district" class="form-select shadow-sm bg-success text-white">
                                     <option value="">Select District</option>
-                                    @if(Auth::user()->division_lead == 'chattogram'){
-                                        @foreach(['Bandarban', 'Bramanbaria', 'Chandpur', 'Comilla', 'Chittagong', 'Coxsbazar', 
-                                                  'Feni', 'Khagrachari', 'Lakshmipur', 'Noakhali', 'Rangamati'] as $district)
-                                            <option value="{{ $district }}">{{ $district }}</option>
-                                        @endforeach
-                                    }
-                                    @elseif(Auth::user()->division_lead == 'dhaka'){
-                                        @foreach(['Dhaka', 'Faridpur', 'Gazipur', 'Gopalganj', 'Kishoreganj', 'Madaripur', 'Manikganj',  
-                                                'Munshiganj', 'Narayanganj', 'Narsingdi', 'Rajbari', 'Shariatpur', 'Tangail'] as $district)
-                                            <option value="{{ $district }}">{{ $district }}</option>
-                                        @endforeach
-                                    }
-                                    @elseif(Auth::user()->division_lead == 'khulna'){
-                                        @foreach(['Bagerhat', 'Chuadanga', 'Jashore', 'Jhenaidah', 'Khulna', 
-                                                  'Kushtia', 'Magura', 'Meherpur', 'Narail', 'Satkhira'] as $district)
-                                            <option value="{{ $district }}">{{ $district }}</option>
-                                        @endforeach
-                                    }
-                                    @elseif(Auth::user()->division_lead == 'rajshahi'){
-                                        @foreach(['Bogura', 'Chapainawabganj', 'Joypurhat', 'Natore', 'Naogaon', 
-                                                  'Pabna', 'Rajshahi', 'Sirajganj'] as $district)
-                                            <option value="{{ $district }}">{{ $district }}</option>
-                                        @endforeach
-                                    }
-                                    @elseif(Auth::user()->division_lead == 'barisal'){
-                                        @foreach(['Barisal', 'Barguna', 'Bhola', 'Jhalokati', 'Patuakhali', 
-                                                  'Pirojpur'] as $district)
-                                            <option value="{{ $district }}">{{ $district }}</option>
-                                        @endforeach
-                                    }
-                                    @elseif(Auth::user()->division_lead == 'sylhet'){
-                                        @foreach(['Habiganj', 'Moulvibazar', 'Sunamganj', 'Sylhet'] as $district)
-                                            <option value="{{ $district }}">{{ $district }}</option>
-                                        @endforeach
-                                    }
-                                    @elseif(Auth::user()->division_lead == 'rangpur'){
-                                        @foreach(['Dinajpur', 'Gaibandha', 'Kurigram', 'Lalmonirhat', 'Nilphamari', 
-                                                  'Panchagarh', 'Rangpur', 'Thakurgaon'] as $district)
-                                            <option value="{{ $district }}">{{ $district }}</option>
-                                        @endforeach
-                                    }
-                                    @else
-                                        <option value="">No districts available</option>
-                                    @endif
+                                    @foreach([
+                                        'Bagerhat',
+                                        'Bandarban',
+                                        'Barguna',
+                                        'Barisal',
+                                        'Bhola',
+                                        'Bogra',
+                                        'Brahmanbaria',
+                                        'Chandpur',
+                                        'Chapai Nawabganj',
+                                        'Chittagong',
+                                        'Chuadanga',
+                                        'Comilla',
+                                        'Coxsbazar',
+                                        'Dhaka',
+                                        'Dinajpur',
+                                        'Faridpur',
+                                        'Feni',
+                                        'Gaibandha',
+                                        'Gazipur',
+                                        'Gopalganj',
+                                        'Habiganj',
+                                        'Jamalpur',
+                                        'Jessore',
+                                        'Jhalokathi',
+                                        'Jhenaidah',
+                                        'Joypurhat',
+                                        'Khagrachari',
+                                        'Khulna',
+                                        'Kishoreganj',
+                                        'Kurigram',
+                                        'Kushtia',
+                                        'Lakshmipur',
+                                        'Lalmonirhat',
+                                        'Madaripur',
+                                        'Magura',
+                                        'Manikganj',
+                                        'Meherpur',
+                                        'Moulvibazar',
+                                        'Munshiganj',
+                                        'Mymensingh',
+                                        'Naogaon',
+                                        'Narail',
+                                        'Narayanganj',
+                                        'Narsingdi',
+                                        'Natore',
+                                        'Netrokona',
+                                        'Nilphamari',
+                                        'Noakhali',
+                                        'Pabna',
+                                        'Panchagarh',
+                                        'Patuakhali',
+                                        'Pirojpur',
+                                        'Rajbari',
+                                        'Rajshahi',
+                                        'Rangamati',
+                                        'Rangpur',
+                                        'Satkhira',
+                                        'Shariatpur',
+                                        'Sherpur',
+                                        'Sirajganj',
+                                        'Sunamganj',
+                                        'Sylhet',
+                                        'Tangail',
+                                        'Thakurgaon'
+                                    ] as $district)
+                                        <option value="{{ $district }}">{{ $district }}</option>
+                                    @endforeach
                                 </select>
                             </div>
                             @error('district')
@@ -131,7 +155,7 @@
     }
     ::placeholder {
         color: white !important;
-        opacity: 1; /* opacity default 0.5 থাকে, তাই বাড়াতে হবে */
+        opacity: 1; 
     }
 </style>
 @endpush
