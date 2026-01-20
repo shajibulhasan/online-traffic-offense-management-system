@@ -79,7 +79,7 @@
                 </div>
                 <div class="navbar-nav w-100">
                     
-                    <a href="{{ route('dashboard') }}" class="nav-item nav-link text-white {{ request()->routeIs('dashboard') ? 'active' : '' }}"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
+                    <a href="{{ route('dashboard') }}" class="nav-item nav-link text-white {{ request()->routeIs('dashboard' , 'home') ? 'active' : '' }}"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
                     @if(Auth::check() && Auth::user()->role == 'admin')
                     <a href="{{ route('Admin.verifyOfficerAccount') }}" class="nav-item nav-link text-white {{ request()->routeIs('Admin.verifyOfficerAccount') ? 'active' : '' }}"><i class="fa fa-check me-2"></i>Verify Officer</a>
                     <a href="{{ route('Admin.addThana') }}" class="nav-item nav-link text-white {{ request()->routeIs('Admin.addThana') ? 'active' : '' }}"><i class="fa fa-plus me-2"></i>Add Thana</a>
@@ -88,7 +88,8 @@
                     <a href="{{ route('Admin.assignOfficerList') }}" class="nav-item nav-link text-white {{ request()->routeIs('Admin.assignOfficerList') ? 'active' : '' }}"><i class="fa fa-list me-2"></i>Assign Officer List</a>
                     <a href="{{ route('Admin.addArea') }}" class="nav-item nav-link text-white {{ request()->routeIs('Admin.addArea') ? 'active' : '' }}"><i class="fa fa-plus me-2"></i>Add Area</a>
                     <a href="{{ route('Admin.areaList') }}" class="nav-item nav-link text-white {{ request()->routeIs('Admin.areaList') ? 'active' : '' }}"><i class="fa fa-list me-2"></i>Area List</a>
-                    @elseif(Auth::check() && Auth::user()->area_lead != null || Auth::user()->role == 'admin')
+                    @endif
+                    @if(Auth::check() && (Auth::user()->area_lead != null || Auth::user()->role == 'admin'))
                     <a href="{{ route('Officer.addOffense') }}" class="nav-item nav-link text-white {{ request()->routeIs('Officer.addOffense') ? 'active' : '' }}"><i class="fa fa-plus me-2"></i>Add Offense</a>
                     <a href="{{ route('Officer.offenseList') }}" class="nav-item nav-link text-white {{ request()->routeIs('Officer.offenseList') ? 'active' : '' }}"><i class="fa fa-list me-2"></i>Offense List</a>
                     @elseif(Auth::check() && Auth::user()->role == 'user')

@@ -48,6 +48,17 @@ Route::get('/Admin/assignOfficer', [AdminController::class, 'assignOfficer'])->n
 Route::post('/Admin/updateAssignOfficer/{id}', [AdminController::class, 'updateAssignOfficer'])->name('Admin.updateAssignOfficer');
 Route::post('/Admin/assignOfficer', [AdminController::class, 'createAssignOfficer'])->name('Admin.assignOfficer');
 
+// Offense
+Route::get('/Officer/addOffense', [OfficerController::class, 'addOffense'])->name('Officer.addOffense');
+Route::get('/Officer/offenseList', [OfficerController::class, 'offenseList'])->name('Officer.offenseList');
+Route::get('/Officer/updateOffense/{id}', [OfficerController::class, 'editOffense'])->name('Officer.updateOffense');
+Route::get('/officer/search-driver', [OfficerController::class, 'searchDriver'])->name('officer.searchDriver');
+Route::post('/Officer/addOffense', [OfficerController::class, 'createAddOffense'])->name('Officer.addOffense');
+Route::delete('/offense/{id}', [OfficerController::class, 'offensedestroy'])->name('Officer.offense.delete');
+Route::get('/officer/driver', [OfficerController::class, 'Driver'])->name('officer.Driver');
+Route::post('/Officer/updateOffense/{id}', [OfficerController::class, 'updateOffense'])->name('Officer.updateOffense.update');
+
+
 
 
 
@@ -80,15 +91,6 @@ Route::delete('/Admin/show-assign-thana/{id}', [AdminController::class, 'assignT
 //End Admin controller
 
 //start Officer controller 
-Route::get('/Officer/addOffense', [OfficerController::class, 'addOffense'])->name('Officer.addOffense');
-Route::get('/Officer/offenseList', [OfficerController::class, 'offenseList'])->name('Officer.offenseList');
-Route::get('/Officer/updateOffense/{id}', [OfficerController::class, 'editOffense'])->name('Officer.updateOffense');
-Route::get('/officer/search-driver', [OfficerController::class, 'searchDriver'])->name('officer.searchDriver');
-// post method
-Route::post('/Officer/addOffense', [OfficerController::class, 'createAddOffense'])->name('Officer.addOffense');
-Route::delete('/offense/{id}', [OfficerController::class, 'offensedestroy'])->name('Officer.offense.delete');
-Route::get('/officer/driver', [OfficerController::class, 'Driver'])->name('officer.Driver');
-Route::post('/Officer/updateOffense/{id}', [OfficerController::class, 'updateOffense'])->name('Officer.updateOffense.update');
 //End officer controller
 
 //strat Driver controller

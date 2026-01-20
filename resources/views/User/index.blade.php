@@ -11,17 +11,19 @@
                     $createdAt = \Carbon\Carbon::parse($offense->created_at);
                     if($createdAt->gte(now()->subDays(30))) {
                         $point += $offense->point;
+                        $last_createAt = $createdAt;
                         if($offense->status === 'unpaid') {
                             $unpaid_point += $offense->point;
                         }
                     }
                 }
+                $next = $last_createAt->addDays(7)->format('d M, Y');
             @endphp
 
             @if($unpaid_point >= 15)
                 <h4 class="alert-heading text-center">You have 15 or more points in the last 30 days. Your license has been suspended until all payments are made.</h4>
             @elseif($point >= 15)
-                <h4 class="alert-heading text-center">You have 15 or more points in the last 30 days. Your license has been revoked for the next week.</h4>
+                <h4 class="alert-heading text-center">You have 15 or more points in the last 30 days. Your license has been revoked until {{ $next }}.</h4>
             @else
                 <h4 class="alert-heading text-center">You have {{ $point ?? 0 }} points in the last 30 days. Drive Safely!</h4>
             @endif
@@ -38,6 +40,7 @@
                             <th>Details</th>
                             <th>Fine</th>
                             <th>Point</th>
+                            <th>Date</th>
                             <th>Payment Status</th>
                             <th>Action</th>
                         </tr>
@@ -48,7 +51,8 @@
                                 <td class="text-center">{{ $offense->thana }}</td>
                                 <td class="text-center">{{ $offense->details }}</td>
                                 <td class="text-center">{{ $offense->fine }}</td>
-                                <td class="text-center">{{ $offense->point }}</td>   
+                                <td class="text-center">{{ $offense->point }}</td>
+                                <td class="text-center">{{ \Carbon\Carbon::parse($offense->created_at)->format('d M, Y') }}</td>   
                                 <td class="text-center">
                                     @if($offense->status === 'paid')
                                         <span class="badge bg-success">Paid</span>

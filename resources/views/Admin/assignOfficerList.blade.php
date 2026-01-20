@@ -32,8 +32,9 @@
                         <table class="table text-center align-middle mb-0">
                             <thead class="table-success">
                                 <tr>
-                                    <th>Serial</th>
+                                    <th>Officer ID</th>
                                     <th>Officer Name</th>
+                                    <th>Email</th>
                                     <th>District</th>
                                     <th>Thana Name</th>
                                     <th>Area Lead</th>
@@ -44,8 +45,9 @@
                                 @php $id = 1; @endphp
                                 @forelse($assign_areaOfficer as $assign)
                                 <tr>
-                                    <td>{{ $id++ }}</td>
+                                    <td>{{ $assign->id }}</td>
                                     <td>{{ $assign->name }}</td>
+                                    <td>{{ $assign->email }}</td>
                                     <td>{{ $assign->district }}</td>
                                     <td>{{ $assign->thana }}</td>
                                     <td>{{ $assign->area_lead }}</td>
