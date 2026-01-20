@@ -59,6 +59,10 @@ Route::get('/officer/driver', [OfficerController::class, 'Driver'])->name('offic
 Route::post('/Officer/updateOffense/{id}', [OfficerController::class, 'updateOffense'])->name('Officer.updateOffense.update');
 
 
+// PDF generation route
+Route::get('/Officer/offense-list-pdf/{driver_id}', 
+    [HomeController::class, 'offenseListPdf']
+)->name('Officer.offenseListPdf');
 
 
 

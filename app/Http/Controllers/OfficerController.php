@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
 class OfficerController extends Controller
 {
@@ -54,7 +55,7 @@ public function createAddOffense(Request $request)
         } elseif ($request->type === 'nid') {
             $column = 'nid';
         } else {
-            $column = $request->type; // phone বা email
+            $column = $request->type;
         }
         $driver = DB::table('users')
             ->where($column, $request->value)
@@ -77,43 +78,88 @@ public function createAddOffense(Request $request)
     }
 
 
-    public function offenseList(Request $request)
-    {
-        $Offense_list = [];
+public function offenseList(Request $request)
+{
+    $Offense_list = collect();
+    $alert = null;
 
-        if ($request->has(['type', 'value'])) {
-            $type = $request->query('type');
-            $value = $request->query('value');
-            $column = $type === 'license' ? 'license' : $type;
+    if ($request->has(['type', 'value'])) {
 
-            $driver = DB::table('users')
-                ->where($column, $value)
-                ->where('role', 'user')
-                ->first();
+        $type = $request->query('type');
+        $value = $request->query('value');
+        $column = $type === 'license' ? 'license' : $type;
 
-            if ($driver) {
-                $Offense_list = DB::table('offense_list')
-                    ->join('users as officers', 'offense_list.officer_id', '=', 'officers.id')
-                    ->join('users as drivers', 'offense_list.driver_id', '=', 'drivers.id')
-                    ->where('offense_list.driver_id', $driver->id)
-                    ->select(
-                        'offense_list.*',
-                        'officers.name as officer_name',
-                        'drivers.name as driver_name'
-                    )
-                    ->get();
+        // 🔍 Find driver
+        $driver = DB::table('users')
+            ->where($column, $value)
+            ->where('role', 'user')
+            ->first();
+
+        if ($driver) {
+
+            // 📋 Last 30 days offenses
+            $Offense_list = DB::table('offense_list')
+                ->join('users as officers', 'offense_list.officer_id', '=', 'officers.id')
+                ->join('users as drivers', 'offense_list.driver_id', '=', 'drivers.id')
+                ->where('offense_list.driver_id', $driver->id)
+                ->where('offense_list.created_at', '>=', now()->subDays(30))
+                ->select(
+                    'offense_list.*',
+                    'officers.name as officer_name',
+                    'drivers.name as driver_name'
+                )
+                ->get();
+
+
+            $point = $Offense_list->sum('point');
+            $unpaid_point = $Offense_list->where('status', 'unpaid')->sum('point');
+            $last_createAt = $Offense_list->max('created_at');
+
+            $next = $last_createAt
+                ? Carbon::parse($last_createAt)->addDays(7)->format('d M, Y')
+                : null;
+
+
+            if ($unpaid_point >= 15) {
+                $alert = '
+                <div class="alert alert-danger text-center">
+                    He has 15 or more unpaid points in the last 30 days.
+                    He has been suspended until all payments are made.
+                </div>';
+            } elseif ($point >= 15) {
+                $alert = '
+                <div class="alert alert-warning text-center">
+                    He has 15 or more points in the last 30 days.
+                    He has been suspended until ' . $next . '.
+                </div>';
+            } else {
+                $alert = '
+                <div class="alert alert-success text-center">
+                    He has ' . $point . ' points in the last 30 days. Drive Safely!
+                </div>';
             }
         }
+    }
 
-        if ($request->ajax() || $request->has('ajax')) {
+
+    if ($request->ajax() || $request->has('ajax')) {
+
+        if (!$driver ?? true) {
             return response()->json([
-                'success' => true,
-                'data' => $Offense_list
+                'success' => false
             ]);
         }
 
-        return view('Officer.offenseList', compact('Offense_list'));
+        return response()->json([
+            'success' => true,
+            'alert' => $alert,
+            'data' => $Offense_list
+        ]);
     }
+
+    return view('Officer.offenseList', compact('Offense_list'));
+}
+
 
 public function editOffense($id)
 {

@@ -36,6 +36,9 @@
 ```bash
     composer require karim007/laravel-bkash-tokenize
 ```
+```bash
+    composer require barryvdh/laravel-dompdf
+```
 
 ```bash
     php artisan vendor:publish --provider="Karim007\LaravelBkashTokenize\BkashTokenizeServiceProvider" --tag="config"

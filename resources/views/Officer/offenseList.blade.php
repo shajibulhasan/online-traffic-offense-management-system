@@ -15,7 +15,7 @@
 <style>
 ::placeholder {
     color: white !important;
-    opacity: 1; /* opacity default 0.5 থাকে, তাই বাড়াতে হবে */
+    opacity: 1;
 }
 </style>
 <div class="container py-5">
@@ -36,12 +36,15 @@
             <button id="searchBtn" class="btn btn-success w-100">Search</button>
         </div>
     </div>
+
+    <div id="driverAlert"></div>
+
     <div class="card">
         <div class="card-body">
             <table class="table text-black">
                 <thead class="table-success">
                     <tr>
-                        <th>#</th>
+                        <th>Serial</th>
                         <th>Driver Name</th>
                         <th>Officer Name</th>
                         <th>Thana</th>
@@ -80,6 +83,8 @@ $(document).ready(function(){
             success: function(res){
                 let tbody = $('#offenseTbody');
                 tbody.empty();
+                $('#driverAlert').html(res.alert);
+
 
                 if(res.success){
                     $('#driverName').show();
@@ -144,5 +149,6 @@ function deleteOffense(id){
         });
     }
 }
+
 </script>
 @endsection
