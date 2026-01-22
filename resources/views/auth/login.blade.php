@@ -25,9 +25,10 @@
         @endif
         <div class="auth-header">
             <div class="logo">
-                <i class="fas fa-car"></i> OTOMS
+                <!-- <i class="fas fa-car"></i> OTOMS -->
+                <img src="{{ asset('images/otoms.png') }}" alt="OTOMS Logo" width="250" height="150">
             </div>
-            <h5>Online Traffic Offense Management System</h5>
+            <!-- <h5>Online Traffic Offense Management System</h5> -->
         </div>
         <div class="auth-body">
             <h3 class="form-title">Login to Your Account</h3>
