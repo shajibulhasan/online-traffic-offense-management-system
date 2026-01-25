@@ -40,7 +40,7 @@ public function offenseListPdf($driver_id)
         ->first();
 
     if (!$driver) {
-        abort(404, 'Driver not found');
+        abort(404);
     }
 
     $offenses = DB::table('offense_list')
@@ -56,15 +56,23 @@ public function offenseListPdf($driver_id)
     $total_point = $offenses->sum('point');
     $total_fine  = $offenses->sum('fine');
 
-    $pdf = Pdf::loadView('pdf.offense_list', compact(
+    $qrData = url('/verify-report/'.$driver->id);
+
+    $qrUrl = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=" . urlencode($qrData);
+
+    $qrImage = base64_encode(file_get_contents($qrUrl));
+
+    $pdf = PDF::loadView('pdf.offense_list', compact(
         'driver',
         'offenses',
         'total_point',
-        'total_fine'
+        'total_fine',
+        'qrImage'
     ))->setPaper('a4', 'portrait');
+    
+    return $pdf->stream('offense-list.pdf');
+    }
 
-    return $pdf->download('offense-list-'.$driver->id.'.pdf');
-}
 
 
 }
