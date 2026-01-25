@@ -64,7 +64,8 @@
         <div class="sidebar pe-4 pb-3">
             <nav class="navbar navbar-dark">
                 <a href="{{ route('Admin.index') }}" class="navbar-brand mx-4 mb-3">
-                    <h3 class="text-white"></i>Offense <br> Management</h3>
+                    <!-- <h3 class="text-white"></i>Offense <br> Management</h3> -->
+                    <img src="{{ asset('images/otoms.png') }}" alt="OTOMS Logo" width="180" height="100">
                 </a>
                 <div class="d-flex align-items-center ms-4 mb-4">
                     <div class="ms-3 badge bg-primary text-white">

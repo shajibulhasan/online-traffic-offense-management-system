@@ -63,6 +63,9 @@ Route::post('/Officer/updateOffense/{id}', [OfficerController::class, 'updateOff
 Route::get('/Officer/offense-list-pdf/{driver_id}', 
     [HomeController::class, 'offenseListPdf']
 )->name('Officer.offenseListPdf');
+Route::get('/verify-report/{id}', function($id){
+    return "Verified report for driver ID: ".$id;
+});
 
 
 
