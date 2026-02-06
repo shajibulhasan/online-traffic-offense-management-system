@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\DB;
+use Auth;
 
 class HomeController extends Controller
 {
@@ -25,11 +26,25 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $totalOffenseCount = DB::table('offense_list')->count();
+        $userOffenseCount = DB::table('offense_list')
+            ->where('driver_id', auth()->user()->id)
+            ->count();
+        return view('home', compact('totalOffenseCount', 'userOffenseCount'));
     }
      public function dashboard()
     {
-        return view('welcome');
+
+        if (Auth::check()) {
+            $totalOffenseCount = DB::table('offense_list')->count();
+            $userOffenseCount = DB::table('offense_list')
+                ->where('driver_id', auth()->user()->id)
+                ->count();
+            return view('welcome', compact('totalOffenseCount', 'userOffenseCount'));
+        } else {
+            return redirect()->route('login');
+        }
+
     }
 
 public function offenseListPdf($driver_id)
