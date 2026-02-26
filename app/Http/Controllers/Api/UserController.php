@@ -35,4 +35,31 @@ class UserController extends Controller
         ]);
     }
 
+    public function updatePayment(Request $request)
+    {
+        $request->validate([
+            'offense_id' => 'required|exists:offense_list,id',
+            'payment_status' => 'required|in:paid,unpaid',
+        ]);
+
+        $offenseId = $request->input('offense_id');
+        $paymentStatus = $request->input('payment_status');
+
+        $update = DB::table('offense_list')
+            ->where('id', $offenseId)
+            ->update(['payment_status' => $paymentStatus]);
+
+        if ($update) {
+            return response()->json([
+                'status' => 200,
+                'message' => 'Payment status updated successfully'
+            ]);
+        } else {
+            return response()->json([
+                'status' => 500,
+                'message' => 'Failed to update payment status'
+            ]);
+        }
+    }
+
 }
