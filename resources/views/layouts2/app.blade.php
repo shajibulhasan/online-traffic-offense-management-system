@@ -64,7 +64,6 @@
         <div class="sidebar pe-4 pb-3">
             <nav class="navbar navbar-dark">
                 <a href="{{ route('Admin.index') }}" class="navbar-brand mx-4 mb-3">
-                    <!-- <h3 class="text-white"></i>Offense <br> Management</h3> -->
                     <img src="{{ asset('images/otoms.png') }}" alt="OTOMS Logo" width="180" height="100">
                 </a>
                 <div class="d-flex align-items-center ms-4 mb-4">
@@ -86,7 +85,7 @@
                     <a href="{{ route('Admin.addThana') }}" class="nav-item nav-link text-white {{ request()->routeIs('Admin.addThana') ? 'active' : '' }}"><i class="fa fa-plus me-2"></i>Add Thana</a>
                     <a href="{{ route('Admin.thanaList') }}" class="nav-item nav-link text-white {{ request()->routeIs('Admin.thanaList') ? 'active' : '' }}"><i class="fa fa-list me-2"></i>Thana List</a>
                     <a href="{{ route('Admin.assignOfficer') }}" class="nav-item nav-link text-white {{ request()->routeIs('Admin.assignOfficer') ? 'active' : '' }}"><i class="fa fa-user me-2"></i>Assign Officer</a>
-                    <a href="{{ route('Admin.assignOfficerList') }}" class="nav-item nav-link text-white {{ request()->routeIs('Admin.assignOfficerList') ? 'active' : '' }}"><i class="fa fa-list me-2"></i>Assign Officer List</a>
+                    <a href="{{ route('Admin.assignOfficerList') }}" class="nav-item nav-link text-white {{ request()->routeIs('Admin.assignOfficerList') ? 'active' : '' }}"><i class="fa fa-list me-2"></i>Assigned Officer</a>
                     <a href="{{ route('Admin.addArea') }}" class="nav-item nav-link text-white {{ request()->routeIs('Admin.addArea') ? 'active' : '' }}"><i class="fa fa-plus me-2"></i>Add Area</a>
                     <a href="{{ route('Admin.areaList') }}" class="nav-item nav-link text-white {{ request()->routeIs('Admin.areaList') ? 'active' : '' }}"><i class="fa fa-list me-2"></i>Area List</a>
                     @endif
@@ -97,8 +96,6 @@
                     <a href="{{ route('User.index') }}" class="nav-item nav-link text-white {{ request()->routeIs('User.index') ? 'active' : '' }}"><i class="fa fa-exclamation-triangle me-2"></i>My Offense</a>
                     @endif
                     <a href="{{ route('User.profileShow') }}" class="nav-item nav-link text-white {{ request()->routeIs('User.profileShow') ? 'active' : '' }}"><i class="fa fa-user me-2"></i>My Profile</a>
-                    <a href="{{ route('profile.edit') }}" class="nav-item nav-link text-white {{ request()->routeIs('profile.edit') ? 'active' : '' }}"><i class="fa fa-edit me-2"></i>Update Profile</a>
-
                     </div>
                 </div>
             </nav>

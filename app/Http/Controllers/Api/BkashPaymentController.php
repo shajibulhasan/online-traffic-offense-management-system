@@ -77,97 +77,114 @@ class BkashPaymentController extends Controller
         }
     }
 
-    public function callBack(Request $request)
+   public function callBack(Request $request)
     {
-        Log::info('Callback Received:', $request->all());
+        Log::info('Callback Received - Full Data:', $request->all());
 
         try {
             $paymentID = $request->paymentID;
             $status = $request->status;
             $token = $request->token;
             
-            Log::info('Callback Params:', [
+            Log::info('Processing Callback:', [
                 'paymentID' => $paymentID,
                 'status' => $status,
                 'token' => $token
             ]);
 
-            // Execute payment
-            $response = BkashPaymentTokenize::executePayment($paymentID);
+            // First execute the payment
+            $executeResponse = BkashPaymentTokenize::executePayment($paymentID);
+            Log::info('Execute Payment Response:', $executeResponse);
             
-            Log::info('Execute Response:', $response);
-
-            // If execute fails, try query
-            if (!$response || !isset($response['statusCode']) || $response['statusCode'] != '0000') {
-                $response = BkashPaymentTokenize::queryPayment($paymentID);
-                Log::info('Query Response:', $response);
+            // If execute fails, try query payment
+            if (!$executeResponse || (isset($executeResponse['statusCode']) && $executeResponse['statusCode'] != '0000')) {
+                $executeResponse = BkashPaymentTokenize::queryPayment($paymentID);
+                Log::info('Query Payment Response:', $executeResponse);
             }
 
-            // Check if payment successful
-            if (isset($response['statusCode']) && $response['statusCode'] == "0000" && 
-                isset($response['transactionStatus']) && $response['transactionStatus'] == "Completed") {
+            // Check if payment was successful
+            if (isset($executeResponse['statusCode']) && $executeResponse['statusCode'] == '0000' && 
+                isset($executeResponse['transactionStatus']) && $executeResponse['transactionStatus'] == 'Completed') {
                 
-                $trxID = $response['trxID'];
+                $trxID = $executeResponse['trxID'];
+                Log::info('Payment Successful - TrxID: ' . $trxID);
+                
+                // Get offense_id from token
                 $offense_id = null;
                 
-                // Try to get offense_id from payment_sessions table
+                // Try to get from payment_sessions table
                 try {
                     $paymentSession = DB::table('payment_sessions')
                         ->where('token', $token)
-                        ->where('expires_at', '>', now())
                         ->first();
                     
                     if ($paymentSession) {
                         $offense_id = $paymentSession->offense_id;
+                        Log::info('Found offense_id from payment_sessions: ' . $offense_id);
+                        
+                        // Update offense_list
+                        $updateResult = DB::table('offense_list')
+                            ->where('id', $offense_id)
+                            ->update([
+                                'status' => 'paid',
+                                'transaction_id' => $trxID,
+                                'updated_at' => now()
+                            ]);
+                        
+                        Log::info('Database Update Result:', [
+                            'affected_rows' => $updateResult,
+                            'offense_id' => $offense_id,
+                            'trxID' => $trxID
+                        ]);
+                        
+                        // Delete the session
+                        DB::table('payment_sessions')->where('token', $token)->delete();
+                        
+                        // Return success response
+                        return $this->paymentResponse('success', [
+                            'trxID' => $trxID,
+                            'message' => 'Payment successful'
+                        ]);
+                    } else {
+                        Log::error('Payment session not found for token: ' . $token);
+                        
+                        // Try session as fallback
+                        if (session()->has('offense_id')) {
+                            $offense_id = session()->get('offense_id');
+                            Log::info('Found offense_id from session: ' . $offense_id);
+                            
+                            DB::table('offense_list')
+                                ->where('id', $offense_id)
+                                ->update([
+                                    'status' => 'paid',
+                                    'transaction_id' => $trxID,
+                                    'updated_at' => now()
+                                ]);
+                            
+                            session()->forget('offense_id');
+                            
+                            return $this->paymentResponse('success', [
+                                'trxID' => $trxID,
+                                'message' => 'Payment successful'
+                            ]);
+                        }
                     }
                 } catch (\Exception $e) {
-                    Log::warning('Payment sessions table not found, trying session');
-                    // Fallback to session
-                    $offense_id = session()->get('offense_id');
+                    Log::error('Database Error:', ['error' => $e->getMessage()]);
                 }
-                
-                Log::info('Offense ID found:', ['offense_id' => $offense_id]);
-
-                if ($offense_id) {
-                    // Update offense status
-                    $updated = DB::table('offense_list')
-                        ->where('id', $offense_id)
-                        ->update([
-                            'status' => 'paid',
-                            'transaction_id' => $trxID,
-                            'updated_at' => now()
-                        ]);
-                    
-                    Log::info('Database Update Result:', [
-                        'offense_id' => $offense_id,
-                        'trxID' => $trxID,
-                        'updated' => $updated
-                    ]);
-
-                    // Clean up
-                    try {
-                        DB::table('payment_sessions')->where('token', $token)->delete();
-                    } catch (\Exception $e) {
-                        session()->forget(['payment_token', 'offense_id']);
-                    }
-
-                    return $this->paymentResponse('success', [
-                        'trxID' => $trxID,
-                        'message' => 'Payment successful'
-                    ]);
-                } else {
-                    Log::error('Offense ID not found');
-                }
+            } else {
+                $errorMsg = $executeResponse['statusMessage'] ?? 'Payment execution failed';
+                Log::error('Payment execution failed:', ['error' => $errorMsg]);
             }
 
-            // Payment failed
+            // If we reach here, payment failed
             return $this->paymentResponse('failed', [
-                'message' => $response['statusMessage'] ?? 'Payment failed'
+                'message' => $executeResponse['statusMessage'] ?? 'Payment failed'
             ]);
 
         } catch (\Exception $e) {
-            Log::error('Callback Error:', [
-                'error' => $e->getMessage(),
+            Log::error('Callback Exception:', [
+                'message' => $e->getMessage(),
                 'trace' => $e->getTraceAsString()
             ]);
             
@@ -176,8 +193,7 @@ class BkashPaymentController extends Controller
             ]);
         }
     }
-
-    private function paymentResponse($status, $data = [])
+        private function paymentResponse($status, $data = [])
     {
         $html = '<!DOCTYPE html>
         <html>

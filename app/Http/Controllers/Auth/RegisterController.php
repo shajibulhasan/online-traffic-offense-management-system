@@ -55,6 +55,8 @@ class RegisterController extends Controller
             'phone' => ['required', 'unique:users'],
             'password' => ['required', 'string', 'min:6', 'confirmed'],
             'nid' => ['required', 'unique:users'],
+            'role' => ['required', 'in:user,admin'],
+            'license' => ['required_if:role,user', 'unique:users,license'],
         ]);
     }
 
@@ -71,6 +73,7 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'phone' => $data['phone'],
             'role' => $data['role'],
+            'license' => $data['role'] === 'user' ? $data['license'] : null,
             'nid' => $data['nid'],
             'password' => Hash::make($data['password']),
         ]);

@@ -104,6 +104,15 @@
                         <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
                     @enderror
                 </div>
+                <!-- License for user -->
+                <div class="form-floating mb-3" id="licenseField" style="display: none;">
+                    <input type="text" name="license" class="form-control @error('license') is-invalid @enderror"
+                           value="{{ old('license') }}" id="regLicense" placeholder="Enter License Number">
+                    <label for="regLicense">License Number</label>
+                    @error('license')
+                        <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+                    @enderror
+                </div>
 
                 <!-- Submit -->
                 <button type="submit" class="btn btn-primary w-100">Register</button>
@@ -119,5 +128,19 @@
 
     <!-- Bootstrap 5 JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        // Show/hide license field based on user type selection
+        document.getElementById('userType').addEventListener('change', function() {
+            var licenseField = document.getElementById('licenseField');
+            if (this.value === 'user') {
+                licenseField.style.display = 'block';
+                document.getElementById('regLicense').setAttribute('required', 'required');
+            } else {
+                licenseField.style.display = 'none';
+                document.getElementById('regLicense').removeAttribute('required');
+            }
+        });
+    </script>
 </body>
 </html>

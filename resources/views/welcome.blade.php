@@ -5,217 +5,243 @@
 
     @section('content')
 
-    <style>
-          /* dashboard content */
-        .dashboard-container {
-            padding: 32px 36px;
-            max-width: 1200px;
-        }
+    <!-- Total offenses vs Today offenses graph -->
+    <div class="recent-box" style="margin-top: 30px; background: linear-gradient(135deg, #667eea 0%, #06c22f 100%); border-radius: 20px; padding: 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.1);">
+        <div class="recent-title" style="color: white; font-size: 1.2rem; font-weight: 600; margin-bottom: 20px; display: flex; align-items: center;">
+            <i class="fas fa-chart-line" style="margin-right: 12px; color: #ffd700; font-size: 1.5rem;"></i> 
+            Offenses Analytics Dashboard
+            <span style="margin-left: auto; font-size: 0.9rem; background: rgba(255,255,255,0.2); padding: 5px 15px; border-radius: 20px;">
+                <i class="fas fa-calendar-alt" style="margin-right: 5px;"></i> Live Updates
+            </span>
+        </div>
+        
+        <!-- Stats Cards -->
+        <div style="display: flex; gap: 20px; margin-bottom: 25px;">
+            <div style="flex: 1; background: rgba(255,255,255,0.15); backdrop-filter: blur(10px); border-radius: 15px; padding: 20px; border: 1px solid rgba(255,255,255,0.2);">
+                @if(Auth::check() && Auth::user()->role != 'user')
+                <div style="color: rgba(255,255,255,0.8); font-size: 0.9rem; margin-bottom: 8px;">Total Offenses</div>
+                <div style="color: white; font-size: 2.5rem; font-weight: 700; line-height: 1;">{{ $totalOffenseCount }}</div>
+                @else
+                <div style="color: rgba(255,255,255,0.8); font-size: 0.9rem; margin-bottom: 8px;">My Offenses</div>
+                <div style="color: white; font-size: 2.5rem; font-weight: 700; line-height: 1;">{{ $userOffenseCount }}</div>
+                @endif
+                <div style="color: rgba(255,255,255,0.6); font-size: 0.8rem; margin-top: 8px;">
+                    <i class="fas fa-arrow-up" style="color: #4ade80; margin-right: 5px;"></i> All time records
+                </div>
+            </div>
+            <div style="flex: 1; background: rgba(255,255,255,0.15); backdrop-filter: blur(10px); border-radius: 15px; padding: 20px; border: 1px solid rgba(255,255,255,0.2);">
+                @if(Auth::check() && Auth::user()->role != 'user')
+                <div style="color: rgba(255,255,255,0.8); font-size: 0.9rem; margin-bottom: 8px;">Today's Offenses</div>
+                <div style="color: white; font-size: 2.5rem; font-weight: 700; line-height: 1;">{{ $todayOffenseCount }}</div>
+                @else
+                <div style="color: rgba(255,255,255,0.8); font-size: 0.9rem; margin-bottom: 8px;">My Offenses Unpaid</div>
+                <div style="color: white; font-size: 2.5rem; font-weight: 700; line-height: 1;">{{ $unpaidOffenseCount }}</div>
+                @endif
+                <div style="color: rgba(255,255,255,0.6); font-size: 0.8rem; margin-top: 8px;">
+                    <i class="fas fa-arrow-up" style="color: #4ade80; margin-right: 5px;"></i> Updated daily
+                </div>
+                <div style="color: rgba(255,255,255,0.6); font-size: 0.8rem; margin-top: 8px;">
+                    <i class="fas fa-calendar-day" style="color: #ffd700; margin-right: 5px;"></i> {{ date('F j, Y') }}
+                </div>
+            </div>
+        </div>
 
-        .offense-card {
-            max-width: 550px;
-            background: white;
-            border-radius: 28px;
-            box-shadow: 0 20px 30px -10px rgba(2, 48, 93, 0.2);
-            overflow: hidden;
-            border: 1px solid rgba(0,70,120,0.08);
-            margin-bottom: 40px;
-        }
-
-        .card-header-custom {
-            background: #0b7c36;
-            padding: 22px 28px;
-            border-bottom: 1px solid rgba(0,70,120,0.1);
+        <!-- Chart Container -->
+        <div style="background: white; border-radius: 15px; padding: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.2);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <div style="display: flex; gap: 20px;">
+                    <div style="display: flex; align-items: center;">
+                        <span style="width: 12px; height: 12px; background: linear-gradient(135deg, #3b82f6, #2563eb); border-radius: 3px; margin-right: 8px;"></span>
+                        @if(Auth::check() && Auth::user()->role != 'user')
+                        <span style="color: #4a5568; font-size: 0.9rem;">Total Offenses</span>
+                        @else
+                        <span style="color: #4a5568; font-size: 0.9rem;">My Offenses</span>
+                        @endif
+                    </div>
+                    <div style="display: flex; align-items: center;">
+                        <span style="width: 12px; height: 12px; background: linear-gradient(135deg, #ef4444, #dc2626); border-radius: 3px; margin-right: 8px;"></span>
+                        @if(Auth::check() && Auth::user()->role != 'user')
+                        <span style="color: #4a5568; font-size: 0.9rem;">Today's Offenses</span>
+                        @else
+                        <span style="color: #4a5568; font-size: 0.9rem;">Unpaid Offenses</span>
+                        @endif
+                    </div>
+                </div>
+                <div style="color: #718096; font-size: 0.9rem;">
+                    <i class="fas fa-info-circle" style="margin-right: 5px;"></i> Click bars for details
+                </div>
+            </div>
             
-        }
+            <canvas id="offensesChart" height="100"></canvas>
+            
+            <!-- Trend Indicator -->
+            @php
+                if(Auth::check() && Auth::user()->role != 'user') {
+                    $trend = $todayOffenseCount > 0 ? round(($todayOffenseCount / $totalOffenseCount) * 100, 1) : 0;
+                } else {
+                    $trend = $userOffenseCount > 0 ? round(($unpaidOffenseCount / $userOffenseCount) * 100, 1) : 0;
+                }
+            @endphp
+            
+            <div style="margin-top: 20px; padding-top: 20px; border-top: 2px dashed #e2e8f0; display: flex; justify-content: space-between; align-items: center;">
+                <div style="display: flex; align-items: center; gap: 15px;">
+                    <div style="background: #f7fafc; padding: 8px 15px; border-radius: 25px;">
+                        <span style="color: #4a5568; font-size: 0.9rem;">Today's share: <strong style="color: #2d3748; font-size: 1.1rem;">{{ $trend }}%</strong></span>
+                    </div>
+                    @if(Auth::check() && Auth::user()->role != 'user')
+                        @if($todayOffenseCount > ($totalOffenseCount / 30))
+                        <span style="color: #e53e3e; font-size: 0.9rem;">
+                            <i class="fas fa-exclamation-triangle" style="margin-right: 5px;"></i> Above daily average
+                        </span>
+                        @else
+                        <span style="color: #38a169; font-size: 0.9rem;">
+                            <i class="fas fa-check-circle" style="margin-right: 5px;"></i> Below daily average
+                        </span>
+                        @endif
+                    @else
+                        @if($unpaidOffenseCount > ($userOffenseCount / 30))
+                        <span style="color: #e53e3e; font-size: 0.9rem;">
+                            <i class="fas fa-exclamation-triangle" style="margin-right: 5px;"></i> Above daily average
+                        </span>
+                        @else
+                        <span style="color: #38a169; font-size: 0.9rem;">
+                            <i class="fas fa-check-circle" style="margin-right: 5px;"></i> Below daily average
+                        </span>
+                        @endif
+                    @endif
+                </div>
+                <button onclick="refreshChart()" style="background: none; border: none; color: #4299e1; cursor: pointer; font-size: 0.9rem;">
+                    <i class="fas fa-sync-alt" style="margin-right: 5px;"></i> Refresh
+                </button>
+            </div>
+        </div>
+    </div>
 
-        .card-header-custom h3 {
-            color: white;
-            font-weight: 600;
-            font-size: 1.5rem;
-            margin: 0;
-            letter-spacing: -0.3px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        const ctx = document.getElementById('offensesChart').getContext('2d');
+        
+        // Gradient backgrounds
+        const totalGradient = ctx.createLinearGradient(0, 0, 0, 400);
+        totalGradient.addColorStop(0, '#3b82f6');
+        totalGradient.addColorStop(1, '#2563eb');
+        
+        const todayGradient = ctx.createLinearGradient(0, 0, 0, 400);
+        todayGradient.addColorStop(0, '#ef4444');
+        todayGradient.addColorStop(1, '#dc2626');
+        
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                @if(Auth::check() && Auth::user()->role != 'user')
+                labels: ['Total Offenses', 'Today Offenses'],
+                @else
+                labels: ['My Offenses', 'Unpaid Offenses'],
+                @endif
+                datasets: [{
+                    label: 'Number of Offenses',
+                    @if(Auth::check() && Auth::user()->role != 'user')
+                    data: [{{ $totalOffenseCount }}, {{ $todayOffenseCount }}],
+                    @else
+                    data: [{{ $userOffenseCount }}, {{ $unpaidOffenseCount }}],
+                    @endif
+                    backgroundColor: [totalGradient, todayGradient],
+                    borderRadius: 10,
+                    borderSkipped: false,
+                    barPercentage: 0.6,
+                    categoryPercentage: 0.8,
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: {
+                    legend: { 
+                        display: false 
+                    },
+                    tooltip: {
+                        backgroundColor: '#1a202c',
+                        titleColor: '#fff',
+                        bodyColor: '#e2e8f0',
+                        borderColor: '#4a5568',
+                        borderWidth: 1,
+                        padding: 12,
+                        cornerRadius: 8,
+                        displayColors: true,
+                        callbacks: {
+                            label: function(context) {
+                                let label = context.dataset.label || '';
+                                let value = context.parsed.y;
+                                return label + ': ' + value.toLocaleString() + ' offenses';
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    y: { 
+                        beginAtZero: true,
+                        grid: {
+                            color: '#e2e8f0',
+                            drawBorder: false,
+                        },
+                        ticks: {
+                            @if(Auth::check() && Auth::user()->role != 'user')
+                            stepSize: Math.ceil({{ $totalOffenseCount }} / 5),
+                            @else
+                            stepSize: Math.ceil({{ $userOffenseCount }} / 5),
+                            @endif
+                            callback: function(value) {
+                                return value.toLocaleString();
+                            }
+                        }
+                    },
+                    x: {
+                        grid: {
+                            display: false
+                        }
+                    }
+                },
+                onClick: function(e, item) {
+                    if(item.length > 0) {
+                        const index = item[0].dataIndex;
+                        const label = this.data.labels[index];
+                        const value = this.data.datasets[0].data[index];
+                        alert(`${label}: ${value.toLocaleString()} offenses`);
+                    }
+                }
+            }
+        });
+        
+        function refreshChart() {
+            location.reload();
         }
+    </script>
 
-        .card-header-custom h3 i {
-            color: #fcd34d;
-        }
-
-        .card-body-custom {
-            padding: 32px 24px;
-            background: white;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-        }
-
-        .big-number {
-            font-size: 7rem;
-            font-weight: 800;
-            line-height: 1;
-            color: #b91c1c;
-            text-shadow: 0 4px 12px rgba(185,28,28,0.15);
-        }
-
-        .label-total {
-            font-size: 1rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            color: #4b6f8e;
-            font-weight: 600;
-            margin-top: 4px;
-        }
-
-        /* extra stats row (optional, but matches admin theme) */
-        .stats-row {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 24px;
-            margin-top: 30px;
-        }
-
-        .stat-card {
-            background: white;
-            border-radius: 24px;
-            padding: 24px 28px;
-            box-shadow: 0 8px 24px rgba(0, 40, 70, 0.06);
-            flex: 1 1 180px;
-            border: 1px solid #dfeaf3;
-        }
-
-        .stat-card i {
-            font-size: 2rem;
-            color: #1f5f99;
-            background: #e3f0fd;
-            padding: 12px;
-            border-radius: 18px;
-        }
-
-        .stat-card .stat-value {
-            font-size: 2rem;
-            font-weight: 700;
-            margin-top: 12px;
-            color: #0b2b4a;
-        }
-
-        .stat-card .stat-label {
-            color: #597a9d;
-            font-weight: 500;
-        }
-
-        /* dummy table / list hint */
+    <style>
         .recent-box {
-            background: white;
-            border-radius: 24px;
-            padding: 22px 28px;
-            margin-top: 30px;
-            border: 1px solid #dee9f2;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
-
-        .recent-title {
-            font-weight: 600;
-            font-size: 1.2rem;
-            margin-bottom: 18px;
-            color: #163a5c;
+        
+        .recent-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 30px 50px rgba(0,0,0,0.15) !important;
         }
-
-        .thana-row {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            border-bottom: 1px solid #ecf3fa;
-            padding: 14px 0;
+        
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.7; }
+            100% { opacity: 1; }
         }
-
-        .thana-row:last-child {
-            border-bottom: none;
+        
+        .fa-sync-alt:hover {
+            animation: spin 1s linear infinite;
         }
-
-        .badge-offense {
-            background: #dc2626;
-            color: white;
-            font-weight: 600;
-            padding: 6px 14px;
-            border-radius: 40px;
-            font-size: 0.9rem;
+        
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
         }
-
     </style>
 
-       <div class="dashboard-container">
-            <!-- row col-md-6 offset-md-3 style card (exactly as snippet) -->
-            <div class="row">
-                <div class="offense-card col-md-6 mx-auto">
-                    <div class="card-header-custom">
-                        <h3>
-                            <i class="fas fa-exclamation-triangle"></i> 
-                            Total Offenses Recorded
-                        </h3>
-                    </div>
-                    <div class="card-body-custom">
-                        <!-- number "1" as shown in image, but we can also mimic dynamic 1 -->
-                        <div class="big-number">120</div>
-                        <div class="label-total">offense in system</div>
-                    </div>
-                </div>
-                <div class="offense-card col-md-6">
-                    <div class="card-header-custom">
-                        <h3>
-                            <i class="fas fa-exclamation-triangle"></i> 
-                            Today's Offenses Recorded
-                        </h3>
-                    </div>
-                    <div class="card-body-custom">
-                        <!-- number "1" as shown in image, but we can also mimic dynamic 1 -->
-                        <div class="big-number">5</div>
-                        <div class="label-total">offenses recorded today</div>
-                    </div>
-                </div>                         
-            </div>
-            <!-- Additional admin stats (harmonizes with dashboard) -->
-            <div class="stats-row">
-                <div class="stat-card">
-                    <i class="fas fa-user-police"></i>
-                    <div class="stat-value">8</div>
-                    <div class="stat-label">Verified officers</div>
-                </div>
-                <div class="stat-card">
-                    <i class="fas fa-building"></i>
-                    <div class="stat-value">457</div>
-                    <div class="stat-label">Thanas</div>
-                </div>
-                <div class="stat-card">
-                    <i class="fas fa-pen-fancy"></i>
-                    <div class="stat-value">12</div>
-                    <div class="stat-label">Offense types</div>
-                </div>
-            </div>
-
-            <!-- Recent thana / area summary (simulates Thana list & area list) -->
-            <div class="recent-box">
-                <div class="recent-title"><i class="fas fa-clock" style="margin-right: 10px; color: #256eb0;"></i> Recent thana activity</div>
-                <div class="thana-row">
-                    <span><i class="fas fa-map-marker-alt" style="color:#1f6390;"></i> <strong>Motijheel Thana</strong> (Area: 5)</span>
-                    <span class="badge-offense">2 offenses</span>
-                </div>
-                <div class="thana-row">
-                    <span><i class="fas fa-map-marker-alt" style="color:#1f6390;"></i> <strong>Uttara Thana</strong> (Area: 3)</span>
-                    <span class="badge-offense">0 offenses</span>
-                </div>
-                <div class="thana-row">
-                    <span><i class="fas fa-map-marker-alt" style="color:#1f6390;"></i> <strong>Ramna Thana</strong> (Area: 4)</span>
-                    <span class="badge-offense">1 offense</span>
-                </div>
-                <hr>
-                <!-- subtle hint of "Total Offenses Recorded 1" and area list -->
-                <div style="display: flex; justify-content: space-between; color: #2f577d;">
-                    <span><i class="far fa-file-alt"></i> Area list: Gulshan, Banani, Motijheel...</span>
-                    <span><i class="fas fa-check-circle" style="color:#2e7d32;"></i> Assign officer: 3 pending</span>
-                </div>
-            </div>
     @endsection
 @endguest
