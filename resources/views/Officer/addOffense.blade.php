@@ -93,6 +93,33 @@
                                 @enderror
                             </div>
 
+                            <!-- offenses type -->
+                                <div class="mb-4">
+                                    <label for="offense_type"><b>Offense Type:</b><span class="text-danger">*</span></label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="bi bi-exclamation-triangle-fill"></i></span>
+                                        <select class="form-select bg-success text-white" name="offense_type" id="offense_type">
+                                            <option value="" selected>Select Offense Type</option>
+                                            <option value="Speeding">Speeding</option>
+                                            <option value="Illegal Parking">Illegal Parking</option>
+                                            <option value="Running Red Light">Running Red Light</option>
+                                            <option value="Reckless Driving">Reckless Driving</option>
+                                            <option value="Driving Under Influence">Driving Under Influence</option>
+                                            <option value="Using Mobile While Driving">Using Mobile While Driving</option>
+                                            <option value="Not Wearing Seatbelt">Not Wearing Seatbelt</option>
+                                            <option value="Overloading">Overloading</option>
+                                            <option value="Without License">Without License</option>
+                                            <option value="License Expired">License Expired</option>
+                                            <option value="Without Helmet">Without Helmet</option>
+                                            <option value="Other">Other</option>
+                                        </select>
+                                    </div>
+                                    @error('offense_type')
+                                        <div class="text-danger mt-2">{{ $message }}</div>
+                                    @enderror
+                                </div>
+
+
                             {{-- Offense Details --}}
                             <div class="mb-4">
                                 <label for="offense"><b>Detailed Offense:</b><span class="text-danger">*</span></label>
@@ -110,7 +137,7 @@
                                 <label for="fine"><b>Fine:</b><span class="text-danger">*</span></label>
                                 <div class="input-group">
                                     <span class="input-group-text"><i class="bi bi-cash-coin"></i></span>
-                                    <input type="text" class="form-control @error('fine') is-invalid @enderror bg-success text-white" name="fine" id="fine" placeholder="Enter fine amount" value="{{ old('fine') }}">
+                                    <input type="text" class="form-control @error('fine') is-invalid @enderror bg-success text-white" name="fine" id="fine" placeholder="Enter fine amount" value="{{ old('fine') }}" readonly>
                                 </div>
                                 @error('fine')
                                     <div class="text-danger mt-2">{{ $message }}</div>
@@ -122,7 +149,7 @@
                                 <label for="point"><b>Point:</b><span class="text-danger">*</span></label>
                                 <div class="input-group">
                                     <span class="input-group-text"><i class="bi bi-marker-tip"></i></span>
-                                    <input type="text" class="form-control @error('point') is-invalid @enderror bg-success text-white" name="point" id="point" placeholder="Enter points" value="{{ old('point') }}">
+                                    <input type="text" class="form-control @error('point') is-invalid @enderror bg-success text-white" name="point" id="point" placeholder="Enter points" value="{{ old('point') }}" readonly>
                                 </div>
                                 @error('point')
                                     <div class="text-danger mt-2">{{ $message }}</div>
@@ -216,5 +243,34 @@
         }
         return true;
     }
+
+    // when select offense type then set fine and point automatically
+    document.getElementById('offense_type').addEventListener('change', function() {
+        const offenseType = this.value;
+        const fineInput = document.getElementById('fine');
+        const pointInput = document.getElementById('point');
+        const offenseData = {
+            "Speeding": { fine: 500, point: 5 },
+            "Illegal Parking": { fine: 400, point: 4 },
+            "Running Red Light": { fine: 300, point: 3 },
+            "Reckless Driving": { fine: 500, point: 5 },
+            "Driving Under Influence": { fine: 400, point: 4 },
+            "Using Mobile While Driving": { fine: 600, point: 6 },
+            "Not Wearing Seatbelt": { fine: 500, point: 5 },
+            "Overloading": { fine: 400, point: 4 },
+            "Without License": { fine: 700, point: 7 },
+            "License Expired": { fine: 300, point: 3 },
+            "Without Helmet": { fine: 400, point: 4 },
+            "Other": { fine: 500, point: 5 }
+        };
+        const data = offenseData[offenseType];
+        if (data) {
+            fineInput.value = data.fine;
+            pointInput.value = data.point;
+        } else {
+            fineInput.value = '';
+            pointInput.value = '';
+        }
+    });
 </script>
 @endsection

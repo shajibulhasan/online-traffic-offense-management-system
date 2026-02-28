@@ -4,6 +4,21 @@
 <div class="container py-5">
     <div class="card">
         <div class="alert alert-danger" role="alert">
+            <h4 class="alert-heading text-center">Important Notice: Please Pay Your Fines Promptly to Avoid License Suspension or Revocation!</h4>
+        </div>
+       
+
+        @if(session('success'))
+            <div class="alert alert-success">
+                {{ session('success') }}
+            </div>
+        @elseif(session('error'))
+            <div class="alert alert-danger">
+                {{ session('error') }}
+            </div>
+        @endif
+
+        
            @php
                 $unpaid_point = 0;
                 $point = 0;
@@ -16,6 +31,11 @@
                             $unpaid_point += $offense->point;
                         }
                     }
+                }
+                if(isset($last_createAt)) {
+                    $last_createAt = \Carbon\Carbon::parse($last_createAt);
+                } else {
+                    $last_createAt = now();
                 }
                 $next = $last_createAt->addDays(7)->format('d M, Y');
             @endphp
@@ -80,7 +100,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="6" class="text-center">NO Offense</td>
+                                <td colspan="7" class="text-center">NO Offense</td>
                             </tr>
                         @endforelse
 

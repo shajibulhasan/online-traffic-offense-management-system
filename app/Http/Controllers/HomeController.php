@@ -26,21 +26,53 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $totalOffenseCount = DB::table('offense_list')->count();
-        $userOffenseCount = DB::table('offense_list')
-            ->where('driver_id', auth()->user()->id)
-            ->count();
-        return view('home', compact('totalOffenseCount', 'userOffenseCount'));
+        if (Auth::check()) {
+            if(Auth::user()->role == 'user') {
+                $userOffenseCount = DB::table('offense_list')
+                    ->where('driver_id', auth()->user()->id)
+                    ->count();
+                $unpaidOffenseCount = DB::table('offense_list')
+                    ->where('driver_id', auth()->user()->id)                
+                    ->where('status', 'unpaid')
+                    ->count();
+                    
+                return view('home', compact('userOffenseCount', 'unpaidOffenseCount'));
+            }else {
+                $totalOffenseCount = DB::table('offense_list')->count();
+                $todayOffenseCount = DB::table('offense_list')
+                    ->whereDate('created_at', now()->toDateString())
+                    ->count();
+                
+                return view('home', compact('totalOffenseCount', 'todayOffenseCount'));
+            }
+           
+        } else {
+            return redirect()->route('login');
+        }
     }
      public function dashboard()
     {
 
         if (Auth::check()) {
-            $totalOffenseCount = DB::table('offense_list')->count();
-            $userOffenseCount = DB::table('offense_list')
-                ->where('driver_id', auth()->user()->id)
-                ->count();
-            return view('welcome', compact('totalOffenseCount', 'userOffenseCount'));
+            if(Auth::user()->role == 'user') {
+                $userOffenseCount = DB::table('offense_list')
+                    ->where('driver_id', auth()->user()->id)
+                    ->count();
+                $unpaidOffenseCount = DB::table('offense_list')
+                    ->where('driver_id', auth()->user()->id)                
+                    ->where('status', 'unpaid')
+                    ->count();
+                    
+                return view('welcome', compact('userOffenseCount', 'unpaidOffenseCount'));
+            }else {
+                $totalOffenseCount = DB::table('offense_list')->count();
+                $todayOffenseCount = DB::table('offense_list')
+                    ->whereDate('created_at', now()->toDateString())
+                    ->count();
+                
+                return view('welcome', compact('totalOffenseCount', 'todayOffenseCount'));
+            }
+           
         } else {
             return redirect()->route('login');
         }
