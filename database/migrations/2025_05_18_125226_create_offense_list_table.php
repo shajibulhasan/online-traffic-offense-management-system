@@ -16,13 +16,13 @@ return new class extends Migration
             $table->unsignedBigInteger('driver_id');
             $table->unsignedBigInteger('officer_id');
             $table->string('thana_name');
+            $table->string('offense_type');
             $table->string('details_offense');
             $table->string('fine');
             $table->string('point');
             $table->string('transaction_id')->nullable();
             $table->string('status')->default('unpaid');
             $table->timestamps();
-            // Ensure referenced user IDs exist in users table
             $table->foreign('officer_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('driver_id')->references('id')->on('users')->onDelete('cascade');
         });

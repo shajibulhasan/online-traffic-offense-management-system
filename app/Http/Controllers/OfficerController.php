@@ -18,6 +18,7 @@ public function createAddOffense(Request $request)
     $request->validate([
         'driver_id'       => ['required', 'exists:users,id'],
         'thana_name'      => ['required', 'string', 'max:250'],
+        'offense_type'    => ['required', 'string', 'max:500'],
         'details_offense' => ['required', 'string', 'max:500'],
         'fine'            => ['required'],
         'point'           => ['required'],
@@ -27,6 +28,7 @@ public function createAddOffense(Request $request)
         'driver_id'       => $request->driver_id,
         'officer_id'      => auth()->user()->id,
         'thana_name'      => $request->thana_name,
+        'offense_type'    => $request->offense_type,
         'details_offense' => $request->details_offense,
         'fine'            => $request->fine,
         'point'           => $request->point,
