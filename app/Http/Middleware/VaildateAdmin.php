@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Auth;
 
-class ThanaLead
+class VaildateAdmin
 {
     /**
      * Handle an incoming request.
@@ -16,14 +16,14 @@ class ThanaLead
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (auth()->check()) {
-            if (auth()->user()->thana_lead != null) {
+        if (Auth::check()) {
+            if (Auth::user()->role == 'admin') {
                 return $next($request);
             } else {
-                return redirect('/')->with('error', 'You do not have permission to access this page.');
+                return redirect('/');
             }
         } else {
-            return redirect('login')->with('error', 'Please log in to continue.');
+            return redirect('login');
         }
     }
 }
