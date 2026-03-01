@@ -5,9 +5,8 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Illuminate\Support\Facades\Auth;
 
-class DivisionLead
+class VaildateDriver
 {
     /**
      * Handle an incoming request.
@@ -16,14 +15,14 @@ class DivisionLead
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (auth()->check()) {
-            if (auth()->user()->division_lead != null) {
+        if (Auth::check()) {
+            if (Auth::user()->role == 'user') {
                 return $next($request);
             } else {
-                return redirect('/')->with('error', 'You do not have permission to access this page.');
+                return redirect('/');
             }
         } else {
-            return redirect('login')->with('error', 'Please log in to continue.');
+            return redirect('login');
         }
     }
 }

@@ -27,7 +27,7 @@
     <meta content="" name="description">
 
     <!-- Favicon -->
-    <link href="{{ asset('assets/img/favicon.ico') }}" rel="icon">
+    <link href="{{ asset('images/otoms.png') }}" rel="icon">
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -89,7 +89,7 @@
                     <a href="{{ route('Admin.addArea') }}" class="nav-item nav-link text-white {{ request()->routeIs('Admin.addArea') ? 'active' : '' }}"><i class="fa fa-plus me-2"></i>Add Area</a>
                     <a href="{{ route('Admin.areaList') }}" class="nav-item nav-link text-white {{ request()->routeIs('Admin.areaList') ? 'active' : '' }}"><i class="fa fa-list me-2"></i>Area List</a>
                     @endif
-                    @if(Auth::check() && (Auth::user()->area_lead != null || Auth::user()->role == 'admin'))
+                    @if(Auth::check() && Auth::user()->area_lead != null && Auth::user()->role == 'officer')
                     <a href="{{ route('Officer.addOffense') }}" class="nav-item nav-link text-white {{ request()->routeIs('Officer.addOffense') ? 'active' : '' }}"><i class="fa fa-plus me-2"></i>Add Offense</a>
                     <a href="{{ route('Officer.offenseList') }}" class="nav-item nav-link text-white {{ request()->routeIs('Officer.offenseList') ? 'active' : '' }}"><i class="fa fa-list me-2"></i>Offense List</a>
                     @elseif(Auth::check() && Auth::user()->role == 'user')
