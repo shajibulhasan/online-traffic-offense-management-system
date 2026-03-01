@@ -9,6 +9,8 @@ use App\Http\Middleware\VaildateAdmin;
 use App\Http\Middleware\VaildateDriver;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\HomeController;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 Auth::routes();
 
@@ -63,7 +65,11 @@ Route::get('/Officer/offense-list-pdf/{driver_id}',
 )->name('Officer.offenseListPdf')->middleware(ValidateUser::class);
 Route::get('/verify-report/{id}', function($id){
     $driver = \App\Models\User::find($id);
-    return "Verified report for driver Name: ".$driver->name ." and Driver License: ".$driver->license;
+    if($driver->role != 'user'){
+        $driver = null;
+    }
+    $lastOffense = DB::table('offense_list')->where('driver_id', $id)->orderBy('created_at', 'desc')->first();
+    return view('User.verifyReport', compact('driver', 'lastOffense'));
 });
 
 
