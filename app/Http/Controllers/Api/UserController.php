@@ -35,6 +35,47 @@ class UserController extends Controller
         ]);
     }
 
+    public function updateProfile(Request $request, $id)
+    {
+        $userId = $id;
+
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email,' . $userId,
+            'password' => 'nullable|string|min:6|confirmed',
+            'phone' => 'nullable|string|max:20|unique:users,phone,' . $userId,
+            'nid' => 'nullable|string|max:20|unique:users,nid,' . $userId,
+        ]);
+
+        $updateData = [
+            'name' => $request->input('name'),
+            'email' => $request->input('email'),
+            'phone' => $request->input('phone'),
+            'nid' => $request->input('nid'),
+        ];
+
+        if ($request->filled('password')) {
+            $updateData['password'] = bcrypt($request->input('password'));
+        }
+
+        $update = DB::table('users')
+            ->where('id', $userId)
+            ->update($updateData);
+
+        if ($update) {
+            return response()->json([
+                'status' => 200,
+                'message' => 'Profile updated successfully',
+                'data' => DB::table('users')->where('id', $userId)->first()
+            ]);
+        } else {
+            return response()->json([
+                'status' => 500,
+                'message' => 'Failed to update profile'
+            ]);
+        }
+    }
+
     public function updatePayment(Request $request)
     {
         $request->validate([

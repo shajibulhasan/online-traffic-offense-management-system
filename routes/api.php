@@ -17,7 +17,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/my-offenses', [UserController::class, 'myOffenses']);
     Route::post('/offense/update-payment', [UserController::class, 'updatePayment']);
     Route::get('/myProfile', [UserController::class, 'myProfile']);
-    Route::post('/update-profile', [UserController::class, 'updateProfile']);
+    Route::post('/update-profile/{id}', [UserController::class, 'updateProfile']);
 });
 
 // Clear any existing routes and add these
