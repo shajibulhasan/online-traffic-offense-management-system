@@ -1,0 +1,326 @@
+<?php
+
+namespace App\Http\Controllers\Api;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+
+class OfficerControllerApi extends Controller
+{
+       public function searchDriver(Request $request)
+    {
+        try {
+            $type = $request->query('type');
+            $value = $request->query('value');
+
+            if (!$type || !$value) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Search type and value are required'
+                ], 400);
+            }
+
+            $query = DB::table('users')->where('role', 'user');
+
+            switch ($type) {
+                case 'phone':
+                    $query = $query->where('phone', $value);
+                    break;
+                case 'email':
+                    $query = $query->where('email', $value);
+                    break;
+                case 'license':
+                    $query = $query->where('license', $value);
+                    break;
+                case 'nid':
+                    $query = $query->where('nid', $value);
+                    break;
+                default:
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'Invalid search type'
+                    ], 400);
+            }
+
+            $driver = $query->first();
+
+            if ($driver) {
+                // Make sure email is always returned even if null
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Driver found successfully',
+                    'driver' => [
+                        'id' => $driver->id,
+                        'name' => $driver->name,
+                        'email' => $driver->email, // Ensure email is always a string
+                        'phone' => $driver->phone,
+                        'nid' => $driver->nid,
+                        'license' => $driver->license ?? '',
+                        'role' => $driver->role,
+                        'total_points' => $driver->total_points ?? 0,
+                        'profile_image' => $driver->profile_image ?? null,
+                    ]
+                ], 200);
+            } else {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'No driver found with this ' . $type
+                ], 404);
+            }
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Server error: ' . $e->getMessage()
+            ], 500);
+        }
+    }
+
+
+        public function addOffense(Request $request)
+    {
+        try {
+            // Validate request
+            $validated = $request->validate([
+                'offense_type' => 'required|string|max:255',
+                'details_offense' => 'required|string',
+                'fine' => 'required|numeric|min:0',
+                'point' => 'required|integer|min:0',
+                'driver_id' => 'required|integer|exists:users,id',
+                'thana' => 'required|string|max:255',
+                'officer_name' => 'required|string|max:255',
+            ]);
+
+            // Check if driver exists and is actually a driver
+            $driver = DB::table('users')->where('id', $request->driver_id)->first();
+            if (!$driver || $driver->role !== 'user') {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Invalid driver ID'
+                ], 400);
+            }
+
+            // Insert offense into database
+            $offenseId = DB::table('offense_list')->insertGetId([
+                'offense_type' => $request->offense_type,
+                'details_offense' => $request->details_offense,
+                'fine' => $request->fine,
+                'point' => $request->point,
+                'driver_id' => $request->driver_id,
+                'thana_name' => $request->thana,
+                'officer_id' => $request->officer_id,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+
+            // Get the inserted offense
+            $offense = DB::table('offense_list')->where('id', $offenseId)->first();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Offense added successfully',
+                'offense' => [
+                    'id' => $offense->id,
+                    'offense_type' => $offense->offense_type,
+                    'details_offense' => $offense->details_offense,
+                    'fine' => $offense->fine,
+                    'point' => $offense->point,
+                    'driver_id' => $offense->driver_id,
+                    'thana' => $offense->thana_name,
+                    'officer_id' => $offense->officer_id,
+                    'created_at' => $offense->created_at,
+                ]
+            ], 201);
+
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Validation error',
+                'errors' => $e->errors()
+            ], 422);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Server error: ' . $e->getMessage()
+            ], 500);
+        }
+    }
+
+    public function offenseList(Request $request)
+    {
+        try {
+            $type = $request->query('type');
+            $value = $request->query('value');
+            
+            \Log::info('Offense List Request', ['type' => $type, 'value' => $value]);
+
+            if (!$type || !$value) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Search type and value are required'
+                ], 400);
+            }
+
+            // First find the driver
+            $query = DB::table('users')->where('role', 'user');
+
+            switch ($type) {
+                case 'phone':
+                    $query->where('phone', $value);
+                    break;
+                case 'email':
+                    $query->where('email', $value);
+                    break;
+                case 'license':
+                    $query->where('license', $value);
+                    break;
+                case 'nid':
+                    $query->where('nid', $value);
+                    break;
+                default:
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'Invalid search type'
+                    ], 400);
+            }
+
+            $driver = $query->first();
+
+            if (!$driver) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'No driver found with this ' . $type,
+                    'data' => []
+                ], 404);
+            }
+
+            // Get offenses for this driver
+            $offenses = DB::table('offense_list')
+                ->where('driver_id', $driver->id)
+                ->orderBy('created_at', 'desc')
+                ->get()
+                ->map(function($offense) {
+                    return [
+                        'id' => $offense->id,
+                        'driver_name' => DB::table('users')->where('id', $offense->driver_id)->value('name'),
+                        'officer_name' => DB::table('users')->where('id', $offense->officer_id)->value('name'),
+                        'thana_name' => $offense->thana,
+                        'details_offense' => $offense->details_offense,
+                        'fine' => $offense->fine,
+                        'point' => $offense->point,
+                        'status' => $offense->status ?? 'unpaid',
+                        'transaction_id' => $offense->transaction_id ?? null,
+                        'created_at' => $offense->created_at,
+                    ];
+                });
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Offenses found successfully',
+                'driver' => [
+                    'id' => $driver->id,
+                    'name' => $driver->name,
+                    'email' => $driver->email,
+                    'phone' => $driver->phone,
+                ],
+                'data' => $offenses,
+                'total_fine' => $offenses->sum('fine'),
+                'total_points' => $offenses->sum('point'),
+            ], 200);
+
+        } catch (\Exception $e) {
+            \Log::error('Offense list error: ' . $e->getMessage());
+            return response()->json([
+                'success' => false,
+                'message' => 'Server error: ' . $e->getMessage()
+            ], 500);
+        }
+    }
+
+    /**
+     * Delete offense (API)
+     */
+    public function deleteOffense($id)
+    {
+        try {
+            $deleted = DB::table('offense_list')->where('id', $id)->delete();
+
+            if ($deleted) {
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Offense deleted successfully'
+                ], 200);
+            } else {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Offense not found'
+                ], 404);
+            }
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Server error: ' . $e->getMessage()
+            ], 500);
+        }
+    }
+
+    /**
+     * Update offense page (for web view)
+     */
+    public function editOffense($id)
+    {
+        $offense = DB::table('offense_list')->where('id', $id)->first();
+        
+        if (!$offense) {
+            return redirect()->back()->with('error', 'Offense not found');
+        }
+
+        $driver = DB::table('users')->where('id', $offense->driver_id)->first();
+
+        return view('officer.edit_offense', compact('offense', 'driver'));
+    }
+
+    /**
+     * Update offense (API)
+     */
+    public function updateOffense(Request $request, $id)
+    {
+        try {
+            $validated = $request->validate([
+                'offense_type' => 'required|string|max:255',
+                'details_offense' => 'required|string',
+                'fine' => 'required|numeric|min:0',
+                'point' => 'required|integer|min:0',
+            ]);
+
+            $updated = DB::table('offense_list')
+                ->where('id', $id)
+                ->update([
+                    'offense_type' => $request->offense_type,
+                    'details_offense' => $request->details_offense,
+                    'fine' => $request->fine,
+                    'point' => $request->point,
+                    'updated_at' => now(),
+                ]);
+
+            if ($updated) {
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Offense updated successfully'
+                ], 200);
+            } else {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Offense not found'
+                ], 404);
+            }
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Server error: ' . $e->getMessage()
+            ], 500);
+        }
+    }
+}
