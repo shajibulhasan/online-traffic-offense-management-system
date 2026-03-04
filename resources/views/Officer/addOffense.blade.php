@@ -77,16 +77,7 @@
                                 <label for="thana"><b>Thana:</b><span class="text-danger">*</span></label>
                                 <div class="input-group">
                                     <span class="input-group-text"><i class="bi bi-house-add-fill"></i></span> 
-                                    @if(Auth::user()->thana != null)
                                     <input type="text" class="form-control mb-2 bg-success text-white" value="{{ Auth::user()->thana }}" id="thana" name="thana_name" readonly>
-                                    @else
-                                        <select class="form-select bg-success text-white" name="thana_name" id="thana">
-                                            <option value="" selected>Select Thana</option>
-                                        @foreach($thana_list as $thana) 
-                                            <option value="{{ $thana->thana_name }}">{{ $thana->thana_name }}</option>
-                                        @endforeach
-                                        </select>
-                                    @endif
                                 </div>
                                 @error('thana_name')
                                     <div class="text-danger mt-2">{{ $message }}</div>
