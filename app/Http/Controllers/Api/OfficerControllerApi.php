@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Validator;
 
 class OfficerControllerApi extends Controller
 {
@@ -89,7 +91,7 @@ class OfficerControllerApi extends Controller
                 'fine' => 'required|numeric|min:0',
                 'point' => 'required|integer|min:0',
                 'driver_id' => 'required|integer|exists:users,id',
-                'thana' => 'required|string|max:255',
+                'thana_name' => 'required|string|max:255',
                 'officer_name' => 'required|string|max:255',
             ]);
 
@@ -128,7 +130,7 @@ class OfficerControllerApi extends Controller
                     'fine' => $offense->fine,
                     'point' => $offense->point,
                     'driver_id' => $offense->driver_id,
-                    'thana' => $offense->thana_name,
+                    'thana_name' => $offense->thana_name,
                     'officer_id' => $offense->officer_id,
                     'created_at' => $offense->created_at,
                 ]
@@ -148,20 +150,31 @@ class OfficerControllerApi extends Controller
         }
     }
 
-    public function offenseList(Request $request)
+     public function offenseList(Request $request)
     {
         try {
-            $type = $request->query('type');
-            $value = $request->query('value');
-            
-            \Log::info('Offense List Request', ['type' => $type, 'value' => $value]);
+            // Validate request
+            $validator = Validator::make($request->all(), [
+                'type' => 'required|in:phone,email,license,nid',
+                'value' => 'required|string|max:255',
+            ]);
 
-            if (!$type || !$value) {
+            if ($validator->fails()) {
                 return response()->json([
                     'success' => false,
-                    'message' => 'Search type and value are required'
-                ], 400);
+                    'message' => 'Validation failed',
+                    'errors' => $validator->errors()
+                ], 422);
             }
+
+            $type = $request->query('type', $request->input('type'));
+            $value = $request->query('value', $request->input('value'));
+            
+            Log::info('Offense List Request', [
+                'type' => $type, 
+                'value' => $value,
+                'all_params' => $request->all()
+            ]);
 
             // First find the driver
             $query = DB::table('users')->where('role', 'user');
@@ -197,21 +210,39 @@ class OfficerControllerApi extends Controller
             }
 
             // Get offenses for this driver
-            $offenses = DB::table('offense_list')
-                ->where('driver_id', $driver->id)
-                ->orderBy('created_at', 'desc')
+
+
+            $offenses = DB::table('offense_list as o')
+                ->leftJoin('users as driver', 'o.driver_id', '=', 'driver.id')
+                ->leftJoin('users as officer', 'o.officer_id', '=', 'officer.id')
+                ->where('o.driver_id', $driver->id)
+                ->orderBy('o.created_at', 'desc')
+                ->select(
+                    'o.id',
+                    'o.driver_id',
+                    'o.officer_id',
+                    'o.thana_name',
+                    'o.details_offense',
+                    'o.fine',
+                    'o.point',
+                    'o.status',
+                    'o.transaction_id',
+                    'o.created_at',
+                    'driver.name as driver_name',
+                    'officer.name as officer_name'
+                )
                 ->get()
                 ->map(function($offense) {
                     return [
                         'id' => $offense->id,
-                        'driver_name' => DB::table('users')->where('id', $offense->driver_id)->value('name'),
-                        'officer_name' => DB::table('users')->where('id', $offense->officer_id)->value('name'),
-                        'thana_name' => $offense->thana,
+                        'driver_name' => $offense->driver_name ?? 'Unknown',
+                        'officer_name' => $offense->officer_name ?? 'Unknown',
+                        'thana_name' => $offense->thana_name,
                         'details_offense' => $offense->details_offense,
-                        'fine' => $offense->fine,
-                        'point' => $offense->point,
+                        'fine' => (int)$offense->fine,
+                        'point' => (int)$offense->point,
                         'status' => $offense->status ?? 'unpaid',
-                        'transaction_id' => $offense->transaction_id ?? null,
+                        'transaction_id' => $offense->transaction_id,
                         'created_at' => $offense->created_at,
                     ];
                 });
@@ -225,43 +256,61 @@ class OfficerControllerApi extends Controller
                     'email' => $driver->email,
                     'phone' => $driver->phone,
                 ],
-                'data' => $offenses,
+                'data' => $offenses->values()->toArray(),
                 'total_fine' => $offenses->sum('fine'),
                 'total_points' => $offenses->sum('point'),
             ], 200);
 
         } catch (\Exception $e) {
-            \Log::error('Offense list error: ' . $e->getMessage());
+            Log::error('Offense list error: ' . $e->getMessage());
+            Log::error('Stack trace: ' . $e->getTraceAsString());
+            
             return response()->json([
                 'success' => false,
-                'message' => 'Server error: ' . $e->getMessage()
+                'message' => 'Server error occurred',
+                'error' => $e->getMessage()
             ], 500);
         }
     }
 
     /**
-     * Delete offense (API)
+     * Delete an offense
      */
-    public function deleteOffense($id)
+    public function deleteOffense(Request $request, $id)
     {
         try {
-            $deleted = DB::table('offense_list')->where('id', $id)->delete();
+            Log::info('Delete offense request', ['id' => $id]);
 
-            if ($deleted) {
-                return response()->json([
-                    'success' => true,
-                    'message' => 'Offense deleted successfully'
-                ], 200);
-            } else {
+            // Check if offense exists
+            $offense = DB::table('offense_list')->where('id', $id)->first();
+
+            if (!$offense) {
                 return response()->json([
                     'success' => false,
                     'message' => 'Offense not found'
                 ], 404);
             }
+
+            // Optional: Check if user has permission to delete
+            // You can add authorization logic here
+
+            // Delete the offense
+            DB::table('offense_list')->where('id', $id)->delete();
+
+            Log::info('Offense deleted successfully', ['id' => $id]);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Offense deleted successfully'
+            ], 200);
+
         } catch (\Exception $e) {
+            Log::error('Delete offense error: ' . $e->getMessage());
+            
             return response()->json([
                 'success' => false,
-                'message' => 'Server error: ' . $e->getMessage()
+                'message' => 'Failed to delete offense',
+                'error' => $e->getMessage()
             ], 500);
         }
     }
