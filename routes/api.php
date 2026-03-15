@@ -30,6 +30,7 @@ Route::prefix('officer')->middleware('auth:sanctum')->group(function () {
     Route::get('/offense-list', [OfficerControllerApi::class, 'offenseList']);
     Route::delete('/delete-offense/{id}', [OfficerControllerApi::class, 'deleteOffense']);
     Route::put('/update-offense/{id}', [OfficerControllerApi::class, 'updateOffense']);
+    Route::get('/edit-offense/{id}', [OfficerControllerApi::class, 'getOffenseById']);
 });
 
 // Clear any existing routes and add these
