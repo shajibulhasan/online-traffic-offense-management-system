@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\BkashPaymentController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\OfficerControllerApi;
+use App\Http\Controllers\Api\AdminControllerApi;
 
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
@@ -31,6 +32,13 @@ Route::prefix('officer')->middleware('auth:sanctum')->group(function () {
     Route::delete('/delete-offense/{id}', [OfficerControllerApi::class, 'deleteOffense']);
     Route::put('/update-offense/{id}', [OfficerControllerApi::class, 'updateOffense']);
     Route::get('/edit-offense/{id}', [OfficerControllerApi::class, 'getOffenseById']);
+});
+
+Route::prefix('admin')->middleware('auth:sanctum')->group(function () {
+    Route::get('/officers/pending', [AdminControllerApi::class, 'pendingOfficers']);
+    Route::get('/officers/approved', [AdminControllerApi::class, 'approvedOfficers']);
+    Route::post('/officers/{id}/approve', [AdminControllerApi::class, 'approveOfficer']);
+    Route::put('/reject-officer/{id}', [AdminControllerApi::class, 'rejectOfficer']);
 });
 
 // Clear any existing routes and add these

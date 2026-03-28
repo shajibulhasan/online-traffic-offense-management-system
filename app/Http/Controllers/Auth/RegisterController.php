@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class RegisterController extends Controller
 {
@@ -49,14 +50,28 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
-        return Validator::make($data, [
+        $rules = [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'phone' => ['required', 'unique:users'],
             'password' => ['required', 'string', 'min:6', 'confirmed'],
             'nid' => ['required', 'unique:users'],
-            'role' => ['required', 'in:user,admin'],
-            'license' => ['required_if:role,user', 'unique:users,license'],
+            'role' => ['required', 'in:user,admin,officer'],
+        ];
+        
+        // License validation for user role
+        if (isset($data['role']) && $data['role'] === 'user') {
+            $rules['license'] = ['required', 'unique:users,license'];
+        } else {
+            $rules['license'] = ['nullable'];
+        }
+        
+        return Validator::make($data, $rules, [
+            'license.required' => 'License number is required for user role.',
+            'license.unique' => 'This license number is already registered.',
+            'phone.unique' => 'This phone number is already registered.',
+            'nid.unique' => 'This NID is already registered.',
+            'email.unique' => 'This email is already registered.',
         ]);
     }
 
@@ -76,9 +91,11 @@ class RegisterController extends Controller
             'license' => $data['role'] === 'user' ? $data['license'] : null,
             'nid' => $data['nid'],
             'password' => Hash::make($data['password']),
+            // 'created_at' will be automatically added by Laravel
         ]);
     }
-     /**
+    
+    /**
      * The user has been registered.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -87,8 +104,31 @@ class RegisterController extends Controller
      */
     protected function registered(Request $request, $user)
     {
-        session()->flash('success', 'Registration successful!');
+        session()->flash('success', 'Registration successful! Welcome ' . $user->name);
+        
+        // Redirect based on role
+        if ($user->role === 'admin') {
+            return redirect()->route('dashboard');
+        } elseif ($user->role === 'officer') {
+            return redirect()->route('dashboard');
+        }
+        
+        return redirect()->route('home');
     }
     
-
+    /**
+     * Handle registration validation errors
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Validation\ValidationException  $exception
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
+     */
+    protected function sendFailedResponse(Request $request, $exception)
+    {
+        session()->flash('error', 'Registration failed! Please check your input.');
+        
+        return redirect()->back()
+            ->withErrors($exception->errors())
+            ->withInput();
+    }
 }
