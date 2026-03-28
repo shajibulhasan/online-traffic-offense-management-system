@@ -190,12 +190,15 @@ class AdminController extends Controller
 
     public function verifyOfficerAccount()
     {
-        $officers = DB::table('users')
-        ->whereNull('thana')
+        $pendingOfficers = DB::table('users')
         ->where('role', 'officer')
         ->where('status', 0)
         ->get();
-        return view('Admin.verifyOfficerAccount', compact('officers'));
+        $approvedOfficers = DB::table('users')
+        ->where('role', 'officer')
+        ->where('status', 1)
+        ->get();
+        return view('Admin.verifyOfficerAccount', compact('officers', 'pendingOfficers', 'approvedOfficers'));
     }
     public function approveOfficer($id)
     {
