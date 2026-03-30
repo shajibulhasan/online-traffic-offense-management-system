@@ -198,7 +198,7 @@ class AdminController extends Controller
         ->where('role', 'officer')
         ->where('status', 1)
         ->get();
-        return view('Admin.verifyOfficerAccount', compact('officers', 'pendingOfficers', 'approvedOfficers'));
+        return view('Admin.verifyOfficerAccount', compact('pendingOfficers', 'approvedOfficers'));
     }
     public function approveOfficer($id)
     {

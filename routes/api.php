@@ -39,9 +39,39 @@ Route::prefix('admin')->middleware('auth:sanctum')->group(function () {
     Route::get('/officers/approved', [AdminControllerApi::class, 'approvedOfficers']);
     Route::post('/officers/{id}/approve', [AdminControllerApi::class, 'approveOfficer']);
     Route::put('/reject-officer/{id}', [AdminControllerApi::class, 'rejectOfficer']);
+
+    Route::get('/thanas/list', [AdminControllerApi::class, 'getThanas']);
+    Route::post('/thanas', [AdminControllerApi::class, 'addThana']);
+    Route::put('/thanas/{id}', [AdminControllerApi::class, 'updateThana']);
+    Route::delete('/thanas/{id}', [AdminControllerApi::class, 'deleteThana']);
+    Route::get('/get/thana/{id}', [AdminControllerApi::class, 'getThanaById']);    
 });
 
-// Clear any existing routes and add these
+
+Route::middleware('auth:sanctum')->group(function () {
+    // Area routes
+    Route::get('/areas', [AdminControllerApi::class, 'getAreas']);
+    Route::post('/areas', [AdminControllerApi::class, 'addArea']);
+    Route::put('/areas/{id}', [AdminControllerApi::class, 'updateArea']);
+    Route::delete('/areas/{id}', [AdminControllerApi::class, 'deleteArea']);
+    
+    // Helper route for thanas by district
+    Route::get('/thanas-by-district/{district}', [AdminControllerApi::class, 'getThanasByDistrict']);
+});
+
+
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/assigned-officers', [AdminControllerApi::class, 'getAssignedOfficers']);
+    Route::post('/assigned-officers', [AdminControllerApi::class, 'assignOfficer']);
+    Route::put('/assigned-officers/{id}', [AdminControllerApi::class, 'updateAssignedOfficer']);
+    Route::delete('/assigned-officers/{id}', [AdminControllerApi::class, 'deleteAssignedOfficer']);
+    
+    // Helper routes
+    Route::get('/officers', [AdminControllerApi::class, 'getOfficers']);
+});
+
+
+
 // API routes
 Route::post('/bkash/create-payment/{amount}/{id}', [BkashPaymentController::class, 'createPayment']);
 Route::get('/bkash/callback', [BkashPaymentController::class, 'callBack'])->name('bkash.callback');
