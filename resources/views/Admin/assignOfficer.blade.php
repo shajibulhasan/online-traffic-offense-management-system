@@ -139,5 +139,34 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
 });
+
+
+// get area list by thana & district
+const thanaSelect = document.getElementById('thana');
+const areaSelect = document.getElementById('area');
+const districtSelect = document.getElementById('district'); 
+
+thanaSelect.addEventListener('change', function () {
+    const thana = this.value;
+    areaSelect.innerHTML = '<option value="">Loading...</option>';
+
+    if (!thana) {
+        areaSelect.innerHTML = '<option value="">Select Area</option>';
+        return;
+    }
+
+    fetch(`/get-areas-by-thana/${encodeURIComponent(thana)}/${encodeURIComponent(districtSelect.value)}`)
+        .then(res => res.json())
+        .then(data => {
+            areaSelect.innerHTML = '<option value="">Select Area</option>';
+            data.forEach(area => {
+                let opt = document.createElement('option');
+                opt.value = area.area_name;
+                opt.textContent = area.area_name;
+                areaSelect.appendChild(opt);
+            });
+        });
+});
+
 </script>
 @endpush

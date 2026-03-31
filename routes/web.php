@@ -35,6 +35,7 @@ Route::get('/Admin/verifyOfficerAccount', [AdminController::class, 'verifyOffice
 
 // Area routes
 Route::get('/get-thanas-by-district/{district}', [AdminController::class, 'getThanasByDistrict'])->middleware(VaildateAdmin::class);
+Route::get('/get-areas-by-thana/{thana}/{district}', [AdminController::class, 'getAreasByThana'])->middleware(VaildateAdmin::class);
 Route::get('/Admin/addArea', [AdminController::class, 'addArea'])->name('Admin.addArea')->middleware(VaildateAdmin::class);
 Route::get('/Admin/areaList', [AdminController::class, 'areaList'])->name('Admin.areaList')->middleware(VaildateAdmin::class);
 Route::post('/Admin/addArea', [AdminController::class, 'area'])->name('Admin.addArea')->middleware(VaildateAdmin::class);

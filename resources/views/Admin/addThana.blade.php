@@ -35,7 +35,7 @@
                                     <option value="">Select Division</option>
                                     @foreach([
                                         'Barishal',
-                                        'Chattogram',
+                                        'Chittagong',
                                         'Dhaka',
                                         'Khulna',
                                         'Mymensingh',
@@ -204,7 +204,7 @@
         "Barishal": [
             "Barguna","Barisal","Bhola","Jhalokathi","Patuakhali","Pirojpur"
         ],
-        "Chattogram": [
+        "Chittagong": [
             "Bandarban","Brahmanbaria","Chandpur","Chittagong","Comilla",
             "Coxsbazar","Feni","Khagrachari","Lakshmipur","Noakhali","Rangamati"
         ],
