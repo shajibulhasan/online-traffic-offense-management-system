@@ -103,4 +103,32 @@ class UserController extends Controller
         }
     }
 
+
+    function dashboardStats(Request $request) {
+        $userId = $request->user()->id;
+
+        $totalOffenses = DB::table('offense_list')
+            ->where('driver_id', $userId)
+            ->count();
+
+        $paidOffenses = DB::table('offense_list')
+            ->where('driver_id', $userId)
+            ->where('status', 'paid')
+            ->count();
+
+        $unpaidOffenses = DB::table('offense_list')
+            ->where('driver_id', $userId)
+            ->where('status', 'unpaid')
+            ->count();
+
+        return response()->json([
+            'status' => 200,
+            'message' => 'Dashboard stats fetched successfully',
+            'data' => [
+                'total_offenses' => $totalOffenses,
+                'unpaid_offenses' => $unpaidOffenses
+            ]
+        ]);
+    }
+
 }

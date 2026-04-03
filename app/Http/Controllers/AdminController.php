@@ -102,6 +102,15 @@ class AdminController extends Controller
             ->get(['id','thana_name']);
     }
 
+    public function getAreasByThana($thana, $district)
+    {
+        return DB::table('area')
+            ->where('thana_name', $thana)
+            ->where('district', $district)
+            ->orderBy('area_name')
+            ->get(['id','area_name']);
+    }
+
     public function area(Request $request)
     {
         $request->validate(

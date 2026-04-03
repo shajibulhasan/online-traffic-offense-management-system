@@ -68,6 +68,10 @@ Route::middleware('auth:sanctum')->group(function () {
     
     // Helper routes
     Route::get('/officers', [AdminControllerApi::class, 'getOfficers']);
+
+    // dashboard stats
+    Route::get('/admin/offenses/counts', [AdminControllerApi::class, 'dashboardStats']);
+    Route::get('/user/offenses/counts', [UserController::class, 'dashboardStats']);
 });
 
 
