@@ -472,4 +472,27 @@ class AdminControllerApi extends Controller
     }
 
 
+
+    public function dashboardStats()
+    {
+        try {
+            $totalOffenseCount = DB::table('offense_list')->count();
+            $todayOffenseCount = DB::table('offense_list')->whereDate('created_at', now()->toDateString())->count();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Dashboard stats fetched successfully',
+                'data' => [
+                    'total_offense' => $totalOffenseCount,
+                    'today_offense' => $todayOffenseCount,
+                ]
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to fetch dashboard stats'
+            ], 500);
+        }
+    }
+
 }
