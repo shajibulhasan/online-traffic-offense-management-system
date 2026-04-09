@@ -100,6 +100,7 @@ Route::post('/Admin/assignDistrict', [AdminController::class, 'CreateAssign'])->
 Route::delete('/assignOfficer/{id}', [AdminController::class, 'assignOfficerdestroy'])->name('Admin.assignOfficer.delete')->middleware(VaildateAdmin::class);
 Route::delete('/Admin/assignDistrict/{id}', [AdminController::class, 'assignDistrcitdestroy'])->name('Admin.assignDistrict.delete')->middleware(VaildateAdmin::class);
 Route::delete('/Admin/show-assign-thana/{id}', [AdminController::class, 'assignThanadestroy'])->name('Admin.show-assign-thana.delete')->middleware(VaildateAdmin::class);
+Route::get('/Admin/offense-management', [AdminController::class, 'offenseManagement'])->name('Admin.offense-management')->middleware(VaildateAdmin::class);
 
 //End Admin controller
 
