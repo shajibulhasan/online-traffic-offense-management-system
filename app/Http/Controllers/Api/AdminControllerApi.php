@@ -495,4 +495,37 @@ class AdminControllerApi extends Controller
         }
     }
 
+     public function offenseManagement()
+    {
+        $allOffenses = DB::table('offense_list')
+            ->join('users as drivers', 'offense_list.driver_id', '=', 'drivers.id')
+            ->join('users as officers', 'offense_list.officer_id', '=', 'officers.id')
+            ->select('offense_list.*', 'drivers.name as driver_name', 'officers.name as officer_name')
+            ->get();
+            
+        $paidOffenses = DB::table('offense_list')
+            ->join('users as drivers', 'offense_list.driver_id', '=', 'drivers.id')
+            ->join('users as officers', 'offense_list.officer_id', '=', 'officers.id')
+            ->select('offense_list.*', 'drivers.name as driver_name', 'officers.name as officer_name')
+            ->where('offense_list.status', 'paid')  // Specify table name
+            ->get();
+            
+        $unpaidOffenses = DB::table('offense_list')
+            ->join('users as drivers', 'offense_list.driver_id', '=', 'drivers.id')
+            ->join('users as officers', 'offense_list.officer_id', '=', 'officers.id')
+            ->select('offense_list.*', 'drivers.name as driver_name', 'officers.name as officer_name')
+            ->where('offense_list.status', 'unpaid')  // Specify table name
+            ->get();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Offense management data fetched successfully',
+            'data' => [
+                'all_offenses' => $allOffenses,
+                'paid_offenses' => $paidOffenses,
+                'unpaid_offenses' => $unpaidOffenses,
+            ]
+        ], 200);
+    }
+
 }

@@ -82,6 +82,7 @@
                     <a href="{{ route('dashboard') }}" class="nav-item nav-link text-white {{ request()->routeIs('dashboard' , 'home') ? 'active' : '' }}"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
                     @if(Auth::check() && Auth::user()->role == 'admin')
                     <a href="{{ route('Admin.verifyOfficerAccount') }}" class="nav-item nav-link text-white {{ request()->routeIs('Admin.verifyOfficerAccount') ? 'active' : '' }}"><i class="fa fa-check me-2"></i>Verify Officer</a>
+                    <a href="{{ route('Admin.offense-management') }}" class="nav-item nav-link text-white {{ request()->routeIs('Admin.offense-management') ? 'active' : '' }}"><i class="fa fa-list me-2"></i>Offense Management</a>
                     <a href="{{ route('Admin.addThana') }}" class="nav-item nav-link text-white {{ request()->routeIs('Admin.addThana') ? 'active' : '' }}"><i class="fa fa-plus me-2"></i>Add Thana</a>
                     <a href="{{ route('Admin.thanaList') }}" class="nav-item nav-link text-white {{ request()->routeIs('Admin.thanaList') ? 'active' : '' }}"><i class="fa fa-list me-2"></i>Thana List</a>
                     <a href="{{ route('Admin.assignOfficer') }}" class="nav-item nav-link text-white {{ request()->routeIs('Admin.assignOfficer') ? 'active' : '' }}"><i class="fa fa-user me-2"></i>Assign Officer</a>
