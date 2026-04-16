@@ -18,8 +18,7 @@ class AdminControllerApi extends Controller
             'success' => true,
             'message' => 'Pending officers fetched successfully',
             'data' => $pendingOfficers
-            ],200);
-    
+        ], 200);
     }
 
     public function approvedOfficers()
@@ -30,38 +29,39 @@ class AdminControllerApi extends Controller
             'success' => true,
             'message' => 'Approved officers fetched successfully',
             'data' => $approvedOfficers
-            ],200);
-    
+        ], 200);
     }
 
     public function approveOfficer($id)
     {
         $updated = DB::table('users')->where('id', $id)->update(['status' => 1, 'updated_at' => now()]);
 
-        if($updated)
-        {
+        if ($updated) {
             return response()->json([
                 'success' => true,
                 'message' => 'Officer approved successfully',
-                ],200);
+            ], 200);
         }
+
+        return response()->json([
+            'success' => false,
+            'message' => 'Officer not found or already approved'
+        ], 404);
     }
 
-
-    public function getThanas(){
+    public function getThanas()
+    {
         $thanas = DB::table('thana')->get();
 
         return response()->json([
             'success' => true,
             'message' => 'Thanas fetched successfully',
             'data' => $thanas
-            ],200);
+        ], 200);
     }
 
-      // Add Thana Function
     public function addThana(Request $request)
     {
-        // Validate the request
         $request->validate([
             'division' => 'required|string',
             'district' => 'required|string',
@@ -71,8 +71,7 @@ class AdminControllerApi extends Controller
         ]);
 
         try {
-            // Insert into database
-             $id = DB::table('thana')->insertGetId([
+            $id = DB::table('thana')->insertGetId([
                 'division' => $request->division,
                 'district' => $request->district,
                 'thana_name' => $request->thana_name,
@@ -82,15 +81,13 @@ class AdminControllerApi extends Controller
                 'updated_at' => now(),
             ]);
 
-        // Get the inserted thana
-        $thana = DB::table('thana')->where('id', $id)->first();
+            $thana = DB::table('thana')->where('id', $id)->first();
 
             return response()->json([
                 'success' => true,
                 'message' => 'Thana added successfully',
-                'data' => $thana  
+                'data' => $thana
             ], 201);
-            
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
@@ -100,8 +97,6 @@ class AdminControllerApi extends Controller
         }
     }
 
-
-     // Update thana
     public function updateThana(Request $request, $id)
     {
         $request->validate([
@@ -113,7 +108,7 @@ class AdminControllerApi extends Controller
         ]);
 
         try {
-            $updated = DB::table('thana')
+            DB::table('thana')
                 ->where('id', $id)
                 ->update([
                     'division' => $request->division,
@@ -131,7 +126,6 @@ class AdminControllerApi extends Controller
                 'message' => 'Thana updated successfully',
                 'data' => $updatedThana
             ], 200);
-            
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
@@ -141,10 +135,16 @@ class AdminControllerApi extends Controller
         }
     }
 
-    // Get thana by id
     public function getThanaById($id)
     {
         $thana = DB::table('thana')->where('id', $id)->first();
+
+        if (!$thana) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Thana not found'
+            ], 404);
+        }
 
         return response()->json([
             'success' => true,
@@ -153,13 +153,11 @@ class AdminControllerApi extends Controller
         ], 200);
     }
 
-
-    // Delete thana
     public function deleteThana($id)
     {
         try {
             $thana = DB::table('thana')->where('id', $id)->first();
-            
+
             if (!$thana) {
                 return response()->json([
                     'success' => false,
@@ -173,7 +171,6 @@ class AdminControllerApi extends Controller
                 'success' => true,
                 'message' => $thana->thana_name . ' deleted successfully'
             ], 200);
-            
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
@@ -182,10 +179,6 @@ class AdminControllerApi extends Controller
             ], 500);
         }
     }
-
-
-
-    // Add these functions to AdminController
 
     public function addArea(Request $request)
     {
@@ -216,11 +209,11 @@ class AdminControllerApi extends Controller
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
-                'message' => 'Failed to add area'
+                'message' => 'Failed to add area',
+                'error' => $e->getMessage()
             ], 500);
         }
     }
-
 
     public function getThanasByDistrict($district)
     {
@@ -235,18 +228,16 @@ class AdminControllerApi extends Controller
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
-                'message' => 'Failed to fetch thanas'
+                'message' => 'Failed to fetch thanas',
+                'error' => $e->getMessage()
             ], 500);
         }
     }
 
-
     public function getAreas()
     {
         try {
-            $areas = DB::table('area')
-                ->orderBy('created_at', 'desc')
-                ->get();
+            $areas = DB::table('area')->get();
 
             return response()->json([
                 'success' => true,
@@ -255,7 +246,8 @@ class AdminControllerApi extends Controller
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
-                'message' => 'Failed to fetch areas'
+                'message' => 'Failed to fetch areas',
+                'error' => $e->getMessage()
             ], 500);
         }
     }
@@ -290,7 +282,8 @@ class AdminControllerApi extends Controller
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
-                'message' => 'Failed to update area'
+                'message' => 'Failed to update area',
+                'error' => $e->getMessage()
             ], 500);
         }
     }
@@ -299,7 +292,7 @@ class AdminControllerApi extends Controller
     {
         try {
             $area = DB::table('area')->where('id', $id)->first();
-            
+
             if (!$area) {
                 return response()->json([
                     'success' => false,
@@ -316,25 +309,24 @@ class AdminControllerApi extends Controller
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
-                'message' => 'Failed to delete area'
+                'message' => 'Failed to delete area',
+                'error' => $e->getMessage()
             ], 500);
         }
     }
 
-
-
-
-    // Get all assigned officers
+    // Get all assigned officers - FIXED
     public function getAssignedOfficers()
     {
         try {
             $assignments = DB::table('users')
+                ->where('role', 'officer')
+                ->where('status', 1)
                 ->whereNotNull('district')
                 ->whereNotNull('thana')
                 ->whereNotNull('area_lead')
-                ->where('role', 'officer')
-                ->where('status', 1)
                 ->orderBy('created_at', 'desc')
+                ->select('id', 'name', 'email', 'district', 'thana', 'area_lead', 'created_at', 'updated_at')
                 ->get();
 
             return response()->json([
@@ -344,30 +336,31 @@ class AdminControllerApi extends Controller
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
-                'message' => 'Failed to fetch assigned officers'
+                'message' => 'Failed to fetch assigned officers',
+                'error' => $e->getMessage()
             ], 500);
         }
     }
 
-    // Assign officer
+    // Assign officer - FIXED
     public function assignOfficer(Request $request)
     {
         $request->validate([
+            'officer_id' => 'required|exists:users,id',
             'district' => 'required|string',
             'thana' => 'required|string',
             'area_lead' => 'required|string',
         ]);
 
-        try {            
-             DB::table('users')
+        try {
+            DB::table('users')
                 ->where('id', $request->officer_id)
                 ->update([
-                'district' => $request->district,
-                'thana' => $request->thana,
-                'area_lead' => $request->area_lead,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ]);
+                    'district' => $request->district,
+                    'thana' => $request->thana,
+                    'area_lead' => $request->area_lead,
+                    'updated_at' => now(),
+                ]);
 
             $assignment = DB::table('users')->where('id', $request->officer_id)->first();
 
@@ -379,12 +372,13 @@ class AdminControllerApi extends Controller
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
-                'message' => 'Failed to assign officer'
+                'message' => 'Failed to assign officer',
+                'error' => $e->getMessage()
             ], 500);
         }
     }
 
-    // Update assigned officer
+    // Update assigned officer - FIXED (uses users table, not assigned_officers)
     public function updateAssignedOfficer(Request $request, $id)
     {
         $request->validate([
@@ -393,8 +387,17 @@ class AdminControllerApi extends Controller
             'area_lead' => 'required|string',
         ]);
 
-        try {            
-            DB::table('assigned_officers')
+        try {
+            $officer = DB::table('users')->where('id', $id)->where('role', 'officer')->first();
+            
+            if (!$officer) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Officer not found'
+                ], 404);
+            }
+
+            DB::table('users')
                 ->where('id', $id)
                 ->update([
                     'district' => $request->district,
@@ -413,29 +416,30 @@ class AdminControllerApi extends Controller
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
-                'message' => 'Failed to update assignment'
+                'message' => 'Failed to update assignment',
+                'error' => $e->getMessage()
             ], 500);
         }
     }
 
-    // Delete assigned officer
+    // Delete assigned officer (unassign) - FIXED
     public function deleteAssignedOfficer($id)
     {
         try {
-            $assignment = DB::table('users')->where('id', $id)->first();
-            
+            $assignment = DB::table('users')->where('id', $id)->where('role', 'officer')->first();
+
             if (!$assignment) {
                 return response()->json([
                     'success' => false,
-                    'message' => 'Assignment not found'
+                    'message' => 'Officer not found'
                 ], 404);
             }
 
             DB::table('users')->where('id', $id)
                 ->update([
-                    'district' => NULL,
-                    'thana' => NULL,
-                    'area_lead' => NULL,
+                    'district' => null,
+                    'thana' => null,
+                    'area_lead' => null,
                     'updated_at' => now(),
                 ]);
 
@@ -446,32 +450,38 @@ class AdminControllerApi extends Controller
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
-                'message' => 'Failed to unassign officer'
+                'message' => 'Failed to unassign officer',
+                'error' => $e->getMessage()
             ], 500);
         }
     }
 
-
+    // Get available officers (not assigned yet) - FIXED
     public function getOfficers()
     {
         try {
-            $officers = DB::table('users')->where('role', 'officer')->where('status', 1)->whereNull('district')->whereNull('thana')->whereNull('area_lead')->get();
+            $officers = DB::table('users')
+                ->where('role', 'officer')
+                ->where('status', 1)
+                ->whereNull('district')
+                ->whereNull('thana')
+                ->whereNull('area_lead')
+                ->select('id', 'name', 'email', 'nid', 'phone', 'created_at', 'updated_at')
+                ->get();
 
             return response()->json([
                 'success' => true,
                 'message' => 'Officers fetched successfully',
                 'data' => $officers
-                ], 200);
-
+            ], 200);
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
-                'message' => 'Failed to fetch officers'
+                'message' => 'Failed to fetch officers',
+                'error' => $e->getMessage()
             ], 500);
         }
     }
-
-
 
     public function dashboardStats()
     {
@@ -490,42 +500,83 @@ class AdminControllerApi extends Controller
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
-                'message' => 'Failed to fetch dashboard stats'
+                'message' => 'Failed to fetch dashboard stats',
+                'error' => $e->getMessage()
             ], 500);
         }
     }
 
-     public function offenseManagement()
+    public function offenseManagement()
     {
-        $allOffenses = DB::table('offense_list')
+        try {
+            $allOffenses = DB::table('offense_list')
             ->join('users as drivers', 'offense_list.driver_id', '=', 'drivers.id')
             ->join('users as officers', 'offense_list.officer_id', '=', 'officers.id')
             ->select('offense_list.*', 'drivers.name as driver_name', 'officers.name as officer_name')
             ->get();
-            
-        $paidOffenses = DB::table('offense_list')
+
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Offense management data fetched successfully',
+                'data' =>  $allOffenses,
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to fetch offense management data',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
+
+    public function offenseManagementPaid()
+    {
+        try {
+            $paidOffenses = DB::table('offense_list')
             ->join('users as drivers', 'offense_list.driver_id', '=', 'drivers.id')
             ->join('users as officers', 'offense_list.officer_id', '=', 'officers.id')
             ->select('offense_list.*', 'drivers.name as driver_name', 'officers.name as officer_name')
             ->where('offense_list.status', 'paid')  // Specify table name
             ->get();
-            
-        $unpaidOffenses = DB::table('offense_list')
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Paid offenses fetched successfully',
+                'data' => $paidOffenses
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to fetch paid offenses',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
+
+    public function offenseManagementUnpaid()
+    {
+        try {
+            $unpaidOffenses = DB::table('offense_list')
             ->join('users as drivers', 'offense_list.driver_id', '=', 'drivers.id')
             ->join('users as officers', 'offense_list.officer_id', '=', 'officers.id')
             ->select('offense_list.*', 'drivers.name as driver_name', 'officers.name as officer_name')
             ->where('offense_list.status', 'unpaid')  // Specify table name
             ->get();
 
-        return response()->json([
-            'success' => true,
-            'message' => 'Offense management data fetched successfully',
-            'data' => [
-                'all_offenses' => $allOffenses,
-                'paid_offenses' => $paidOffenses,
-                'unpaid_offenses' => $unpaidOffenses,
-            ]
-        ], 200);
+            return response()->json([
+                'success' => true,
+                'message' => 'Unpaid offenses fetched successfully',
+                'data' => $unpaidOffenses
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to fetch unpaid offenses',
+                'error' => $e->getMessage()
+            ], 500);
+        }
     }
+
 
 }

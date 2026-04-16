@@ -45,7 +45,9 @@ Route::prefix('admin')->middleware('auth:sanctum')->group(function () {
     Route::put('/thanas/{id}', [AdminControllerApi::class, 'updateThana']);
     Route::delete('/thanas/{id}', [AdminControllerApi::class, 'deleteThana']);
     Route::get('/get/thana/{id}', [AdminControllerApi::class, 'getThanaById']);  
-    Route::get('/offenses/management', [AdminControllerApi::class, 'offenseManagement']);  
+    Route::get('/offenses', [AdminControllerApi::class, 'offenseManagement']);  
+    Route::get('/offenses/paid', [AdminControllerApi::class, 'offenseManagementPaid']);  
+    Route::get('/offenses/unpaid', [AdminControllerApi::class, 'offenseManagementUnpaid']);  
 });
 
 
