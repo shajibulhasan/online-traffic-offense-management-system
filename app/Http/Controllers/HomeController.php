@@ -79,47 +79,48 @@ class HomeController extends Controller
 
     }
 
-public function offenseListPdf($driver_id)
-{
-    $driver = DB::table('users')
-        ->where('id', $driver_id)
-        ->where('role', 'user')
-        ->first();
+    public function offenseListPdf($driver_id)
+    {
+        if ($user->role == 'user' && $driver_id != $user->id) {
+            abort(403, 'Unauthorized access to this report.');
+        }
 
-    if (!$driver) {
-        abort(404);
+        $driver = DB::table('users')
+            ->where('id', $driver_id)
+            ->where('role', 'user')
+            ->first();
+
+        if (!$driver) {
+            abort(404);
+        }
+
+        $offenses = DB::table('offense_list')
+            ->join('users as officers', 'offense_list.officer_id', '=', 'officers.id')
+            ->where('offense_list.driver_id', $driver_id)
+            ->select(
+                'offense_list.*',
+                'officers.name as officer_name'
+            )
+            ->orderBy('offense_list.created_at', 'desc')
+            ->get();
+
+        $total_point = $offenses->sum('point');
+        $total_fine  = $offenses->sum('fine');
+
+        $qrData = url('/verify-report/'.$driver->id);
+
+        $qrUrl = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=" . urlencode($qrData);
+
+        $qrImage = base64_encode(file_get_contents($qrUrl));
+
+        $pdf = PDF::loadView('pdf.offense_list', compact(
+            'driver',
+            'offenses',
+            'total_point',
+            'total_fine',
+            'qrImage'
+        ))->setPaper('a4', 'portrait');
+        
+        return $pdf->stream('offense-list.pdf');
     }
-
-    $offenses = DB::table('offense_list')
-        ->join('users as officers', 'offense_list.officer_id', '=', 'officers.id')
-        ->where('offense_list.driver_id', $driver_id)
-        ->select(
-            'offense_list.*',
-            'officers.name as officer_name'
-        )
-        ->orderBy('offense_list.created_at', 'desc')
-        ->get();
-
-    $total_point = $offenses->sum('point');
-    $total_fine  = $offenses->sum('fine');
-
-    $qrData = url('/verify-report/'.$driver->id);
-
-    $qrUrl = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=" . urlencode($qrData);
-
-    $qrImage = base64_encode(file_get_contents($qrUrl));
-
-    $pdf = PDF::loadView('pdf.offense_list', compact(
-        'driver',
-        'offenses',
-        'total_point',
-        'total_fine',
-        'qrImage'
-    ))->setPaper('a4', 'portrait');
-    
-    return $pdf->stream('offense-list.pdf');
-    }
-
-
-
 }
