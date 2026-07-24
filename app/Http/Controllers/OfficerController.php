@@ -100,29 +100,33 @@ public function offenseList(Request $request)
 
         if ($driver) {
 
-            // 📋 Last 30 days offenses
+            // 📋 ALL offenses (table e dekhanor jonno — no date filter)
             $Offense_list = DB::table('offense_list')
                 ->join('users as officers', 'offense_list.officer_id', '=', 'officers.id')
                 ->join('users as drivers', 'offense_list.driver_id', '=', 'drivers.id')
                 ->where('offense_list.driver_id', $driver->id)
-                ->where('offense_list.created_at', '>=', now()->subDays(30))
                 ->select(
                     'offense_list.*',
                     'officers.name as officer_name',
                     'drivers.name as driver_name'
                 )
+                ->orderBy('offense_list.created_at', 'desc')
                 ->get();
 
-                $pdf = '<a href="' . route('Officer.offenseListPdf', $driver->id) . '" class="btn btn-danger btn-sm float-end">Download PDF</a>';
+            $pdf = '<a href="' . route('Officer.offenseListPdf', $driver->id) . '" class="btn btn-danger btn-sm float-end">Download PDF</a>';
 
-            $point = $Offense_list->sum('point');
-            $unpaid_point = $Offense_list->where('status', 'unpaid')->sum('point');
-            $last_createAt = $Offense_list->max('created_at');
+            // 📊 Shudhu last 30 days er offense diye point/alert calculate hobe
+            $recentOffenses = $Offense_list->filter(function ($offense) {
+                return \Carbon\Carbon::parse($offense->created_at)->gte(now()->subDays(30));
+            });
+
+            $point = $recentOffenses->sum('point');
+            $unpaid_point = $recentOffenses->where('status', 'unpaid')->sum('point');
+            $last_createAt = $recentOffenses->max('created_at');
 
             $next = $last_createAt
                 ? Carbon::parse($last_createAt)->addDays(7)->format('d M, Y')
                 : null;
-
 
             if ($unpaid_point >= 15) {
                 $alert = '
@@ -144,7 +148,6 @@ public function offenseList(Request $request)
             }
         }
     }
-
 
     if ($request->ajax() || $request->has('ajax')) {
 

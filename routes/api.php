@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\BkashPaymentController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\OfficerControllerApi;
 use App\Http\Controllers\Api\AdminControllerApi;
+use App\Http\Controllers\HomeController;
 
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
@@ -20,6 +21,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/offense/update-payment', [UserController::class, 'updatePayment']);
     Route::get('/myProfile', [UserController::class, 'myProfile']);
     Route::post('/update-profile/{id}', [UserController::class, 'updateProfile']);
+    Route::get('/offense-list-pdf/{driver_id}', [HomeController::class, 'offenseListPdf']);
 });
 
 Route::middleware('auth:sanctum')->group(function () {
